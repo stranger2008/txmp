@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsreturnDao">
+    
+    <insert id="insert" parameterType="com.xingfugo.business.module.Goodsreturn">
+		insert into inc_goods_return (trade_id ,biz_type, order_id, goods_id, cont_desc, img_path, no_reason, info_state, user_id, in_date,applyNum ,applyProof , returnType, refundMoney ,refundRemark) 
+		values(#{trade_id} ,#{biz_type}, #{order_id}, #{goods_id}, #{cont_desc}, #{img_path}, #{no_reason}, #{info_state}, #{user_id},NOW(), #{applyNum}, #{applyProof}, #{returnType}, #{refundMoney}, #{refundRemark});
+	</insert>
+    
+    <select id="getGoodsreturnByPage" resultType="map"
+    	parameterType="com.xingfugo.business.module.query.GoodsreturnQueryForm">
+        select g.* ,s.cust_id ,s.goods_name,s.img_path goods_img_path,c.para_key info_state_name, 
+        (select para_key from commpara where para_code='goodsreturn_type' and para_value = g.biz_type) biz_type_name
+        from inc_goods_return g 
+        left join goods s on g.goods_id = s.goods_id 
+        left join commpara c on g.info_state = c.para_value and c.para_code='goodsreturn_state'
+        <where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(trade_id)">
+				and g.trade_id in (${trade_id})
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and g.user_id=#{user_id}
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and s.cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+				and g.info_state=#{info_state}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(biz_type)">
+				and g.biz_type=#{biz_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(keywords)">
+				and ( s.goods_name like concat('%', #{keywords}, '%') OR g.order_id = #{keywords})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(sear_days)">
+				and <![CDATA[ ( TO_DAYS(NOW()) - TO_DAYS(g.in_date)) <= #{sear_days} ]]>
+			</if>
+		</where>
+		order by g.in_date desc
+    </select>
+    
+    <select id="getStateCount" resultType="map" parameterType="map">
+    	select count(*) ct,g.info_state,c.para_key info_state_name
+        from inc_goods_return g left join commpara c on g.info_state = c.para_value and c.para_code='goodsreturn_state' 
+		left join goodsorder o on g.order_id = o.order_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and o.sale_cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_states)">
+				AND g.info_state IN (${info_states })
+			</if>
+		</where>
+        group by g.info_state
+    </select>
+    
+    <select id="getByPk" resultType="map" parameterType="string">
+    	select u.user_name,u.cellphone,r.*,g.goods_name,c.para_key info_state_name,(select para_key from commpara where para_value=r.biz_type and para_code='goodsreturn_type') biz_type_name
+		from inc_goods_return r 
+		left join goods g on r.goods_id = g.goods_id 
+		left join commpara c on r.info_state = c.para_value and c.para_code='goodsreturn_state'
+		left join memberuser u on r.user_id = u.user_id
+		where trade_id=#{value}
+    </select>
+    
+    <select id="getByTradeid" resultType="com.xingfugo.business.module.Goodsreturn" parameterType="string">
+         select * from inc_goods_return where trade_id=${value}
+    </select>
+    
+    <update id="updateState" parameterType="map">
+		UPDATE inc_goods_return SET info_state=#{info_state} WHERE trade_id=#{trade_id}
+	</update>
+    
+    
+    <update id="updateInfo" parameterType="com.xingfugo.business.module.Goodsreturn">
+    	UPDATE inc_goods_return
+	    <set>
+	      <if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">info_state=#{info_state},</if>
+	      <if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(no_reason)">no_reason=#{no_reason},</if>
+	      <if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(refundMoney)">refundMoney=#{refundMoney},</if>
+	      <if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(refundRemark)">refundRemark=#{refundRemark}</if>
+	    </set>
+	  	where trade_id=#{trade_id}
+	</update>
+	
+	<select id="hasUncomplete" resultType="int" parameterType="com.xingfugo.business.module.Goodsreturn">
+         select count(*) from inc_goods_return where order_id=#{order_id} and goods_id != #{goods_id} and info_state!='5'
+    </select>
+    
+	<select id="getOrderAndGoodsId" resultType="map" parameterType="string">
+		select order_id,goods_id from inc_goods_return where user_id = #{user_id}
+		<!-- 
+         select order_id,goods_id from inc_goods_return where user_id = #{user_id} and ( info_state !=5 or ( info_state=5 and biz_type=1 ))
+          -->
+    </select>
+</mapper>

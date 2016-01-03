@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.HotWordDao">
+	<cache eviction="LRU" readOnly="true" 
+		type="com.xingfugo.business.module.mybatis.MybatisRedisCache">
+	</cache>
+    
+    <select id="list" resultType="string" >
+        select key_name from keyword where module_type = 'goods' order by num desc
+    </select>
+	    
+</mapper>

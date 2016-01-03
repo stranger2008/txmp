@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.BuyeraddrDao">
+    
+    <select id="getBuyeraddrByUserId" resultType="map" parameterType="string" >
+        select * from buyeraddr where user_id=#{id} order by is_default desc,in_date desc
+    </select>
+    
+    <select id="getDefaultBuyeraddr" resultType="com.xingfugo.business.module.Buyeraddr" parameterType="string">
+        select * from buyeraddr where user_id=#{id} and is_default='1'
+    </select>
+    
+    <select id="getByPk" resultType="com.xingfugo.business.module.Buyeraddr" parameterType="string">
+        select * from buyeraddr where addr_id=#{id}
+    </select>
+	
+	<insert id="insertBuyeraddr" parameterType="com.xingfugo.business.module.Buyeraddr">
+		insert into buyeraddr(cust_name,area_attr,address,cell_phone,user_id,in_date,is_default,phone) 
+		values(#{cust_name},#{area_attr},#{address},#{cell_phone},#{user_id},now(),#{is_default},#{phone})
+		<selectKey keyProperty="addr_id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateBuyeraddr" parameterType="com.xingfugo.business.module.Buyeraddr">
+		UPDATE buyeraddr SET cust_name=#{cust_name},area_attr=#{area_attr},address=#{address},cell_phone=#{cell_phone},is_default=#{is_default},phone=#{phone} WHERE addr_id=#{addr_id}
+	</update>
+	
+	<update id="updateIsDefaultAddr" parameterType="string">
+		UPDATE buyeraddr SET is_default='0' WHERE user_id=#{user_id}
+	</update>
+	
+	<delete id="deleteBuyeraddr" parameterType="string">
+		DELETE FROM buyeraddr WHERE addr_id=#{addr_id}
+	</delete>
+    
+</mapper>

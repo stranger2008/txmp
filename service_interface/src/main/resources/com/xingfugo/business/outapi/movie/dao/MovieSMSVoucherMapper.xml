@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.outapi.movie.dao.MovieSMSVoucherMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.outapi.movie.module.local.MovieSMSVoucher" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="TINYINT" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="pay_status" property="payStatus" jdbcType="TINYINT" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="voucher_no" property="voucherNo" jdbcType="VARCHAR" />
+    <result column="voucher_id" property="voucherId" jdbcType="VARCHAR" />
+    <result column="use_status" property="useStatus" jdbcType="TINYINT" />
+    <result column="sms_content" property="smsContent" jdbcType="VARCHAR" />
+    <result column="mms_content" property="mmsContent" jdbcType="VARCHAR" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="send_status" property="sendStatus" jdbcType="TINYINT" />
+    <result column="send_type" property="sendType" jdbcType="TINYINT" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.xingfugo.business.outapi.movie.module.local.MovieSMSVoucher" extends="BaseResultMap" >
+    <result column="barcode_image" property="barcodeImage" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    Id, order_id, order_status, order_time, pay_status, position, voucher_no, voucher_id, 
+    use_status, sms_content, mms_content, send_time, send_status, send_type
+  </sql>
+  
+  <sql id="Blob_Column_List" >
+    barcode_image
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from api_movie_sms_voucher
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOrderId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from api_movie_sms_voucher
+    where order_id = #{orderId,jdbcType=VARCHAR} limit 1
+  </select>
+  
+  <insert id="insert" parameterType="com.xingfugo.business.outapi.movie.module.local.MovieSMSVoucher" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into api_movie_sms_voucher (order_id, order_status, order_time, 
+      pay_status, position, voucher_no, 
+      voucher_id, use_status, sms_content, 
+      mms_content, send_time, send_status, 
+      send_type, barcode_image)
+    values (#{orderId,jdbcType=VARCHAR}, #{orderStatus,jdbcType=TINYINT}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{payStatus,jdbcType=TINYINT}, #{position,jdbcType=VARCHAR}, #{voucherNo,jdbcType=VARCHAR}, 
+      #{voucherId,jdbcType=VARCHAR}, #{useStatus,jdbcType=TINYINT}, #{smsContent,jdbcType=VARCHAR}, 
+      #{mmsContent,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{sendStatus,jdbcType=TINYINT}, 
+      #{sendType,jdbcType=TINYINT}, #{barcodeImage,jdbcType=LONGVARCHAR})
+  </insert>
+ 
+  <update id="updateByPrimaryKeySelective" parameterType="com.xingfugo.business.outapi.movie.module.local.MovieSMSVoucher" >
+    update api_movie_sms_voucher
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=TINYINT},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherNo != null" >
+        voucher_no = #{voucherNo,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherId != null" >
+        voucher_id = #{voucherId,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        use_status = #{useStatus,jdbcType=TINYINT},
+      </if>
+      <if test="smsContent != null" >
+        sms_content = #{smsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="mmsContent != null" >
+        mms_content = #{mmsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendStatus != null" >
+        send_status = #{sendStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sendType != null" >
+        send_type = #{sendType,jdbcType=TINYINT},
+      </if>
+      <if test="barcodeImage != null" >
+        barcode_image = #{barcodeImage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

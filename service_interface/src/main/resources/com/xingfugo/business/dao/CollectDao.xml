@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.CollectDao">
+    
+    <select id="getCollectGoodsListByPage" resultType="map"
+    parameterType="com.xingfugo.business.module.query.CollectQueryForm">
+        select t.coll_id,t.info_id,t.info_type,g.goods_name,g.sale_price,g.img_path,t.in_date,g.now_stock,g.down_date, g.down_date &lt; now() isdown
+        from collect t left join goods g on t.info_id = g.goods_id and t.info_type = '0' 
+		where t.user_id = #{user_id} and t.info_type = '0' 
+		order by t.in_date desc
+    </select>
+    
+    <select id="getCollectShopListByPage" resultType="map"
+    parameterType="com.xingfugo.business.module.query.CollectQueryForm">
+		select g.cust_id,t.coll_id,t.info_id,t.info_type,g.shop_name,g.busi_range, g.shop_logo, 
+    		(select count(1) from collect where info_type = '1' and info_id = t.info_id) popular
+		from collect t left join shopconfig g on t.info_id = g.cust_id and t.info_type = '1' 
+		where t.user_id = #{user_id} and t.info_type = '1'
+		order by t.in_date desc
+    </select>
+    
+    <select id="getCollectListByMap" resultType="map" parameterType="map">
+        select * from collect
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				user_id=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_id)">
+				and info_id=#{info_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_type)">
+				and info_type=#{info_type}
+			</if>
+		</where>
+		 order by in_date desc
+    </select>
+	
+	<insert id="insertCollect" parameterType="com.xingfugo.business.module.Collect">
+		insert into collect(info_id,info_type,user_id,in_date)values(#{info_id},#{info_type},#{user_id},now())
+		<selectKey keyProperty="coll_id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="batchInsertCollect" parameterType="list">
+		insert into collect(info_id,info_type,user_id,in_date) values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.info_id},#{item.info_type},#{item.user_id},now())
+		</foreach>
+	</insert>
+	
+	<delete id="deleteCollect" parameterType="int">
+		DELETE FROM collect WHERE coll_id=#{id}
+	</delete>
+	
+	<delete id="batchDeleteCollect" parameterType="list">
+		DELETE FROM collect WHERE coll_id in
+		<foreach collection="list" open="(" close=")" separator="," item="id" >
+		#{id}
+		</foreach>
+	</delete>
+    
+    <delete id="delete" parameterType="string">
+		DELETE FROM collect WHERE coll_id in (${value})
+	</delete>
+    
+    
+</mapper>

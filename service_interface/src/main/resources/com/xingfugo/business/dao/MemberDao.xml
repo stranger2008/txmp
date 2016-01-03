@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.MemberDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Member">
+    	SELECT cust_id,user_name,passwd,contact_name,contact_phone,contact_email,cust_name,logo_img,area_attr,address,phone,reg_money,reg_money_type,lic_no,lic_address,lic_start_time,lic_end_time,lic_img,product,person_id_img,org_img,tax_img,email,bank_img,bank_name,bank_id,apply_time,user_id,audit_status,no_reason,audit_time FROM member WHERE cust_id=${value}
+	</select>
+	
+	<update id="updatePasswd" parameterType="map">
+		UPDATE member SET passwd=#{passwd} WHERE cust_id=#{cust_id}
+	</update>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Member">
+		UPDATE member SET user_name=#{user_name},contact_name=#{contact_name},contact_phone=#{contact_phone},contact_email=#{contact_email},cust_name=#{cust_name},logo_img=#{logo_img},area_attr=#{area_attr},address=#{address},phone=#{phone},reg_money=#{reg_money},reg_money_type=#{reg_money_type},lic_no=#{lic_no},lic_address=#{lic_address},lic_start_time=#{lic_start_time},lic_end_time=#{lic_end_time},lic_img=#{lic_img},product=#{product},person_id_img=#{person_id_img},org_img=#{org_img},tax_img=#{tax_img},email=#{email},bank_img=#{bank_img},bank_name=#{bank_name},bank_id=#{bank_id},user_id=#{user_id},no_reason=#{no_reason},audit_time=NOW() WHERE cust_id=${cust_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Member">
+		INSERT INTO member (user_name,passwd,contact_name,contact_phone,contact_email,cust_name,logo_img,area_attr,address,phone,reg_money,reg_money_type,lic_no,lic_address,lic_start_time,lic_end_time,lic_img,product,person_id_img,org_img,tax_img,email,bank_img,bank_name,bank_id,apply_time,user_id,audit_status,no_reason,audit_time) VALUES (#{user_name},#{passwd},#{contact_name},#{contact_phone},#{contact_email},#{cust_name},#{logo_img},#{area_attr},#{address},#{phone},#{reg_money},#{reg_money_type},#{lic_no},#{lic_address},#{lic_start_time},#{lic_end_time},#{lic_img},#{product},#{person_id_img},#{org_img},#{tax_img},#{email},#{bank_img},#{bank_name},#{bank_id},NOW(),#{user_id},#{audit_status},#{no_reason},NOW())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM member WHERE cust_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT m.cust_id cust_id, m.user_name user_name, m.contact_name contact_name
+			, m.contact_phone contact_phone, m.contact_email contact_email, m.cust_name cust_name
+			, m.logo_img logo_img, m.area_attr area_attr, m.address address, m.phone phone, m.reg_money reg_money
+			, m.reg_money_type reg_money_type, m.lic_no lic_no, m.lic_address lic_address, m.lic_start_time lic_start_time
+			, m.lic_end_time lic_end_time, m.lic_img lic_img, m.product product, m.person_id_img person_id_img
+			, m.org_img org_img, m.tax_img tax_img, m.email email, m.bank_img bank_img, m.bank_name bank_name
+			, m.bank_id bank_id, m.apply_time apply_time, m.user_id user_id, m.audit_status audit_status
+			, m.no_reason no_reason, m.audit_time audit_time
+			<if test="has_area_attr_name == true">
+				, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, m.area_attr)) area_attr_name
+			</if>
+			FROM member m
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				and m.cust_name like concat('%', #{cust_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(audit_status)">
+				and m.audit_status in (${audit_status})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(area_attr)">
+				and m.area_attr like concat('%', #{area_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(apply_time_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(m.apply_time) >= UNIX_TIMESTAMP(#{apply_time_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(apply_time_end)">
+				<![CDATA[ AND DATE(m.apply_time) < DATE_SUB(#{apply_time_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY m.cust_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT m.cust_id cust_id, m.user_name user_name, m.passwd passwd, m.contact_name contact_name
+			, m.contact_phone contact_phone, m.contact_email contact_email, m.cust_name cust_name
+			, m.logo_img logo_img, m.area_attr area_attr, m.address address, m.phone phone, m.reg_money reg_money
+			, m.reg_money_type reg_money_type, m.lic_no lic_no, m.lic_address lic_address, m.lic_start_time lic_start_time
+			, m.lic_end_time lic_end_time, m.lic_img lic_img, m.product product, m.person_id_img person_id_img
+			, m.org_img org_img, m.tax_img tax_img, m.email email, m.bank_img bank_img, m.bank_name bank_name
+			, m.bank_id bank_id, m.apply_time apply_time, m.user_id user_id, m.audit_status audit_status
+			, m.no_reason no_reason, m.audit_time audit_time
+			<if test="has_area_attr_name == true">
+				, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, m.area_attr)) area_attr_name
+			</if>
+		FROM member m
+		<where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				m.user_name=#{user_name}
+			</if>
+			
+		</where>
+		ORDER BY m.cust_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Member">
+		INSERT INTO member (user_name,passwd,contact_name,contact_phone,contact_email,cust_name,logo_img,area_attr,address,phone,reg_money,reg_money_type,lic_no,lic_address,lic_start_time,lic_end_time,lic_img,product,person_id_img,org_img,tax_img,email,bank_img,bank_name,bank_id,apply_time,user_id,audit_status,no_reason,audit_time) VALUES (#{user_name},#{passwd},#{contact_name},#{contact_phone},#{contact_email},#{cust_name},#{logo_img},#{area_attr},#{address},#{phone},#{reg_money},#{reg_money_type},#{lic_no},#{lic_address},#{lic_start_time},#{lic_end_time},#{lic_img},#{product},#{person_id_img},#{org_img},#{tax_img},#{email},#{bank_img},#{bank_name},#{bank_id},NOW(),#{user_id},#{audit_status},#{no_reason},NOW())
+		<selectKey keyProperty="cust_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertReturnPk" parameterType="com.xingfugo.business.module.Member">
+		INSERT INTO member (user_name,passwd,contact_name,contact_phone,contact_email,cust_name,logo_img,area_attr,address,phone,reg_money,reg_money_type,lic_no,lic_address,lic_start_time,lic_end_time,lic_img,product,person_id_img,org_img,tax_img,email,bank_img,bank_name,bank_id,apply_time,user_id,audit_status,no_reason,audit_time) VALUES (#{user_name},#{passwd},#{contact_name},#{contact_phone},#{contact_email},#{cust_name},#{logo_img},#{area_attr},#{address},#{phone},#{reg_money},#{reg_money_type},#{lic_no},#{lic_address},#{lic_start_time},#{lic_end_time},#{lic_img},#{product},#{person_id_img},#{org_img},#{tax_img},#{email},#{bank_img},#{bank_name},#{bank_id},NOW(),#{user_id},#{audit_status},#{no_reason},NOW())
+		<selectKey keyProperty="cust_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="selectMemberByIdWithAreaName" parameterType="string" resultType="com.xingfugo.business.module.Member">
+		SELECT m.cust_id cust_id, m.user_name user_name, m.contact_name contact_name
+			, m.contact_phone contact_phone, m.contact_email contact_email, m.cust_name cust_name
+			, m.logo_img logo_img, m.area_attr area_attr, m.address address, m.phone phone, m.reg_money reg_money
+			, m.reg_money_type reg_money_type, m.lic_no lic_no, m.lic_address lic_address, m.lic_start_time lic_start_time
+			, m.lic_end_time lic_end_time, m.lic_img lic_img, m.product product, m.person_id_img person_id_img
+			, m.org_img org_img, m.tax_img tax_img, m.email email, m.bank_img bank_img, m.bank_name bank_name
+			, m.bank_id bank_id, m.apply_time apply_time, m.user_id user_id, m.audit_status audit_status
+			, m.no_reason no_reason, m.audit_time audit_time
+			, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, m.area_attr)) area_attr_name
+			, su.user_name audit_user_name
+		FROM member m
+		LEFT JOIN sysuser su
+		ON m.user_id = su.user_id
+		WHERE m.cust_id = #{cust_id}
+	</select>
+	
+	<update id="auditMember" parameterType="com.xingfugo.business.module.Member">
+		UPDATE member SET user_id=#{user_id}, audit_status=#{audit_status}, no_reason=#{no_reason}, audit_time=NOW() WHERE cust_id=#{cust_id}	
+	</update>
+	
+	<select id="isUsernameExist" parameterType="string" resultType="int">
+		SELECT COUNT(1) FROM member WHERE user_name = #{value}
+	</select>
+	
+	<select id="isContactNameAndContactPhoneUsed" parameterType="com.xingfugo.business.module.Member" resultType="int">
+		SELECT COUNT(1) FROM member WHERE contact_name = #{contact_name} AND contact_phone = #{contact_phone}
+	</select>
+	
+	<select id="selectJoinUsProgress" parameterType="com.xingfugo.business.module.Member" resultType="com.xingfugo.business.module.Member">
+		SELECT audit_status, no_reason
+		FROM member
+		WHERE contact_name = #{contact_name} AND contact_phone = #{contact_phone}
+		ORDER BY cust_id DESC
+	</select>
+
+</mapper>
+

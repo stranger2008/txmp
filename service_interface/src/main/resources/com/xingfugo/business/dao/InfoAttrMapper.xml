@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.dao.InfoAttrMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.module.InfoAttr" >
+    <result column="infoattr_id" property="infoattrId" jdbcType="CHAR" />
+    <result column="attr_id" property="attrId" jdbcType="CHAR" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="value_id" property="valueId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.xingfugo.business.module.InfoAttr" extends="BaseResultMap" >
+    <result column="attr_value" property="attrValue" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <insert id="batchInsert" >
+    insert into infoattr (infoattr_id, attr_id, attr_name, 
+      sort_no, value_id, attr_value) values
+    <foreach collection="list" item="item" separator=","> 
+    (#{item.infoattrId,jdbcType=CHAR}, #{item.attrId,jdbcType=CHAR}, #{item.attrName,jdbcType=VARCHAR}, 
+     #{item.sortNo,jdbcType=INTEGER}, #{item.valueId,jdbcType=VARCHAR}, #{item.attrValue,jdbcType=LONGVARCHAR})
+     </foreach>
+  </insert>
+
+  <select id="selectByGoodsId" parameterType="int" resultMap="ResultMapWithBLOBs" >
+	select ia.* from infoattr ia 
+	inner join goods g on ia.infoattr_id = g.infoattr_id 
+	where g.goods_id = #{goodsId}
+	order by ia.sort_no asc
+  </select>
+  
+  <select id="selectByInfoId" resultType="map">
+  	select * from infoattr a left join categoryattr ct on a.attr_id = ct.attr_id where a.infoattr_id = #{infoattr_id} and ct.attr_type=3 and ct.is_must=1
+  </select>
+  
+   <select id="getGoodsAtrrsByInfoId" resultType="map">
+  	select * from infoattr a left join categoryattr ct on a.attr_id = ct.attr_id where a.infoattr_id = #{infoattr_id} 
+  </select>
+  
+  <delete id="deletByGoodsId" parameterType="int">
+  	delete from infoattr where infoattr_id = (select infoattr_id from goods where goods_id = #{godsId})
+  </delete>
+  
+  <!--  -->
+  <select id="selectInfoAttrsById" parameterType="java.lang.String" resultType="map">
+  	SELECT av.attr_id attr_id, av.attr_value attr_value, ca.attr_name attr_name
+	FROM attrvalue av
+	LEFT JOIN categoryattr ca
+	ON av.attr_id = ca.attr_id
+	WHERE FIND_IN_SET(av.trade_id, 
+		(SELECT GROUP_CONCAT(REPLACE(IF(STRCMP(RIGHT(ia.value_id, 1), '/') = 0, LEFT(ia.value_id, LENGTH(ia.value_id) - 1), ia.value_id), '/', ',')) FROM infoattr ia
+			WHERE ia.infoattr_id = #{infoattr_id} AND ca.attr_type IN ('2', '3'))
+	)
+	UNION
+	SELECT ia.attr_id ttr_id, ia.attr_value attr_value, ca.attr_name attr_name
+	FROM infoattr ia
+	LEFT JOIN categoryattr ca
+	ON ia.attr_id = ca.attr_id
+	WHERE ia.infoattr_id = #{infoattr_id}
+	AND ca.attr_type IN ('0', '1')
+  	<!-- 
+  	SELECT av.trade_id trade_id, av.attr_id attr_id, av.attr_value attr_value, ca.attr_name
+	FROM attrvalue av
+	LEFT JOIN categoryattr ca
+	ON av.attr_id = ca.attr_id
+	WHERE FIND_IN_SET(av.trade_id, 
+		(SELECT GROUP_CONCAT(REPLACE(IF(STRCMP(RIGHT(ia.attr_value, 1), '/') = 0, LEFT(ia.attr_value, LENGTH(ia.attr_value) - 1), ia.attr_value), '/', ',')) FROM infoattr ia
+			WHERE ia.infoattr_id = #{infoattr_id})
+	)
+	ORDER BY av.attr_id ASC
+	 -->
+  </select>
+  
+  <select id="selectById" parameterType="java.lang.String" resultType="map">
+  	SELECT attr_id, attr_value, value_id
+	FROM infoattr
+	WHERE infoattr_id = #{infoattr_id}
+  </select>
+
+  <select id="getInfoAttrByValueId" parameterType="java.lang.String" resultType="map">
+  	SELECT infoattr_id, attr_id
+	FROM infoattr
+	WHERE value_id LIKE CONCAT('%', #{value_id}, '%')
+	
+  </select>  
+  
+</mapper>

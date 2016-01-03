@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.ApiTourOrderDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.ApiTourOrder">
+    	SELECT {fieldkeylist}[field_node],{/fieldkeylist} FROM api_tour_order WHERE id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.ApiTourOrder">
+		UPDATE api_tour_order SET code=#{code},username=#{username},mobile=#{mobile},idcard=#{idcard},product_name=#{product_name},type=#{type},payable=#{payable},num=#{num},terminal=#{terminal},accountno=#{accountno},paid=#{paid},status=#{status} WHERE id=${id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.ApiTourOrder">
+		INSERT INTO api_tour_order (code,username,mobile,idcard,product_name,type,payable,num,terminal,accountno,paid,status,metadata,date) VALUES (#{code},#{username},#{mobile},#{idcard},#{product_name},#{type},#{payable},#{num},#{terminal},#{accountno},#{paid},#{status},#{metadata},now())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM api_tour_order WHERE id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT {fieldkeylist}[field_node],{/fieldkeylist}  from api_tour_order
+		<where>
+			
+		</where>
+		ORDER BY id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT {fieldkeylist}[field_node],{/fieldkeylist}  from api_tour_order
+		<where>
+			
+		</where>
+		ORDER BY id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.ApiTourOrder">
+		INSERT INTO api_tour_order (code,username,mobile,idcard,product_name,type,payable,num,terminal,accountno,paid,status) VALUES (#{code},#{username},#{mobile},#{idcard},#{product_name},#{type},#{payable},#{num},#{terminal},#{accountno},#{paid},#{status})
+		<selectKey keyProperty="id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

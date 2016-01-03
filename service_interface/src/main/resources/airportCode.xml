@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<airports>
+	<airport>
+		<code>AQG</code>
+		<name>天柱山机场</name>
+		<city>安庆</city>
+	</airport>
+	<airport>
+		<code>JUH</code>
+		<name>九华山机场</name>
+		<city>池州</city>
+	</airport>
+	<airport>
+		<code>FUG</code>
+		<name>西关机场</name>
+		<city>阜阳</city>
+	</airport>
+	<airport>
+		<code>HFE</code>
+		<name>新桥国际机场</name>
+		<city>合肥</city>
+	</airport>
+	<airport>
+		<code>TXN</code>
+		<name>屯溪机场</name>
+		<city>黄山</city>
+	</airport>
+	<airport>
+		<code>BJS</code>
+		<name>南苑机场</name>
+		<city>北京</city>
+	</airport>
+	<airport>
+		<code>PEK</code>
+		<name>首都国际机场</name>
+		<city>北京</city>
+	</airport>
+	<airport>
+		<code>FOC</code>
+		<name>长乐国际机场</name>
+		<city>福州</city>
+	</airport>
+	<airport>
+		<code>JJN</code>
+		<name>晋江机场</name>
+		<city>晋江</city>
+	</airport>
+	<airport>
+		<code>LCX</code>
+		<name>连城机场</name>
+		<city>连城</city>
+	</airport>
+	<airport>
+		<code>WUS</code>
+		<name>武夷山机场</name>
+		<city>武夷山</city>
+	</airport>
+	<airport>
+		<code>XMN</code>
+		<name>高崎国际机场</name>
+		<city>厦门</city>
+	</airport>
+	
+	<airport>
+		<code>CHW</code>
+		<name>酒泉机场</name>
+		<city>酒泉</city>
+	</airport>
+	
+	<airport>
+		<code>DNH</code>
+		<name>敦煌机场</name>
+		<city>敦煌</city>
+	</airport>
+	<airport>
+		<code>IQN</code>
+		<name>西峰镇机场</name>
+		<city>庆阳</city>
+	</airport>
+	
+	<airport>
+		<code>JGN</code>
+		<name>嘉峪关机场</name>
+		<city>嘉峪关</city>
+	</airport>
+	
+	<airport>
+		<code>LHW</code>
+		<name>中川机场</name>
+		<city>兰州</city>
+	</airport>
+	
+	<airport>
+		<code>CAN</code>
+		<name>白云国际机场</name>
+		<city>广州</city>
+	</airport>
+	
+	<airport>
+		<code>FUO</code>
+		<name>沙堤机场</name>
+		<city>佛山</city>
+	</airport>
+	
+	<airport>
+		<code>MXZ</code>
+		<name>梅县机场</name>
+		<city>梅县</city>
+	</airport>
+	
+	<airport>
+		<code>SWA</code>
+		<name>揭阳潮汕机场</name>
+		<city>揭阳/汕头</city>
+	</airport>
+	
+	<airport>
+		<code>SZX</code>
+		<name>宝安国际机场</name>
+		<city>深圳</city>
+	</airport>
+	
+	<airport>
+		<code>ZHA</code>
+		<name>湛江机场</name>
+		<city>湛江</city>
+	</airport>
+	
+	<airport>
+		<code>ZUH</code>
+		<name>三灶机场</name>
+		<city>珠海</city>
+	</airport>
+	
+	<airport>
+		<code>BHY</code>
+		<name>福城机场</name>
+		<city>北海</city>
+	</airport>
+	
+	<airport>
+		<code>KWL</code>
+		<name>两江国际机场</name>
+		<city>桂林</city>
+	</airport>
+	
+	<airport>
+		<code>LZH</code>
+		<name>白莲机场</name>
+		<city>柳州</city>
+	</airport>
+	
+	<airport>
+		<code>NNG</code>
+		<name>吴圩机场</name>
+		<city>南宁</city>
+	</airport>
+	
+	<airport>
+		<code>WUZ</code>
+		<name>长洲岛机场</name>
+		<city>梧州</city>
+	</airport>
+	
+	<airport>
+		<code>ACX</code>
+		<name>兴义机场</name>
+		<city>兴义</city>
+	</airport>
+	
+	<airport>
+		<code>AEB</code>
+		<name>田阳机场</name>
+		<city>百色</city>
+	</airport>
+	
+	<airport>
+		<code>KWE</code>
+		<name>龙洞堡机场</name>
+		<city>贵阳</city>
+	</airport>
+	
+	<airport>
+		<code>TEN</code>
+		<name>大兴机场</name>
+		<city>铜仁</city>
+	</airport>
+	
+	<airport>
+		<code>ZYI</code>
+		<name>遵义机场</name>
+		<city>遵义</city>
+	</airport>
+	
+	<airport>
+		<code>HZH</code>
+		<name>黎平机场</name>
+		<city>黎平</city>
+	</airport>
+	
+	<airport>
+		<code>AVA</code>
+		<name>黄果树机场</name>
+		<city>安顺</city>
+	</airport>
+	
+	<airport>
+		<code>HAK</code>
+		<name>美兰国际机场</name>
+		<city>海口</city>
+	</airport>
+	
+	<airport>
+		<code>SYX</code>
+		<name>凤凰国际机场</name>
+		<city>三亚</city>
+	</airport>
+	
+	<airport>
+		<code>SYX</code>
+		<name>凤凰国际机场</name>
+		<city>三亚</city>
+	</airport>
+	
+	<airport>
+		<code>HDG</code>
+		<name>邯郸机场</name>
+		<city>邯郸</city>
+	</airport>
+	
+	<airport>
+		<code>SHP</code>
+		<name>山海关机场</name>
+		<city>秦皇岛</city>
+	</airport>
+	
+	<airport>
+		<code>SJW</code>
+		<name>正定机场</name>
+		<city>石家庄</city>
+	</airport>
+	<airport>
+		<code>AYN</code>
+		<name>安阳机场</name>
+		<city>安阳</city>
+	</airport>
+	<airport>
+		<code>CGO</code>
+		<name>新郑国际机场</name>
+		<city>郑州</city>
+	</airport>
+	
+	<airport>
+		<code>LYA</code>
+		<name>北郊机场</name>
+		<city>洛阳</city>
+	</airport>
+	
+	<airport>
+		<code>NNY</code>
+		<name>姜营机场</name>
+		<city>南阳</city>
+	</airport>
+	
+	<airport>
+		<code>DQA</code>
+		<name>萨尔图机场</name>
+		<city>大庆</city>
+	</airport>
+	
+	<airport>
+		<code>HEK</code>
+		<name>黑河机场</name>
+		<city>黑河</city>
+	</airport>
+	
+	<airport>
+		<code>HRB</code>
+		<name>太平国际机场</name>
+		<city>哈尔滨</city>
+	</airport>
+	
+	<airport>
+		<code>JMU</code>
+		<name>东郊机场</name>
+		<city>佳木斯</city>
+	</airport>
+	
+	<airport>
+		<code>MDG</code>
+		<name>海浪机场</name>
+		<city>牡丹江</city>
+	</airport>
+	
+	<airport>
+		<code>NDG</code>
+		<name>三家子机场</name>
+		<city>齐齐哈尔</city>
+	</airport>
+	
+	<airport>
+		<code>ENH</code>
+		<name>许家坪机场</name>
+		<city>恩施</city>
+	</airport>
+	
+	<airport>
+		<code>WUH</code>
+		<name>天河国际机场</name>
+		<city>武汉</city>
+	</airport>
+	
+	<airport>
+		<code>XFN</code>
+		<name>刘集机场</name>
+		<city>襄樊</city>
+	</airport>
+	
+	<airport>
+		<code>YIH</code>
+		<name>三峡机场</name>
+		<city>宜昌</city>
+	</airport>
+	<airport>
+		<code>CGD</code>
+		<name>桃花机场</name>
+		<city>常德</city>
+	</airport>
+	
+	<airport>
+		<code>CSX</code>
+		<name>黄花国际机场</name>
+		<city>长沙</city>
+	</airport>
+	
+	<airport>
+		<code>DYG</code>
+		<name>荷花机场</name>
+		<city>张家界</city>
+	</airport>
+	
+	<airport>
+		<code>HJJ</code>
+		<name>芷江机场</name>
+		<city>芷江</city>
+	</airport>
+	
+	<airport>
+		<code>LLF</code>
+		<name>零陵机场</name>
+		<city>永州</city>
+	</airport>
+	
+	<airport>
+		<code>CGQ</code>
+		<name>龙嘉国际机场</name>
+		<city>长春</city>
+	</airport>
+	
+	<airport>
+		<code>JIL</code>
+		<name>二台子机场</name>
+		<city>吉林</city>
+	</airport>
+	
+	<airport>
+		<code>TNH</code>
+		<name>通化机场</name>
+		<city>通化</city>
+	</airport>
+	
+	<airport>
+		<code>CZX</code>
+		<name>奔牛机场</name>
+		<city>常州</city>
+	</airport>
+
+	<airport>
+		<code>LYG</code>
+		<name>白塔埠机场</name>
+		<city>连云港</city>
+	</airport>	
+	
+	<airport>
+		<code>NKG</code>
+		<name>禄口国际机场</name>
+		<city>南京</city>
+	</airport>	
+	
+	<airport>
+		<code>NTG</code>
+		<name>兴东机场</name>
+		<city>南通</city>
+	</airport>	
+	
+	<airport>
+		<code>WUX</code>
+		<name>无锡机场</name>
+		<city>无锡</city>
+	</airport>
+	
+	<airport>
+		<code>XUZ</code>
+		<name>观音机场</name>
+		<city>徐州</city>
+	</airport>	
+	
+	<airport>
+		<code>YTY</code>
+		<name>扬州泰州机场</name>
+		<city>扬州/泰州</city>
+	</airport>
+	
+	<airport>
+		<code>YNZ</code>
+		<name>南洋机场</name>
+		<city>盐城</city>
+	</airport>
+	
+	<airport>
+		<code>SZV</code>
+		<name>光福机场</name>
+		<city>苏州</city>
+	</airport>
+	
+	<airport>
+		<code>JDZ</code>
+		<name>罗家机场</name>
+		<city>景德镇</city>
+	</airport>	
+	<airport>
+		<code>JGS</code>
+		<name>井冈山机场</name>
+		<city>井冈山</city>
+	</airport>
+	
+	<airport>
+		<code>JIU</code>
+		<name>庐山机场</name>
+		<city>九江</city>
+	</airport>	
+	<airport>
+		<code>KHN</code>
+		<name>昌北机场</name>
+		<city>南昌</city>
+	</airport>	
+	
+	<airport>
+		<code>KOW</code>
+		<name>黄金机场</name>
+		<city>赣州</city>
+	</airport>
+	
+	<airport>
+		<code>AOG</code>
+		<name>腾鳌机场</name>
+		<city>鞍山</city>
+	</airport>	
+	
+	<airport>
+		<code>CHG</code>
+		<name>朝阳机场</name>
+		<city>朝阳</city>
+	</airport>	
+	
+	<airport>
+		<code>CNI</code>
+		<name>大长山岛机场</name>
+		<city>长海</city>
+	</airport>	
+	
+	<airport>
+		<code>DDG</code>
+		<name>浪头机场</name>
+		<city>丹东</city>
+	</airport>	
+	
+	<airport>
+		<code>DLC</code>
+		<name>周水子机场</name>
+		<city>大连</city>
+	</airport>
+	
+	<airport>
+		<code>JNZ</code>
+		<name>小岭子机场</name>
+		<city>锦州</city>
+	</airport>
+	
+	<airport>
+		<code>SHE</code>
+		<name>桃仙机场</name>
+		<city>沈阳</city>
+	</airport>
+	
+	<airport>
+		<code>YNJ</code>
+		<name>朝阳川机场</name>
+		<city>延吉</city>
+	</airport>
+	
+	<airport>
+		<code>BAV</code>
+		<name>海兰泡机场</name>
+		<city>包头</city>
+	</airport>	
+	
+	<airport>
+		<code>CIF</code>
+		<name>土城子机场</name>
+		<city>赤峰</city>
+	</airport>	
+	
+	<airport>
+		<code>DSN</code>
+		<name>鄂尔多斯机场</name>
+		<city>鄂尔多斯</city>
+	</airport>	
+	
+	<airport>
+		<code>HET</code>
+		<name>白塔国际机场</name>
+		<city>呼和浩特</city>
+	</airport>
+	
+	<airport>
+		<code>HLD</code>
+		<name>东山机场</name>
+		<city>海拉尔</city>
+	</airport>
+	
+	<airport>
+		<code>HLH</code>
+		<name>乌兰浩特机场</name>
+		<city>乌兰浩特</city>
+	</airport>	
+	
+	<airport>
+		<code>NZH</code>
+		<name>西郊机场</name>
+		<city>满洲里</city>
+	</airport>	
+	
+	<airport>
+		<code>TGO</code>
+		<name>通辽机场</name>
+		<city>通辽</city>
+	</airport>	
+	
+	<airport>
+		<code>WUA</code>
+		<name>乌海机场</name>
+		<city>乌海</city>
+	</airport>	
+	
+	<airport>
+		<code>XIL</code>
+		<name>锡林浩特机场</name>
+		<city>锡林浩特</city>
+	</airport>
+	
+	<airport>
+		<code>INC</code>
+		<name>河东机场</name>
+		<city>银川</city>
+	</airport>
+	<airport>
+		<code>GOQ</code>
+		<name>格尔木机场</name>
+		<city>格尔木</city>
+	</airport>
+	
+	<airport>
+		<code>XNN</code>
+		<name>曹家堡机场</name>
+		<city>西宁</city>
+	</airport>
+	
+	<airport>
+		<code>DOY</code>
+		<name>永安机场</name>
+		<city>东营</city>
+	</airport>
+	
+	<airport>
+		<code>JNG</code>
+		<name>曲阜机场</name>
+		<city>济宁</city>
+	</airport>	
+	
+	<airport>
+		<code>TAO</code>
+		<name>流亭国际机场</name>
+		<city>青岛</city>
+	</airport>
+	
+	<airport>
+		<code>TNA</code>
+		<name>遥墙国际机场</name>
+		<city>济南</city>
+	</airport>
+	
+	<airport>
+		<code>WEF</code>
+		<name>文登机场</name>
+		<city>潍坊</city>
+	</airport>
+	
+	<airport>
+		<code>WEH</code>
+		<name>大水泊机场</name>
+		<city>威海</city>
+	</airport>
+	
+	<airport>
+		<code>YNT</code>
+		<name>莱山机场</name>
+		<city>烟台</city>
+	</airport>
+	
+	<airport>
+		<code>CIH</code>
+		<name>王村机场</name>
+		<city>长治</city>
+	</airport>
+	
+	<airport>
+		<code>DAT</code>
+		<name>怀仁机场</name>
+		<city>大同</city>
+	</airport>
+	
+	<airport>
+		<code>LYI</code>
+		<name>临沂机场</name>
+		<city>临沂</city>
+	</airport>
+	
+	<airport>
+		<code>TYN</code>
+		<name>武宿机场</name>
+		<city>太原</city>
+	</airport>
+	
+	<airport>
+		<code>YCU</code>
+		<name>关公机场</name>
+		<city>运城</city>
+	</airport>	
+	
+	<airport>
+		<code>AKA</code>
+		<name>五里铺机场</name>
+		<city>安康</city>
+	</airport>
+	
+	<airport>
+		<code>ENY</code>
+		<name>二十里铺机场</name>
+		<city>延安</city>
+	</airport>	
+	
+	<airport>
+		<code>HZG</code>
+		<name>西关机场</name>
+		<city>汉中</city>
+	</airport>
+	
+	<airport>
+		<code>UYN</code>
+		<name>西沙机场</name>
+		<city>榆林</city>
+	</airport>
+	
+	<airport>
+		<code>XIY</code>
+		<name>咸阳国际机场</name>
+		<city>西安</city>
+	</airport>
+	
+	<airport>
+		<code>PVG</code>
+		<name>浦东国际机场</name>
+		<city>上海浦东</city>
+	</airport>
+	
+	<airport>
+		<code>SHA</code>
+		<name>虹桥国际机场</name>
+		<city>上海虹桥</city>
+	</airport>	
+	
+	<airport>
+		<code>CTU</code>
+		<name>双流国际机场</name>
+		<city>成都</city>
+	</airport>	
+	
+	<airport>
+		<code>DAX</code>
+		<name>河市霸机场</name>
+		<city>达县</city>
+	</airport>	
+	
+	<airport>
+		<code>GNY</code>
+		<name>广元机场</name>
+		<city>广元</city>
+	</airport>
+	
+	<airport>
+		<code>JZH</code>
+		<name>黄龙机场</name>
+		<city>九寨沟</city>
+	</airport>
+	
+	<airport>
+		<code>LZO</code>
+		<name>萱田机场</name>
+		<city>泸州</city>
+	</airport>	
+	
+	<airport>
+		<code>MIG</code>
+		<name>南郊机场</name>
+		<city>绵阳</city>
+	</airport>
+	
+	<airport>
+		<code>NAO</code>
+		<name>都尉坝机场</name>
+		<city>南充</city>
+	</airport>	
+	
+	<airport>
+		<code>PZI</code>
+		<name>攀枝花机场</name>
+		<city>攀枝花</city>
+	</airport>	
+	
+	<airport>
+		<code>WXN</code>
+		<name>万县机场</name>
+		<city>万州</city>
+	</airport>
+	
+	<airport>
+		<code>XIC</code>
+		<name>青山机场</name>
+		<city>西昌</city>
+	</airport>
+	
+	<airport>
+		<code>YBP</code>
+		<name>菜坝机场</name>
+		<city>宜宾</city>
+	</airport>
+	
+	<airport>
+		<code>TSN</code>
+		<name>滨海国际机场</name>
+		<city>天津</city>
+	</airport>
+	
+	<airport>
+		<code>BPX</code>
+		<name>昌都马草机场</name>
+		<city>昌都</city>
+	</airport>	
+	
+	<airport>
+		<code>LXA</code>
+		<name>贡嘎机场</name>
+		<city>拉萨</city>
+	</airport>	
+	
+	<airport>
+		<code>AKU</code>
+		<name>温宿机场</name>
+		<city>阿克苏</city>
+	</airport>
+	
+	<airport>
+		<code>FYN</code>
+		<name>可可托托海机场</name>
+		<city>富蕴</city>
+	</airport>
+	
+	<airport>
+		<code>HMI</code>
+		<name>哈密机场</name>
+		<city>哈密</city>
+	</airport>	
+	
+	<airport>
+		<code>HTN</code>
+		<name>和田机场</name>
+		<city>和田</city>
+	</airport>	
+	
+	<airport>
+		<code>IQM</code>
+		<name>且末机场</name>
+		<city>且末</city>
+	</airport>
+	
+	<airport>
+		<code>KCA</code>
+		<name>库车机场</name>
+		<city>库车</city>
+	</airport>
+	
+	<airport>
+		<code>KHG</code>
+		<name>喀什机场</name>
+		<city>喀什</city>
+	</airport>
+	
+	<airport>
+		<code>KRL</code>
+		<name>库尔勒机场</name>
+		<city>库尔勒</city>
+	</airport>
+	
+	<airport>
+		<code>KRY</code>
+		<name>克拉玛依机场</name>
+		<city>克拉玛依</city>
+	</airport>
+	
+	<airport>
+		<code>TCG</code>
+		<name>塔城机场</name>
+		<city>塔城</city>
+	</airport>
+	
+	<airport>
+		<code>URC</code>
+		<name>地窝堡国际机场</name>
+		<city>乌鲁木齐</city>
+	</airport>
+	
+	<airport>
+		<code>YIN</code>
+		<name>伊宁机场</name>
+		<city>伊宁</city>
+	</airport>	
+	
+	<airport>
+		<code>BSD</code>
+		<name>保山机场</name>
+		<city>保山</city>
+	</airport>
+	
+	<airport>
+		<code>DIG</code>
+		<name>迪庆机场</name>
+		<city>迪庆/香格里拉</city>
+	</airport>	
+	
+	<airport>
+		<code>DLU</code>
+		<name>大理机场</name>
+		<city>大理</city>
+	</airport>
+	
+	<airport>
+		<code>JHG</code>
+		<name>景洪机场</name>
+		<city>西双版纳</city>
+	</airport>	
+	
+	<airport>
+		<code>KMG</code>
+		<name>巫家坝国际机场</name>
+		<city>昆明</city>
+	</airport>
+	
+	<airport>
+		<code>LJG</code>
+		<name>丽江机场</name>
+		<city>丽江</city>
+	</airport>
+	
+	<airport>
+		<code>LNJ</code>
+		<name>临沧机场</name>
+		<city>临沧</city>
+	</airport>
+	
+	<airport>
+		<code>LUM</code>
+		<name>芒市机场</name>
+		<city>德宏/芒市</city>
+	</airport>
+	
+	<airport>
+		<code>SYM</code>
+		<name>思茅机场</name>
+		<city>思茅</city>
+	</airport>	
+	
+	<airport>
+		<code>ZAT</code>
+		<name>昭通机场</name>
+		<city>昭通</city>
+	</airport>
+	
+	<airport>
+		<code>HGH</code>
+		<name>萧山国际机场</name>
+		<city>杭州</city>
+	</airport>
+	
+	<airport>
+		<code>HSN</code>
+		<name>普陀山机场</name>
+		<city>舟山</city>
+	</airport>	
+	
+	<airport>
+		<code>HYN</code>
+		<name>路桥机场</name>
+		<city>台州/黄岩</city>
+	</airport>	
+	
+	<airport>
+		<code>JUZ</code>
+		<name>衢州机场</name>
+		<city>衢州</city>
+	</airport>
+	
+	<airport>
+		<code>NGB</code>
+		<name>栎社机场</name>
+		<city>宁波</city>
+	</airport>	
+	
+	<airport>
+		<code>WNZ</code>
+		<name>永强机场</name>
+		<city>温州</city>
+	</airport>	
+	
+	<airport>
+		<code>YIW</code>
+		<name>义乌机场</name>
+		<city>义乌</city>
+	</airport>	
+	
+	<airport>
+		<code>CKG</code>
+		<name>重庆</name>
+		<city>江北国际机场</city>
+	</airport>
+	
+	<airport>
+		<code>香港</code>
+		<name>HKG</name>
+		<city>香港国际机场</city>
+	</airport>	
+	
+	<airport>
+		<code>澳门</code>
+		<name>MFM</name>
+		<city>澳门国际机场</city>
+	</airport>	
+	
+</airports>
+

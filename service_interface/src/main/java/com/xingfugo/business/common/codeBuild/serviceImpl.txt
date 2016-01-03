@@ -1,0 +1,27 @@
+package com.xingfugo.business.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.xingfugo.business.dao.{CLASSNAME}Dao;
+import com.xingfugo.business.module.{CLASSNAME};
+
+/**
+ * @function 功能 {FUNNAME}Service层业务实现
+ * @author 创建人 {AUTHOR}
+ * @date 创建日期 {DATE}
+ */
+
+@Service
+public class {CLASSNAME}Service extends GenericService<{CLASSNAME},String>{
+
+	private {CLASSNAME}Dao {TABLENAME}Dao;
+	
+	public {CLASSNAME}Service() {}
+	@Autowired
+	public {CLASSNAME}Service({CLASSNAME}Dao {TABLENAME}Dao) {
+		super({TABLENAME}Dao);
+		this.{TABLENAME}Dao = {TABLENAME}Dao;
+	}
+
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.OrderhistoryDao">
+    
+    <insert id="batchInsertOrderhistory">
+		insert into orderhistory (order_id,cust_id,user_id,action_name,in_date) 
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.order_id},#{item.cust_id},#{item.user_id},#{item.action_name},NOW())
+		</foreach>
+	</insert>
+	
+	<insert id="insertOrderhistory" parameterType="com.xingfugo.business.module.Smshistory">
+		insert into orderhistory (order_id,cust_id,user_id,action_name,in_date) values (#{order_id},#{cust_id},#{user_id},#{action_name},NOW())
+	</insert>
+	
+	<select id="getOrderhistoryList" resultType="map" parameterType="string">
+        select * from orderhistory where order_id=#{value} ORDER BY in_date DESC
+    </select>
+    
+    <insert id="insertUpdateUnpayOrder" parameterType="map">
+    	insert into orderhistory(order_id,action_name,in_date) 
+		select order_id,#{action_name} action_name,now() in_date from goodsorder where order_state=#{old_state} and ( TO_DAYS(NOW())-TO_DAYS(order_time) >= ${time} )
+	</insert>
+	
+	<insert id="insertUpdateUnReceiptOrder" parameterType="map">
+		insert into orderhistory(order_id,action_name,in_date) 
+		select order_id,#{action_name} action_name,now() in_date from goodsorder where order_state=#{old_state} and ( TO_DAYS(NOW())-TO_DAYS(send_time) >= ${time} )
+	</insert>
+    
+</mapper>

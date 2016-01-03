@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Sms_email_templateDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Sms_email_template">
+    	SELECT temp_code,temp_name,temp_con,tag_desc,temp_type FROM sms_email_template WHERE temp_code='${value}'
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Sms_email_template">
+		UPDATE sms_email_template SET temp_name=#{temp_name},temp_con=#{temp_con},tag_desc=#{tag_desc},temp_type=#{temp_type} WHERE temp_code='${temp_code}'
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Sms_email_template">
+		INSERT INTO sms_email_template (temp_name,temp_con,tag_desc,temp_type) VALUES (#{temp_name},#{temp_con},#{tag_desc},#{temp_type})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM sms_email_template WHERE temp_code in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT temp_code,temp_name,temp_con,tag_desc,temp_type  from sms_email_template
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(temp_type)">
+				and temp_type = #{temp_type}
+			</if>	
+		</where>
+		ORDER BY temp_code DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT temp_code,temp_name,temp_con,tag_desc,temp_type  from sms_email_template
+		<where>
+			
+		</where>
+		ORDER BY temp_code DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Sms_email_template">
+		INSERT INTO sms_email_template (temp_name,temp_con,tag_desc,temp_type) VALUES (#{temp_name},#{temp_con},#{tag_desc},#{temp_type})
+		<selectKey keyProperty="temp_code" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

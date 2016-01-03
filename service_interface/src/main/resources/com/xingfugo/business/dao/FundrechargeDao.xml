@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.FundrechargeDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Fundrecharge">
+    	SELECT trade_id,order_no,fund_num,account_no,is_enabled,in_date FROM fundrecharge WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Fundrecharge">
+		UPDATE fundrecharge SET order_no=#{order_no},fund_num=#{fund_num},account_no=#{account_no},is_enabled=#{is_enabled},in_date=#{in_date} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Fundrecharge">
+		INSERT INTO fundrecharge (order_no,fund_num,account_no,is_enabled,in_date) VALUES (#{order_no},#{fund_num},#{account_no},#{is_enabled},#{in_date})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM fundrecharge WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,order_no,fund_num,account_no,is_enabled,in_date  from fundrecharge
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_no)">
+				and order_no like concat('%', #{order_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(fund_num)">
+				and fund_num like concat('%', #{fund_num}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+				and account_no like concat('%', #{account_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_enabled)">
+				and is_enabled like concat('%', #{is_enabled}, '%')
+			</if>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,order_no,fund_num,account_no,is_enabled,in_date  from fundrecharge
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Fundrecharge">
+		INSERT INTO fundrecharge (order_no,fund_num,account_no,is_enabled,in_date) VALUES (#{order_no},#{fund_num},#{account_no},#{is_enabled},#{in_date})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getFundrechargeByOrder_no" parameterType="string" resultType="com.xingfugo.business.module.Fundrecharge">
+    	SELECT trade_id,order_no,fund_num,account_no,is_enabled,in_date
+		FROM fundrecharge
+		WHERE order_no = #{value}
+	</select>
+	
+	<update id="updateFundrechargeStatus" parameterType="com.xingfugo.business.module.Fundrecharge">
+		UPDATE fundrecharge SET is_enabled = #{is_enabled} WHERE order_no = #{order_no}
+	</update>
+
+</mapper>
+

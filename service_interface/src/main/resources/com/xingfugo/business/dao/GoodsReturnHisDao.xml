@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsReturnHisDao">
+    
+     <select id="getByLinkId" resultType="com.xingfugo.business.module.GoodsReturnHis" parameterType="string">
+       select h.* ,(select user_name from member where cust_id = h.user_id ) user_name from inc_goods_return_his h where h.link_id=#{value} order by in_date asc
+     </select>
+     
+	<insert id="insert" parameterType="com.xingfugo.business.module.GoodsReturnHis">
+		insert into inc_goods_return_his(link_id,oper_name,oper_code,in_date,user_id)
+		values(#{link_id},#{oper_name},#{oper_code},NOW(),#{user_id})
+	</insert>
+    
+</mapper>

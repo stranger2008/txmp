@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.module.Order" >
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="buy_cust_id" property="buyCustId" jdbcType="INTEGER" />
+    <result column="sale_cust_id" property="saleCustId" jdbcType="INTEGER" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="area_attr" property="areaAttr" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="goods_amount" property="goodsAmount" jdbcType="DECIMAL" />
+    <result column="ship_free" property="shipFree" jdbcType="DECIMAL" />
+    <result column="tax_invoice" property="taxInvoice" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="REAL" />
+    <result column="discount_money" property="discountMoney" jdbcType="DECIMAL" />
+    <result column="dis_explain" property="disExplain" jdbcType="VARCHAR" />
+    <result column="insured" property="insured" jdbcType="DECIMAL" />
+    <result column="tatal_amount" property="tatalAmount" jdbcType="DECIMAL" />
+    <result column="inter_money" property="interMoney" jdbcType="INTEGER" />
+    <result column="buy_mode" property="buyMode" jdbcType="CHAR" />
+    <result column="pay_id" property="payId" jdbcType="INTEGER" />
+    <result column="send_mode" property="sendMode" jdbcType="CHAR" />
+    <result column="order_state" property="orderState" jdbcType="CHAR" />
+    <result column="pay_state" property="payState" jdbcType="CHAR" />
+    <result column="send_state" property="sendState" jdbcType="CHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="mem_remark" property="memRemark" jdbcType="VARCHAR" />
+    <result column="invoice_type" property="invoiceType" jdbcType="CHAR" />
+    <result column="invoice_top" property="invoiceTop" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="ident_number" property="identNumber" jdbcType="VARCHAR" />
+    <result column="regis_address" property="regisAddress" jdbcType="VARCHAR" />
+    <result column="regis_tel" property="regisTel" jdbcType="VARCHAR" />
+    <result column="open_bank" property="openBank" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
+    <result column="give_inter" property="giveInter" jdbcType="INTEGER" />
+    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    order_id, buy_cust_id, sale_cust_id, consignee, area_attr, address, zip_code, telephone, 
+    mobile, goods_amount, ship_free, tax_invoice, discount, discount_money, dis_explain, 
+    insured, tatal_amount, inter_money, buy_mode, pay_id, send_mode, order_state, pay_state, 
+    send_state, order_time, pay_time, send_time, mem_remark, invoice_type, invoice_top, 
+    company_name, ident_number, regis_address, regis_tel, open_bank, bank_account, invoice_content, 
+    give_inter, order_type
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from goodsorder
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectOrderByPage" resultMap="BaseResultMap" 
+  	parameterType="com.xingfugo.business.module.query.OrderQueryForm" >
+    select 
+    <include refid="Base_Column_List" />
+    from goodsorder
+    <where>
+		<if test="user_id != null">
+			buy_cust_id = ${user_id}
+		</if> 
+		<if test="cust_id != null">
+			sale_cust_id = ${cust_id}
+		</if> 
+    </where>
+    order_time desc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goodsorder
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xingfugo.business.module.Order" >
+    insert into goodsorder (order_id, buy_cust_id, sale_cust_id, 
+      consignee, area_attr, address, 
+      zip_code, telephone, mobile, 
+      goods_amount, ship_free, tax_invoice, 
+      discount, discount_money, dis_explain, 
+      insured, tatal_amount, inter_money, 
+      buy_mode, pay_id, send_mode, 
+      order_state, pay_state, send_state, 
+      order_time, pay_time, send_time, 
+      mem_remark, invoice_type, invoice_top, 
+      company_name, ident_number, regis_address, 
+      regis_tel, open_bank, bank_account, 
+      invoice_content, give_inter, order_type
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{buyCustId,jdbcType=INTEGER}, #{saleCustId,jdbcType=INTEGER}, 
+      #{consignee,jdbcType=VARCHAR}, #{areaAttr,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{zipCode,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{goodsAmount,jdbcType=DECIMAL}, #{shipFree,jdbcType=DECIMAL}, #{taxInvoice,jdbcType=DECIMAL}, 
+      #{discount,jdbcType=REAL}, #{discountMoney,jdbcType=DECIMAL}, #{disExplain,jdbcType=VARCHAR}, 
+      #{insured,jdbcType=DECIMAL}, #{tatalAmount,jdbcType=DECIMAL}, #{interMoney,jdbcType=INTEGER}, 
+      #{buyMode,jdbcType=CHAR}, #{payId,jdbcType=INTEGER}, #{sendMode,jdbcType=CHAR}, 
+      #{orderState,jdbcType=CHAR}, #{payState,jdbcType=CHAR}, #{sendState,jdbcType=CHAR}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{sendTime,jdbcType=TIMESTAMP}, 
+      #{memRemark,jdbcType=VARCHAR}, #{invoiceType,jdbcType=CHAR}, #{invoiceTop,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{identNumber,jdbcType=VARCHAR}, #{regisAddress,jdbcType=VARCHAR}, 
+      #{regisTel,jdbcType=VARCHAR}, #{openBank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, 
+      #{invoiceContent,jdbcType=VARCHAR}, #{giveInter,jdbcType=INTEGER}, #{orderType,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xingfugo.business.module.Order" >
+    insert into goodsorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="buyCustId != null" >
+        buy_cust_id,
+      </if>
+      <if test="saleCustId != null" >
+        sale_cust_id,
+      </if>
+      <if test="consignee != null" >
+        consignee,
+      </if>
+      <if test="areaAttr != null" >
+        area_attr,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="goodsAmount != null" >
+        goods_amount,
+      </if>
+      <if test="shipFree != null" >
+        ship_free,
+      </if>
+      <if test="taxInvoice != null" >
+        tax_invoice,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="discountMoney != null" >
+        discount_money,
+      </if>
+      <if test="disExplain != null" >
+        dis_explain,
+      </if>
+      <if test="insured != null" >
+        insured,
+      </if>
+      <if test="tatalAmount != null" >
+        tatal_amount,
+      </if>
+      <if test="interMoney != null" >
+        inter_money,
+      </if>
+      <if test="buyMode != null" >
+        buy_mode,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="sendMode != null" >
+        send_mode,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="payState != null" >
+        pay_state,
+      </if>
+      <if test="sendState != null" >
+        send_state,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="memRemark != null" >
+        mem_remark,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="invoiceTop != null" >
+        invoice_top,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="identNumber != null" >
+        ident_number,
+      </if>
+      <if test="regisAddress != null" >
+        regis_address,
+      </if>
+      <if test="regisTel != null" >
+        regis_tel,
+      </if>
+      <if test="openBank != null" >
+        open_bank,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="invoiceContent != null" >
+        invoice_content,
+      </if>
+      <if test="giveInter != null" >
+        give_inter,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyCustId != null" >
+        #{buyCustId,jdbcType=INTEGER},
+      </if>
+      <if test="saleCustId != null" >
+        #{saleCustId,jdbcType=INTEGER},
+      </if>
+      <if test="consignee != null" >
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="areaAttr != null" >
+        #{areaAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAmount != null" >
+        #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="shipFree != null" >
+        #{shipFree,jdbcType=DECIMAL},
+      </if>
+      <if test="taxInvoice != null" >
+        #{taxInvoice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=REAL},
+      </if>
+      <if test="discountMoney != null" >
+        #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="disExplain != null" >
+        #{disExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="insured != null" >
+        #{insured,jdbcType=DECIMAL},
+      </if>
+      <if test="tatalAmount != null" >
+        #{tatalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="interMoney != null" >
+        #{interMoney,jdbcType=INTEGER},
+      </if>
+      <if test="buyMode != null" >
+        #{buyMode,jdbcType=CHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=INTEGER},
+      </if>
+      <if test="sendMode != null" >
+        #{sendMode,jdbcType=CHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=CHAR},
+      </if>
+      <if test="sendState != null" >
+        #{sendState,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memRemark != null" >
+        #{memRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=CHAR},
+      </if>
+      <if test="invoiceTop != null" >
+        #{invoiceTop,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="identNumber != null" >
+        #{identNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="regisAddress != null" >
+        #{regisAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="regisTel != null" >
+        #{regisTel,jdbcType=VARCHAR},
+      </if>
+      <if test="openBank != null" >
+        #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceContent != null" >
+        #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="giveInter != null" >
+        #{giveInter,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xingfugo.business.module.Order" >
+    update goodsorder
+    <set >
+      <if test="buyCustId != null" >
+        buy_cust_id = #{buyCustId,jdbcType=INTEGER},
+      </if>
+      <if test="saleCustId != null" >
+        sale_cust_id = #{saleCustId,jdbcType=INTEGER},
+      </if>
+      <if test="consignee != null" >
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="areaAttr != null" >
+        area_attr = #{areaAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAmount != null" >
+        goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="shipFree != null" >
+        ship_free = #{shipFree,jdbcType=DECIMAL},
+      </if>
+      <if test="taxInvoice != null" >
+        tax_invoice = #{taxInvoice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=REAL},
+      </if>
+      <if test="discountMoney != null" >
+        discount_money = #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="disExplain != null" >
+        dis_explain = #{disExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="insured != null" >
+        insured = #{insured,jdbcType=DECIMAL},
+      </if>
+      <if test="tatalAmount != null" >
+        tatal_amount = #{tatalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="interMoney != null" >
+        inter_money = #{interMoney,jdbcType=INTEGER},
+      </if>
+      <if test="buyMode != null" >
+        buy_mode = #{buyMode,jdbcType=CHAR},
+      </if>
+      <if test="payId != null" >
+        pay_id = #{payId,jdbcType=INTEGER},
+      </if>
+      <if test="sendMode != null" >
+        send_mode = #{sendMode,jdbcType=CHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="payState != null" >
+        pay_state = #{payState,jdbcType=CHAR},
+      </if>
+      <if test="sendState != null" >
+        send_state = #{sendState,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memRemark != null" >
+        mem_remark = #{memRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=CHAR},
+      </if>
+      <if test="invoiceTop != null" >
+        invoice_top = #{invoiceTop,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="identNumber != null" >
+        ident_number = #{identNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="regisAddress != null" >
+        regis_address = #{regisAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="regisTel != null" >
+        regis_tel = #{regisTel,jdbcType=VARCHAR},
+      </if>
+      <if test="openBank != null" >
+        open_bank = #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceContent != null" >
+        invoice_content = #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="giveInter != null" >
+        give_inter = #{giveInter,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xingfugo.business.module.Order" >
+    update goodsorder
+    set buy_cust_id = #{buyCustId,jdbcType=INTEGER},
+      sale_cust_id = #{saleCustId,jdbcType=INTEGER},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      area_attr = #{areaAttr,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      ship_free = #{shipFree,jdbcType=DECIMAL},
+      tax_invoice = #{taxInvoice,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=REAL},
+      discount_money = #{discountMoney,jdbcType=DECIMAL},
+      dis_explain = #{disExplain,jdbcType=VARCHAR},
+      insured = #{insured,jdbcType=DECIMAL},
+      tatal_amount = #{tatalAmount,jdbcType=DECIMAL},
+      inter_money = #{interMoney,jdbcType=INTEGER},
+      buy_mode = #{buyMode,jdbcType=CHAR},
+      pay_id = #{payId,jdbcType=INTEGER},
+      send_mode = #{sendMode,jdbcType=CHAR},
+      order_state = #{orderState,jdbcType=CHAR},
+      pay_state = #{payState,jdbcType=CHAR},
+      send_state = #{sendState,jdbcType=CHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      mem_remark = #{memRemark,jdbcType=VARCHAR},
+      invoice_type = #{invoiceType,jdbcType=CHAR},
+      invoice_top = #{invoiceTop,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      ident_number = #{identNumber,jdbcType=VARCHAR},
+      regis_address = #{regisAddress,jdbcType=VARCHAR},
+      regis_tel = #{regisTel,jdbcType=VARCHAR},
+      open_bank = #{openBank,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      invoice_content = #{invoiceContent,jdbcType=VARCHAR},
+      give_inter = #{giveInter,jdbcType=INTEGER},
+      order_type = #{orderType,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

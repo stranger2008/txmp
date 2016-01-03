@@ -1,0 +1,107 @@
+/*清零样式*/
+* { margin: 0; padding: 0;}
+h1,h2,h3,h4,h5,h6 { font-size: 100%; font-style: normal; font-weight:normal; line-height:normal; padding:0; margin:0;}
+ul,ol,li {list-style: none;}
+em,i { font-style: normal;}
+img { border: none;}
+input,img { vertical-align: middle;}
+body { color: #000; font-family:"微软雅黑"; background: #FFF; font-size:12px; min-width:320px; height: auto;}
+a{ font-size:14px; color:#333; text-decoration:none}
+a:hover{ color:#c70003;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after { display: block; content: ''; clear: both; visibility: hidden;}
+.none { display: none;
+}
+.no-spacing { margin: 0; padding: 0;}
+.margin-center { margin: 0 auto; text-align: center;}
+.center { text-align: center;}
+.margin-auto { margin: 0 auto;}
+input:focus {
+    outline:none;
+}
+input[type="submit"], input[type="reset"], input[type="button"], button { -webkit-appearance: none; /*去掉苹果的默认UI来渲染按钮*/}
+
+/*公共样式*/
+.comWdh{ width:320px; min-width:320px; min-height:100%; margin:0 auto; overflow:hidden;}
+.w480{ width:100%; height:100%; min-width:320px; min-height:100%; margin:0 auto; overflow:hidden;}
+.content{ min-width:320px;}
+
+.full-img { width: 100%; height: auto!important; overflow:hidden;}
+.full-div { width: 100%; height: auto!important;}
+.hidden{ overflow:hidden;}
+
+.position{ height:26px; line-height:26px; padding:0 10px; background:#eaedf4; border-bottom:2px solid #c80000;}
+.position a{ font-size:14px; color:#505050;}
+.position a:hover{ color:#c80000;}
+
+.mt5{ margin:0 5px;}
+.mg-t5{ margin-top:5px;}
+.w50{ width:50%;}
+.tbl-type{ display:table; width:100%;}
+.tbl-cell{ display:table-cell;}
+
+
+/*支付*/
+.pay{ border:1px solid #d7d7d7; margin:10px;}
+.progress {
+    font-size: 12px;
+    font-family: "宋体";
+	padding-left:5px;
+	line-height:30px;
+}
+
+.progress li {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.progress li b {
+	margin:0 6px;
+}
+
+.progress li.step-h {
+    color: #e10000;
+}
+
+.progress li.step {
+    color: #5d5d5d;
+}
+.payok{ font-size:12px; color:#666; line-height:30px; margin-top:20px; padding-bottom:20px;}
+.payok-ul{ padding:0 5px;}
+.payok-ul li{ line-height:35px;}
+.payok-ul li span{ display:inline-block; width:120px; text-align:right; font-family:"宋体"; font-size:12px;}
+.payok-ul li .mr{ margin-right:20px;}
+.payok-ul li .mlr5{ margin:0 5px;}
+.card-txt{ width:160px; height:23px; line-height:23px;}
+.next-btn{ margin-top:10px; width:80px; height:32px; line-height:32px; display: inline-block; background-color:#c80000; border:1px solid #d44300; border-radius:2px; color:#fff; font-family:"微软雅黑"; font-size:14px; cursor:pointer;}
+.date-txt{ width:48px; height:23px; line-height:23px;}
+.psd-txt{ width:75px; height:23px; line-height:23px;}
+.pc-txt{ width:140px; height:23px; line-height:23px;}
+.payok-ul a{ color:#0066cc; margin-left:5px; font-family:"宋体"; font-size:12px;}
+
+.pay-o-icon{
+    width: 33px;
+    height: 25px;
+    position: absolute;
+    background: url(../images/mark.png);
+    display: block;
+	margin:5px 0 0 10px;
+}
+.pay-no-icon{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background: url(../images/close-r.png) no-repeat;
+    display: block;
+	margin:5px 0 0 10px;
+}
+.pay-msg{
+    margin-left: 50px;
+}
+.payok-p{ font-size:16px;}
+.payok-ipt{ margin-left:5px; width:80px; height:32px; line-height:32px; display: inline-block; background-color:#c80000; border:1px solid #d44300; border-radius:2px; color:#fff; font-family:"微软雅黑"; font-size:14px; cursor:pointer;}
+.pay-msg a{ color:#0066cc;}
+

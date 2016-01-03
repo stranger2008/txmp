@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.dao.CategoryAttrMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.module.CategoryAttr" >
+    <id column="attr_id" property="attrId" jdbcType="CHAR" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="cat_attr" property="catAttr" jdbcType="VARCHAR" />
+    <result column="attr_type" property="attrType" jdbcType="CHAR" />
+    <result column="is_must" property="isMust" jdbcType="CHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="module_type" property="moduleType" jdbcType="VARCHAR" />
+    <result column="default_val" property="defaultVal" jdbcType="VARCHAR" />
+    <collection property="attrValueList" ofType="com.xingfugo.business.module.CategoryAttrValue" >
+	    <id column="trade_id" property="tradeId" jdbcType="CHAR" />
+	    <result column="attr_value" property="attrValue" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  
+  <select id="selectByCategoryIds" resultMap="BaseResultMap" parameterType="list">
+	select ca.attr_id, ca.attr_name, ca.sort_no, ca.is_must, ca.attr_type, cav.trade_id, cav.attr_value
+	from categoryattr ca 
+		inner join attrvalue cav on ca.attr_id = cav.attr_id
+	where ca.attr_type in ('0', '2', '3') 
+		and ca.module_type = 'goods' 
+		and ca.cat_attr in
+        <foreach collection="list" open="(" close=")" separator="," item="id" >
+	        #{id}
+        </foreach>
+	order by ca.sort_no asc
+  </select>
+  
+  <select id="selectByIds" resultType="map" parameterType="java.lang.String">
+  	select * from categoryattr where attr_id in (${attrIds})
+  </select>
+  
+  
+    
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT attr_id attrId, attr_name attrName, cat_attr catAttr, attr_type attrType, is_must isMust, sort_no sortNo, module_type moduleType, default_val defaultVal
+		FROM categoryattr
+		<where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attrName)">
+				AND attr_name LIKE CONCAT('%', #{attrName}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(catAttr)">
+				<![CDATA[AND REVERSE(LEFT(REVERSE(cat_attr), (IF((INSTR(REVERSE(cat_attr),',') - 1) < 0,LENGTH(cat_attr), (INSTR(REVERSE(cat_attr),',') - 1))))) = #{catAttr}]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attrType)">
+				AND attr_type = #{attrType}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(isMust)">
+				AND is_must = #{isMust}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(moduleType)">
+				AND module_type = #{moduleType}
+			</if>
+		</where>
+		ORDER BY sort_no ASC
+	</select>
+	
+	<insert id="insert" parameterType="com.xingfugo.business.module.CategoryAttr">
+		INSERT INTO categoryattr (attr_id, attr_name, cat_attr, attr_type, is_must, sort_no, module_type, default_val) VALUES (#{attrId}, #{attrName}, #{catAttr}, #{attrType}, #{isMust}, #{sortNo}, #{moduleType}, #{defaultVal})
+	</insert>
+	
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.CategoryAttr">
+    	SELECT ca.attr_id attrId, ca.attr_name attrName, ca.cat_attr catAttr, ca.attr_type attrType, ca.is_must isMust
+			, ca.sort_no sortNo, ca.module_type moduleType, ca.default_val defaultVal, c.cat_id catId, c.cat_name catName
+		FROM categoryattr ca
+		LEFT JOIN category c
+		<![CDATA[ON REVERSE(LEFT(REVERSE(ca.cat_attr), (IF((INSTR(REVERSE(ca.cat_attr),',') - 1) < 0,LENGTH(ca.cat_attr), (INSTR(REVERSE(ca.cat_attr),',') - 1))))) = c.cat_id]]>
+		WHERE ca.attr_id=${value}
+	</select>
+	
+	<update id="update" parameterType="com.xingfugo.business.module.CategoryAttr">
+		UPDATE categoryattr SET attr_name=#{attrName},cat_attr=#{catAttr},attr_type=#{attrType},is_must=#{isMust},sort_no=#{sortNo},module_type=#{moduleType},default_val=#{defaultVal} WHERE attr_id=${attrId}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM categoryattr WHERE attr_id in (${value})
+	</delete>
+	
+	<select id="getCategoryAttListrWithValue" parameterType="map" resultType="map">
+		SELECT ca.attr_id attr_id, ca.attr_name attr_name, ca.is_must is_must, ca.attr_type attr_type, ca.sort_no sort_no, av.trade_id trade_id, av.attr_value attr_value
+		FROM categoryattr ca
+		LEFT JOIN attrvalue av
+		ON ca.attr_id = av.attr_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				AND ca.module_type = #{module_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attrs)">
+				AND ca.cat_attr IN (${cat_attrs})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attr_types)">
+				AND ca.attr_type IN (${attr_types})
+			</if>
+		</where>
+		ORDER BY ca.sort_no
+	</select>
+  
+  
+  <select id="getCategoryAttrByCat_attr" parameterType="map" resultType="map">
+		select attr_id,attr_name,cat_attr ,attr_type from categoryattr
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attr_type)">
+				AND  attr_type = #{attr_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attr_type_min)">
+				AND  attr_type &gt;= #{attr_type_min}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_must)">
+				AND is_must = (${is_must})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attr_id)">
+				AND attr_id not in (${attr_id})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				AND cat_attr LIKE CONCAT('%', #{cat_attr}, '%')
+			</if>
+		</where>
+	</select>
+</mapper>

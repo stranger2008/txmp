@@ -1,0 +1,5 @@
+.uploadimg_img-lst{ margin-top:10px;height:auto;display:inline-block;}
+.uploadimg_img-lst li{ float:left; width:100px; margin:0 0 10px 5px;}
+.uploadimg_img-lst img{ width:100px;height:100px;}
+.uploadimg_img-button{ text-align:right;}
+.uploadimg_img-button a{ padding:0 0 0 5px; line-height:28px;}

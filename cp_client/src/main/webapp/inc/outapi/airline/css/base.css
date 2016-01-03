@@ -1,0 +1,583 @@
+@charset "utf-8";
+
+
+
+
+.half {
+	display: inline-block;
+	width: 40%
+}
+
+.sub_btn_y {
+	background: -webkit-gradient(linear,left top,left bottom,from(#faf0df),to(#eaba6f));
+	background: -moz-linear-gradient(top,#faf0df,#eaba6f);
+	color: #2b2b2b;
+	text-shadow: 1px 0 0 #fff
+}
+
+.airticket h1,.airticket h2,.airticket h3 {
+	font-size: 1em;
+	font-weight: 400
+}
+
+.airticket .header {
+	text-align: center
+}
+
+.airticket .header .ptn_lft {
+	position: absolute;
+	left: 6px;
+	top: 0
+}
+
+.airticket .header .ptn_rgt {
+	position: absolute;
+	right: 6px;
+	top: 0
+}
+
+.airticket .mc {
+	padding: 10px
+}
+
+.airticket .txt_ctr {
+	text-align: center
+}
+
+.airticket .txt_rgt {
+	text-align: right
+}
+
+.airticket .txt_lft {
+	text-align: left
+}
+
+.airticket .line {
+	border-top: 1px solid #dbd7d2;
+	border-bottom: 1px solid #fcfaf9
+}
+
+.airticket select {
+	height: 35px;
+	line-height: 35px;
+	width: 100%
+}
+
+.airticket textarea {
+	width: 100%
+}
+
+.airticket .header-btn a img {
+	vertical-align: text-top
+}
+
+.airticket .login-reg .mc  {
+	width: 100%;
+	padding: 0;
+	color: #b8b1ab
+}
+
+.airticket .login-reg .mc .htl-input,.airticket .order .mc .htl-input {
+	width: 100%;
+	height: 24px;
+	margin: 7px 0;
+	background-color: #f4f4f4;
+	border: 0;
+	color: #b8b1ab;
+	text-indent: 8px;
+	font-size: .95em
+}
+
+.airticket .srch_lst {
+	width: 100%
+}
+
+.airticket .srch_lstw {
+	display: table;
+	padding: 5px 0;
+	width: 100%
+}
+
+.airticket .slw_v1 {
+	padding-bottom: 0
+}
+
+.airticket .srch_lstw span {
+	display: table-cell;
+	vertical-align: middle
+}
+
+.airticket .srch_lstw span.tit {
+	width: 65px;
+	padding-right: 10px;
+	text-align: right
+}
+
+.airticket .srch_lstw span {
+	text-align: left
+}
+
+.airticket .order .sel_box,.airticket .srch_lstw .sel_box {
+	position: relative;
+	display: inline-block;
+	width: 100%
+}
+
+.airticket .order .srch_input,.airticket .order .srch_sel,.airticket .srch_lstw .srch_input,.airticket .srch_lstw .srch_sel {
+	display: table;
+	width: 100%;
+	height: 23px;
+	line-height: 23px
+}
+
+
+.airticket .login-reg .mc .srch_sel,.airticket .order .mc .srch_sel {
+	padding: 8px 0 7px
+}
+
+.airticket .login-reg .mc .srch_sel .txt {
+	text-indent: 8px
+}
+
+
+.airticket .shelper {
+	width: 100%;
+	padding: 0;
+	border-width: 1px 0;
+	border-style: solid;
+	border-color: #ded6d9
+}
+
+.airticket .shelper li {
+	margin: 0;
+	width: auto
+}
+
+.airticket .shelper li a {
+	display: block
+}
+
+.airticket .txt0 {
+	color: #000
+}
+
+.airticket .sbtn_v1 {
+	background: -webkit-gradient(linear,left top,left bottom,from(#73bcdb),color-stop(.5,#56a9d0),to(#3584b8));
+	background: -moz-linear-gradient(top,#68b6d8,#3584b8)
+}
+
+.airticket .htl_myodr {
+	padding-top: 20px
+}
+
+.airticket .hm_v1 {
+	padding: 15px 0 10px
+}
+
+.airticket .htl_cal {
+	background-color: #fffdf7;
+	border: 1px solid #ddd5c8;
+	border-radius: 5px
+}
+
+.airticket .htl_cal table {
+	width: 100%;
+	border-collapse: collapse
+}
+
+.airticket .htl_cal table td,.airticket .htl_cal table th {
+	border-spacing: 0;
+	border: 0;
+	text-align: center
+}
+
+.airticket .htl_cal table thead {
+	box-shadow: inset 0 1px 2px #5fabce
+}
+
+.airticket .htl_cal table th {
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	border-top: 1px solid #ddd5c8;
+	border-bottom: 1px solid #ddd5c8;
+	background: -webkit-gradient(linear,left top,left bottom,from(#2a8ebc),to(#1e83b1));
+	background: -moz-linear-gradient(top,#2a8ebc,#1e83b1)
+}
+
+.airticket .htl_cal table td {
+	height: 40px;
+	line-height: 40px;
+	color: #999;
+	border-bottom: 1px solid #ddd5c8;
+	border-right: 1px solid #ddd5c8
+}
+
+.airticket .htl_cal table td:last-child {
+	border-right: none
+}
+
+.airticket .htl_cal table td.txt3 {
+	color: #333
+}
+
+
+.airticket .use_list_info .succ_info {
+	padding: 10px 0;
+	font-size: .875em;
+	color: #b8b1ab
+}
+
+.airticket .use_list_info .mg10 {
+	display: inline-block;
+	margin-top: 10px
+}
+
+.airticket .use_list_info .rdo {
+	vertical-align: top;
+	margin-top: 3px
+}
+
+.airticket .order_static ul {
+	display: table;
+	width: 100%
+}
+
+.airticket .order_static ul li {
+	display: table-cell
+}
+
+.airticket .order_static ul li:first-child {
+	padding-right: 5px
+}
+
+.airticket .order_static ul li:last-child {
+	padding-left: 5px
+}
+
+.airticket .user_comm .arrow {
+	background-position: 97% 50%
+}
+
+.airticket .order_info2_v1 {
+	border-radius: 3px 3px 0 0
+}
+
+.airticket .online_pay {
+	display: block;
+	margin-bottom: 15px;
+	padding: 10px;
+	font-size: .95em;
+	background-color: #fffdf7;
+	border: 1px solid #ddd5c8;
+	border-top: none;
+	color: gray;
+	border-radius: 0 0 3px 3px
+}
+
+.airticket .retreat_info {
+	padding: 10px
+}
+
+.airticket .retreat_info_v1 {
+	border-top: 1px solid #ddd5c8
+}
+
+.airticket .retreat_info ul {
+	display: table;
+	width: 100%;
+	margin-bottom: 15px
+}
+
+.airticket .retreat_info ul.mgn0 {
+	margin-bottom: 0
+}
+
+.airticket .retreat_info ul li {
+	display: table-cell;
+	font-size: .95em
+}
+
+.airticket .retreat_info ul li.wth35 {
+	width: 35%
+}
+
+.airticket .retreat_info ul li .txt {
+	color: #666
+}
+
+.airticket .retreat_info ul li .txt2 {
+	font-size: .875em;
+	color: #666;
+	letter-spacing: -1px
+}
+
+.airticket .order_info2 .arrow_none {
+	background: 0 0
+}
+
+.airticket .mon2,.airticket .year {
+	height: 20px;
+	width: 70px
+}
+
+.airticket .mon2 {
+	width: 50px
+}
+
+.p-name2 {
+	padding: 10px 5px
+}
+
+.btn-area-rt {
+	position: absolute;
+	top: 0;
+	right: 5px
+}
+
+.btn-area-lt {
+	position: absolute;
+	top: 0;
+	left: 5px
+}
+
+.btn-type {
+	padding: 10px 30px;
+	border-radius: 5px;
+	background: -webkit-gradient(linear,0 0,0 100%,from(#ed3131),color-stop(.05,#d22121),to(#af0b0b));
+	background: -moz-linear-gradient(top,#ed3131,#af0b0b);
+	font-size: 1em;
+	color: #fff;
+	text-shadow: 1px 1px 2px #000
+}
+
+.login {
+	text-decoration: underline;
+	color: #67738a
+}
+
+.my-cart {
+	position: relative;
+	padding: 10px;
+	background-color: #f2ebe3;
+	border-top: 1px solid #ddd2c0;
+	border-bottom: 1px solid #ddd2c0;
+	box-shadow: inset 0 1px 0 #fff
+}
+
+.my-cart-v1 {
+	border-top: none;
+	box-shadow: none
+}
+
+.my-cart .btn-area-rt {
+	top: 9px;
+	right: 10px
+}
+
+.my-cart .link {
+	color: #67738a
+}
+
+.my-cart .btn-type {
+	margin-left: 10px;
+	padding: 6px 10px
+}
+
+.pay-img {
+	vertical-align: middle
+}
+
+.cart-list .p-img-v1 {
+	width: 82px
+}
+
+.cart-list .suit .p-img-v2 {
+	width: 82px;
+	margin-left: 0
+}
+
+.input-chk {
+	margin: 0 5px
+}
+
+.input-visi {
+	visibility: hidden
+}
+
+.cart-list .fl-v1,.cart-list .fl-v2 {
+	width: 220px
+}
+
+.cart-list .fl-v2 {
+	margin: 0 0 10px 90px;
+	text-align: left
+}
+
+.pop-good {
+	overflow-y: auto;
+	height: 132px
+}
+
+.list .mc .pop-good li {
+	position: relative;
+	padding: 10px 75px 10px 0;
+	margin: 0 10px;
+	min-height: 90px;
+	border: none;
+	border-bottom: 1px solid #849dbc
+}
+
+.list .mc .btn-pop-sel {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	display: block;
+	width: 70px;
+	height: 28px;
+	line-height: 28px;
+	margin-top: 10px;
+	border: 1px solid #a7bad1;
+	background-color: #194882;
+	text-align: center;
+	color: #e5d22e;
+	border-radius: 5px
+}
+
+.pop-img {
+	position: absolute;
+	right: 0;
+	top: 10px
+}
+
+.category {
+	padding: 16px 14px
+}
+
+.category .category-lst {
+	background-color: #fffdf7;
+	border: 1px solid #ded6c9;
+	border-radius: 5px
+}
+
+.category .category-lst .category-li .category-a,.category .category2-lst .category2-li .category2-a {
+	border-bottom: 1px solid #ded6c9
+}
+
+.category .category-lst .category-li:last-child .category-a {
+	border-bottom: none
+}
+
+.cart-pop .att-succ {
+	font-size: 16px
+}
+
+.cart-pop .cart-succ {
+	font-size: 14px
+}
+
+.cart-pop .ico-succ span {
+	display: block
+}
+
+.cart-pop .cp-lnk {
+	display: table;
+	width: 100%
+}
+
+.cart-pop .cp-lnk a {
+	display: table-cell;
+	width: 50%;
+	padding: 7px 0 9px;
+	font-size: 14px;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0,0,0,1);
+	text-align: center
+}
+
+.cart-pop .bar {
+	height: 17px;
+	margin-top: 4px;
+	background: rgba(130,128,127,.65)
+}
+
+.order-pop {
+	position: absolute;
+	left: 10px;
+	bottom: 1px;
+	width: 280px;
+	background-color: rgba(0,0,0,.8);
+	color: #fff;
+	border-radius: 2px;
+	border: 1px solid #3d3c3b;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.5)
+}
+
+.order-pop .ico-succ {
+	margin-top: 5px;
+	text-align: center;
+	border-bottom: 1px solid rgba(130,128,127,.5);
+	text-shadow: 0 1px 0 rgba(0,0,0,1)
+}
+
+.order-pop .att-succ {
+	font-size: 16px
+}
+
+.order-pop .cart-succ {
+	font-size: 14px
+}
+
+.order-pop .ico-succ span {
+	display: block
+}
+
+.order-pop .cp-lnk {
+	display: table;
+	width: 100%
+}
+
+.order-pop .cp-lnk a {
+	font-size: 17px;
+	color: #fff;
+	text-align: center
+}
+
+.mu_l .price-txt {
+	font-size: 17px;
+	color: #e8393c;
+	line-height: 20px
+}
+
+.mu_l .mgn-bt {
+	display: inline-block;
+	margin-bottom: 10px
+}
+
+.mu_l .red {
+	color: #e8393c
+}
+
+.chk-type,.chk-type2 {
+	display: inline-block;
+	width: 20px;
+	height: 19px;
+	text-indent: -1000px;
+	border: 1px solid #eaebeb;
+	border-radius: 2px;
+	background: #fff;
+	box-shadow: 0 -1px 0 #c3c4c4
+}
+
+.chk-type2 {
+	float: left;
+	margin: 10px 5px 0 0
+}
+
+.chk-type {
+	margin-right: 10px
+}
+
+
+
+

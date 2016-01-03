@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Buyer_complaintDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Buyer_complaint">
+    	SELECT complaint_id,user_id,cust_id,order_id,img_evidence,com_type,reason,status,remark,in_date FROM buyer_complaint WHERE complaint_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Buyer_complaint">
+		UPDATE buyer_complaint SET user_id=#{user_id},cust_id=#{cust_id},order_id=#{order_id},img_evidence=#{img_evidence},com_type=#{com_type},reason=#{reason},status=#{status},remark=#{remark} WHERE complaint_id=${complaint_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Buyer_complaint">
+		INSERT INTO buyer_complaint (user_id,cust_id,order_id,img_evidence,com_type,reason,status,remark,in_date) VALUES (#{user_id},#{cust_id},#{order_id},#{img_evidence},#{com_type},#{reason},#{status},#{remark},NOW())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM buyer_complaint WHERE complaint_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT  m.cust_name ,u.user_name,b.complaint_id,b.user_id,b.cust_id,b.order_id,b.img_evidence,b.com_type,b.reason,b.status,b.remark,b.in_date  from buyer_complaint  b
+		left JOIN  memberuser  u  on  u.user_id = b.user_id
+		left JOIN  member  m  on  m.cust_id = b.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and b.user_id = #{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and b.cust_id = #{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				and b.order_id like concat('%', #{order_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(com_type)">
+				and b.com_type like concat('%', #{com_type}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+				and b.status like concat('%', #{status}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and u.user_name like concat('%', #{user_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				and m.cust_name like concat('%', #{cust_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(b.in_date) >= UNIX_TIMESTAMP(#{in_date_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_end)">
+				<![CDATA[ AND DATE(b.in_date) < DATE_SUB(#{in_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY b.complaint_id ASC,b.in_date ASC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT  m.cust_name,u.user_name,b.complaint_id,b.user_id,b.cust_id,b.order_id,b.img_evidence,b.com_type,b.reason,b.status,b.remark,b.in_date  from buyer_complaint  b
+		left JOIN  memberuser  u  on  u.user_id = b.user_id
+		left JOIN  member  m  on  m.cust_id = b.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and b.user_id = #{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and b.cust_id = #{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				and b.order_id like concat('%', #{order_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(com_type)">
+				and b.com_type like concat('%', #{com_type}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+				and b.status like concat('%', #{status}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and u.user_name like concat('%', #{user_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				and m.cust_name like concat('%', #{cust_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(b.in_date) >= UNIX_TIMESTAMP(#{in_date_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_end)">
+				<![CDATA[ AND DATE(b.in_date) < DATE_SUB(#{in_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY b.complaint_id ASC,b.in_date ASC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Buyer_complaint">
+		INSERT INTO buyer_complaint (user_id,cust_id,order_id,img_evidence,com_type,reason,status,remark,in_date) VALUES (#{user_id},#{cust_id},#{order_id},#{img_evidence},#{com_type},#{reason},#{status},#{remark},NOW())
+		<selectKey keyProperty="complaint_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getComplaintByOrderId" resultType="map" parameterType="map">
+		SELECT *  from buyer_complaint where order_id = #{order_id}
+	</select>
+
+</mapper>
+

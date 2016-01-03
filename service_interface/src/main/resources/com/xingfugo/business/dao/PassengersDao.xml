@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.PassengersDao">
+    
+       <select id="passengersListById" resultType="map" parameterType="int">
+        select passenger_id,name,type,identityType,identityNo,birthday,defaultbyair from api_air_passengers 
+        where user_id =#{id}     order by name ASC
+    </select>
+    
+    
+     
+    <insert id="insertPassenger" parameterType="com.xingfugo.business.outapi.airline.module.Passengers">
+    	<selectKey resultType="java.lang.Integer" keyProperty="passenger_id" order="AFTER" >
+      		select LAST_INSERT_ID()
+    	</selectKey>
+		insert into api_air_passengers(name,type,identityType,identityNo,birthday,defaultbyair,user_id)values(#{name},#{type},#{identityType},#{identityNo},#{birthday},#{defaultbyair},#{user_id})
+	</insert>
+	
+	
+	   <delete id="deletePassengerById" parameterType="String">
+			DELETE FROM api_air_passengers WHERE passenger_id=#{id}
+		</delete>
+
+
+
+
+    <select id="passengersListByIds" resultType="map">
+         select passenger_id,name,type,identityType,identityNo,birthday,defaultbyair from api_air_passengers  where passenger_id in
+        <foreach collection="list" open="(" separator="," close=")" item="pId" >
+        	#{pId}
+        </foreach>
+        order by name desc
+    </select>
+    
+    <select id="getPaaserger" resultType="com.xingfugo.business.outapi.airline.module.Passengers" parameterType="string">
+        select * from api_air_passengers    where passenger_id =#{id}   
+    </select>
+</mapper>

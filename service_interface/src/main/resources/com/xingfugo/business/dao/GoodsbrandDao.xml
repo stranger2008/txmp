@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsbrandDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Goodsbrand">
+    	SELECT brand_id,brand_name,brand_site,logo,content,goods_attr,sort_no,info_state,is_recom FROM goodsbrand WHERE brand_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Goodsbrand">
+		UPDATE goodsbrand SET brand_name=#{brand_name},brand_site=#{brand_site},logo=#{logo},content=#{content},goods_attr=#{goods_attr},sort_no=#{sort_no},info_state=#{info_state},is_recom=#{is_recom} WHERE brand_id=${brand_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Goodsbrand">
+		INSERT INTO goodsbrand (brand_name,brand_site,logo,content,goods_attr,sort_no,info_state,is_recom) VALUES (#{brand_name},#{brand_site},#{logo},#{content},#{goods_attr},#{sort_no},#{info_state},#{is_recom})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM goodsbrand WHERE brand_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT brand_id,brand_name,brand_site,logo,content,goods_attr,sort_no,info_state,is_recom  from goodsbrand
+		<where>
+					
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(brand_name)">
+				and brand_name like concat('%', #{brand_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_attr)">
+				and goods_attr like concat('%', #{goods_attr}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+					and info_state =#{info_state }
+			</if>
+			
+		</where>
+		ORDER BY sort_no ASC,brand_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT brand_id,brand_name,brand_site,logo,content,goods_attr,sort_no,info_state,is_recom  from goodsbrand
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_attr)">
+				and goods_attr like concat('%', #{goods_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+				and info_state =#{info_state }
+			</if>
+		</where>
+		ORDER BY sort_no ASC,brand_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Goodsbrand">
+		INSERT INTO goodsbrand (brand_name,brand_site,logo,content,goods_attr,sort_no,info_state,is_recom) VALUES (#{brand_name},#{brand_site},#{logo},#{content},#{goods_attr},#{sort_no},#{info_state},#{is_recom})
+		<selectKey keyProperty="brand_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+   <select id="isBrandNameExist" resultType="map" parameterType="map">
+		select * from goodsbrand
+        <where>			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(brand_name)">
+				AND brand_name=#{brand_name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getListForStatic" resultType="map" parameterType="map">
+		select * from goodsbrand
+		 <where>			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_attr)">
+				AND  goods_attr like concat('%', #{goods_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+				and info_state = #{info_state}
+			</if>
+		</where>
+		order by brand_id desc limit ${start},${row}
+	</select>
+	
+	
+	<select id="selectByGoodsAttr" resultType="map">
+        SELECT brand_id,brand_name,brand_site,logo,content,goods_attr,sort_no,info_state,is_recom  from goodsbrand
+        <where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_attr)">
+					and goods_attr like concat('%', #{goods_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(catAttr_list_s)">
+				<foreach collection="catAttr_list_s" index="index" item="item" open="(" separator="or" close=")">
+					goods_attr like concat('%', #{item}, '%')
+	        	</foreach>
+	        </if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+					and info_state =#{info_state }
+			</if> 
+		</where>
+		ORDER BY sort_no ASC,brand_id DESC
+    </select>  
+		
+</mapper>
+

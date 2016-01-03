@@ -1,0 +1,24 @@
+package com.xingfugo.business.dao;
+
+import com.xingfugo.business.module.{CLASSNAME};
+
+/**
+ * @function 功能 {FUNNAME}dao层业务接口
+ * @author  创建人{AUTHOR}
+ * @date  创建日期 {DATE}
+ */
+public interface {CLASSNAME}Dao extends GenericDao<{CLASSNAME},String>{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+

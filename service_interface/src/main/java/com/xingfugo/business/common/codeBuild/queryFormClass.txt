@@ -1,0 +1,21 @@
+package com.xingfugo.business.module.query;
+
+import com.xingfugo.business.module.mybatis.BasePageForm;
+
+/**
+ * @function 功能 {FUNNAME}表单查询实体
+ * @author 创建人 {AUTHOR}
+ * @date 创建日期 {DATE}
+ */
+
+public class {CLASSNAME}QueryForm extends BasePageForm{
+	{searchlist}
+	private String [field_name];
+	public String get[fieldname]() {
+		return [field_name];
+	}
+	public void set[fieldname](String [field_name]) {
+		this.[field_name] = [field_name];
+	}
+	{/searchlist}
+}

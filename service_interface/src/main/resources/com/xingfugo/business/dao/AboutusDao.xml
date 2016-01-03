@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.AboutusDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Aboutus">
+    	SELECT info_id,title,content,cat_attr,in_date FROM aboutus WHERE info_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Aboutus">
+		UPDATE aboutus SET title=#{title},content=#{content},cat_attr=#{cat_attr},in_date=#{in_date} WHERE info_id=${info_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Aboutus">
+		INSERT INTO aboutus (title,content,cat_attr,in_date) VALUES (#{title},#{content},#{cat_attr},#{in_date})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM aboutus WHERE info_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT info_id,title,content,cat_attr,in_date  from aboutus
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(title)">
+				and title like concat('%', #{title}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				and cat_attr like concat('%', #{cat_attr}, '%')
+			</if>
+			
+		</where>
+		ORDER BY info_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT info_id,title,content,cat_attr,in_date  from aboutus
+		<where>
+			
+		</where>
+		ORDER BY info_id DESC
+	</select>
+	
+	<select id="getAboutusInfoByCatids" resultType="map" parameterType="list">
+		select * from aboutus where substr(cat_attr,length(cat_attr)-10,length(cat_attr)) in
+        <foreach collection="list" open="(" separator="," close=")" item="pId" >
+        	${pId}
+        </foreach>
+        ORDER BY in_date DESC
+	</select>
+	
+	
+	<select id="getListForStatic" resultType="map" parameterType="map">
+		select title,info_id,content from aboutus 
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_id)">
+				and cat_attr like concat('%',#{cat_id},'%')
+			</if>
+		</where>
+		order by in_date desc limit ${start},${row}
+	</select>
+	
+	<select id="getAllListForStatic" resultType="map">
+		select title,info_id,content from aboutus 
+	</select>
+	
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Aboutus">
+		INSERT INTO aboutus (title,content,cat_attr,in_date) VALUES (#{title},#{content},#{cat_attr},#{in_date})
+		<selectKey keyProperty="info_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

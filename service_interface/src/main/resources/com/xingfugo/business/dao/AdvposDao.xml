@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.AdvposDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Advpos">
+    	SELECT pos_id,pos_name,cat_attr,pos_desc,pos_type,p_width,p_height,img_path,in_date FROM advpos WHERE pos_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Advpos">
+		UPDATE advpos SET pos_name=#{pos_name},cat_attr=#{cat_attr},pos_desc=#{pos_desc},pos_type=#{pos_type},p_width=#{p_width},p_height=#{p_height},img_path=#{img_path} WHERE pos_id=${pos_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Advpos">
+		INSERT INTO advpos (pos_name,cat_attr,pos_desc,pos_type,p_width,p_height,img_path,in_date) VALUES (#{pos_name},#{cat_attr},#{pos_desc},#{pos_type},#{p_width},#{p_height},#{img_path},#{in_date})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM advpos WHERE pos_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT pos_id,pos_name,cat_attr,pos_desc,pos_type,p_width,p_height,img_path,in_date,sort_no  from advpos
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pos_name)">
+				and pos_name like concat('%', #{pos_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				and cat_attr like concat('%', #{cat_attr}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pos_type)">
+				and pos_type like concat('%', #{pos_type}, '%')
+			</if>
+			
+		</where>
+		ORDER BY cat_attr DESC,sort_no ASC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT pos_id,pos_name,cat_attr,pos_desc,pos_type,p_width,p_height,img_path,in_date  from advpos
+		<where>
+			
+		</where>
+		ORDER BY pos_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Advpos">
+		INSERT INTO advpos (pos_name,cat_attr,pos_desc,pos_type,p_width,p_height,img_path,in_date) VALUES (#{pos_name},#{cat_attr},#{pos_desc},#{pos_type},#{p_width},#{p_height},#{img_path},#{in_date})
+		<selectKey keyProperty="pos_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

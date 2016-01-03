@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<movieConf>
+	<serverRootURL>http://douyou100.com:7031</serverRootURL>
+	<interfaceURL>/External/Web/ExternalWebInterface.ashx</interfaceURL>
+	<interfaceParam>param</interfaceParam>
+	<seatSelectURL>/External/Web/WebLockSeat.aspx</seatSelectURL>
+	<appKey>C100000148</appKey>
+	<appCode>txmp-888999</appCode>
+	<maxSelectedSeat>4</maxSelectedSeat>
+</movieConf>

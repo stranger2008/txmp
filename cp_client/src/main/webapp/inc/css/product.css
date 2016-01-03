@@ -1,0 +1,69 @@
+.goods-d-tab{
+    height: 40px;
+    background: url(../images/mammon-detail-bg.png) repeat-x;
+    border: 1px solid #e1dfe0;
+}
+.goods-d-tab a{
+    width: 122px;
+    height: 40px;
+    line-height: 40px;
+    color: #5d5d5d;
+    font-size: 14px;
+    font-family: '微软雅黑';
+    text-align: center;
+    border-right: 1px solid #eee3ea;
+    display: block;
+    float: left;
+}
+.goods-d-tab span{
+    width: 1px;
+    height: 40px;
+    background: #fff;
+    display: block;
+    float: right;
+}
+.goods-d-tab a:hover,
+.goods-d-tab .active{
+    background: #f7f7f7;
+    border-top: 2px solid #e10000;
+    margin: -1px 0 0 0;
+    height: 39px;
+}
+.goods-d-show{
+    margin-bottom: 45px;
+}
+
+.goods-p-msg{
+    margin: 0 0 0 70px;
+}
+.goods-p-color{
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    margin: 5px 0 0;
+    cursor: pointer;
+}
+.goods-p-color-on{
+    border: 1px solid  #e4393c;
+    height: 24px;
+    line-height: 24px;
+}
+.goods-p-color-on em{
+    display: block;
+    background: url(../images/mammon-icon.png) -773px -31px;
+    bottom: 0;
+    display: inline-block;
+    height: 16px;
+    position: absolute;
+    right: 0;
+    width: 16px;
+}
+.goods-p {
+    font-size: 14px;
+    font-family: "微软雅黑";
+    color: #5d5d5d;
+    margin: 10px 0;
+}

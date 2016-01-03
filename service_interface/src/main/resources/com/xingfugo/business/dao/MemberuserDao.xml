@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.MemberuserDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Memberuser">
+    	SELECT user_id,user_level,user_name,passwd,state_code,email,real_name,sex,cellphone,login_time,img_path,area_attr,is_open FROM memberuser WHERE user_id=${value}
+	</select>
+	
+	<select id="getByPkpwd" parameterType="string" resultType="com.xingfugo.business.module.Memberuser">
+    	SELECT user_id,user_level,user_name,passwd,state_code,email,real_name,sex,cellphone,login_time FROM memberuser WHERE user_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Memberuser">
+		UPDATE memberuser SET user_level=#{user_level},user_name=#{user_name},state_code=#{state_code},email=#{email},real_name=#{real_name},sex=#{sex},cellphone=#{cellphone} WHERE user_id=${user_id}
+	</update>
+	
+	<update id="updatepwd" parameterType="com.xingfugo.business.module.Memberuser">
+		UPDATE memberuser SET passwd=#{passwd} WHERE user_id=#{user_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Memberuser">
+		INSERT INTO memberuser (user_level,user_name,passwd,state_code,email,real_name,sex,cellphone,login_time) VALUES (#{user_level},#{user_name},#{passwd},#{state_code},#{email},#{real_name},#{sex},#{cellphone},#{login_time})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM memberuser WHERE user_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT user_id,user_level,user_name,passwd,state_code,email,real_name,sex,cellphone,login_time  from memberuser
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_level)">
+				and user_level like concat('%', #{user_level}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and user_name like concat('%', #{user_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(state_code)">
+				and state_code like concat('%', #{state_code}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(email)">
+				and email like concat('%', #{email}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(real_name)">
+				and real_name like concat('%', #{real_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cellphone)">
+				and cellphone like concat('%', #{cellphone}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(from_time)">
+				<![CDATA[ and login_time >= #{from_time} ]]>
+				
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(to_time)">
+				<![CDATA[ AND DATE(login_time) < DATE_SUB(#{to_time}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY user_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT user_id,user_level,user_name,passwd,state_code,email,real_name,sex,cellphone,login_time  from memberuser
+		<where>
+			
+		</where>
+		ORDER BY user_id DESC
+	</select>
+	
+	<select id="hasExist" resultType="java.lang.Integer" parameterType="com.xingfugo.business.module.Memberuser">
+        select count(0) from memberuser 
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and user_name = #{user_name}
+			</if>
+	
+		</where>
+    </select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Memberuser">
+		INSERT INTO memberuser (user_level,user_name,passwd,state_code,email,real_name,sex,cellphone,login_time) VALUES (#{user_level},#{user_name},#{passwd},#{state_code},#{email},#{real_name},#{sex},#{cellphone},#{login_time})
+		<selectKey keyProperty="user_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="hasPhonenumber" resultType="string" parameterType="string">
+        select * from memberuser where cellphone=#{value}
+    </select>
+
+</mapper>
+

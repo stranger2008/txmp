@@ -1,0 +1,82 @@
+/*全部订单*/
+.header{ position:relative; height:48px;font-size:18px; color:#fff; background-color:#af0000;}
+.return-btn2{ position: absolute; top:15px; left:10px;}
+.header-txt{ line-height:48px;}
+.header-txt2{ position:absolute; top:0; left:30px; line-height:48px;}
+.header-btn{ position: absolute; top:9px; right:10px;}
+
+.allorder-cont{ margin:0 5px 10px 5px; border:1px solid #d7d7d7; border-top:0;}
+.allorder-cont li{ border-bottom:1px solid #d7d7d7; padding:20px 0; color:#505050;}
+.allorder-app{ margin:10px 0;}
+.allorder-app li{ border-bottom:1px solid #d7d7d7; padding:20px 20px 30px 0; color:#505050;}
+
+
+.allorder .allorder-btn{ display:block; padding-left:10px; line-height:40px; font-size:18px; vertical-align:middle;}
+.allorder .allorder-btn:before{ content:''; float:left; width:49px; height:49px; background:url(../images/icons-order.png) no-repeat; background-position:4px 6px; margin-right:10px; border-radius:5px; background-color:#5cbda4;}
+
+/*.allorder .allorder-btn:after{ content:''; float:right; width:10px; height:10px; border:solid #707070; border-width:2px 0 0 2px; -webkit-transform: rotate(135deg); margin-top:15px; margin-right:20px;}
+*/
+.allorder li:nth-child(2) .allorder-btn:before{ background-color:#e43b38; background-position:5px -44px;}
+.allorder li:nth-child(3) .allorder-btn:before{ background-color:#e9a421; background-position:5px -92px;}
+.allorder li:nth-child(4) .allorder-btn:before{ background-color:#32abe2; background-position:5px -142px;}
+.allorder li:nth-child(5) .allorder-btn:before{ background-color:#4e9f19; background-position:5px -194px;}
+.allorder li:nth-child(6) .allorder-btn:before{ background-color:#e43b38; background-position:5px -241px;}
+.allorder li:last-child{ border-bottom:0;}
+
+
+.shortcut-nav{ }
+.shortcut-nav .shortcut-div{ max-width:80px; min-width:64px; margin:0 auto; padding:0 5px; }
+.shortcut-nav ul li{ width:25%; padding:7px 0; text-align:center;}
+.shortcut-nav ul a:hover{ color:#fff;}
+.shortcut-btn{ display:block; float:left; width:64px; height:56px; border-radius:10px; text-align:center; color:#fff; background-color:#ff9462;}
+.shortcut-nav .shortcut-btn:before{ display:block; content:''; width:24px; height:30px; background:url(../images/icons-nav.png) no-repeat; background-position:0 0; margin:2px auto;}
+.shortcut-nav li:nth-child(2) .shortcut-btn{ background-color:#65d9fe;}
+.shortcut-nav li:nth-child(2) .shortcut-btn:before{ background-position:0 -26px;}
+.shortcut-nav li:nth-child(3) .shortcut-btn{ background-color:#a8d034;}
+.shortcut-nav li:nth-child(3) .shortcut-btn:before{ background-position:0 -52px;}
+.shortcut-nav li:nth-child(4) .shortcut-btn{ background-color:#f1d200;}
+.shortcut-nav li:nth-child(4) .shortcut-btn:before{ background-position:0 -78px;}
+.shortcut-nav li:nth-child(5) .shortcut-btn{ background-color:#a885f5;}
+.shortcut-nav li:nth-child(5) .shortcut-btn:before{ background-position:0 -104px;}
+.shortcut-nav li:nth-child(6) .shortcut-btn{ background-color:#e3b7a2;}
+.shortcut-nav li:nth-child(6) .shortcut-btn:before{ background-position:0 -52px;}
+.shortcut-nav li:nth-child(7) .shortcut-btn{ background-color:#f9b523;}
+.shortcut-nav li:nth-child(7) .shortcut-btn:before{ background-position:0 -52px;}
+
+
+
+/*用户中心*/
+.user h3{ line-height:30px; font-weight:bold; font-size:16px; color:#333; padding:5px 10px;}
+.ordercenter{ margin:0 10px 10px 10px; border:1px solid #ddd;}
+.ordercenter li{ border-bottom:1px dashed #d7d7d7; padding:10px 0; color:#505050;}
+.ordercenter .allorder-btn{ display:block; padding-left:10px; line-height:28px; font-size:16px; vertical-align:middle;}
+.ordercenter .allorder-btn:before{ content:''; float:left; width:28px; height:28px; background:url(../images/icon-user.png) no-repeat; background-position:0 1px; margin-right:10px;}
+.ordercenter .allorder-btn:after{ content:''; float:right; width:10px; height:10px; border:solid #707070; border-width:2px 0 0 2px; -webkit-transform: rotate(135deg); margin-top:10px; margin-right:20px;}
+.ordercenter li:nth-child(1) .allorder-btn:before{ background-position:0 -32px;}
+.ordercenter li:nth-child(2) .allorder-btn:before{background-position:0 -65px;}
+.ordercenter li:nth-child(3) .allorder-btn:before{ background-position:0 -98px;}
+.ordercenter li:last-child{ border-bottom:0;}
+
+.accountcenter{ margin:0 10px 10px 10px; border:1px solid #ddd;}
+.accountcenter li{ border-bottom:1px dashed #d7d7d7; padding:10px 0; color:#505050;}
+.accountcenter .allorder-btn{ display:block; padding-left:10px; line-height:28px; font-size:16px; vertical-align:middle;}
+.accountcenter .allorder-btn:before{ content:''; float:left; width:28px; height:28px; background:url(../images/icon-user.png) no-repeat; background-position:0 -98px; margin-right:10px;}
+.accountcenter .allorder-btn:after{ content:''; float:right; width:10px; height:10px; border:solid #707070; border-width:2px 0 0 2px; -webkit-transform: rotate(135deg); margin-top:10px; margin-right:20px;}
+.accountcenter li:nth-child(1) .allorder-btn:before{ background-position:0 -98px;}
+.accountcenter li:nth-child(2) .allorder-btn:before{ background-position:0 -131px;}
+.accountcenter li:nth-child(3) .allorder-btn:before{ background-position:0 -225px;}
+.accountcenter li:nth-child(4) .allorder-btn:before {background-position: 0 -164px;}
+.accountcenter li:nth-child(5) .allorder-btn:before{ background-position:0 -195px;}
+.accountcenter li:last-child{ border-bottom:0;}
+
+
+
+
+
+
+
+
+
+
+
+

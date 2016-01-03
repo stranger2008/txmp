@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.terminal.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.terminal.module.Goods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="cat_attr" property="catAttr" jdbcType="VARCHAR" />
+    <result column="size_attr" property="sizeAttr" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_wd" property="goodsWd" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR" />
+    <result column="img_path" property="imgPath" jdbcType="VARCHAR" />
+    <result column="goods_video" property="goodsVideo" jdbcType="VARCHAR" />
+    <result column="self_cat" property="selfCat" jdbcType="VARCHAR" />
+    <result column="up_date" property="upDate" jdbcType="TIMESTAMP" />
+    <result column="down_date" property="downDate" jdbcType="TIMESTAMP" />
+    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
+    <result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+    <result column="mem_price" property="memPrice" jdbcType="VARCHAR" />
+    <result column="total_stock" property="totalStock" jdbcType="INTEGER" />
+    <result column="now_stock" property="nowStock" jdbcType="INTEGER" />
+    <result column="warn_stock" property="warnStock" jdbcType="INTEGER" />
+    <result column="saled_num" property="saledNum" jdbcType="INTEGER" />
+    <result column="give_inter" property="giveInter" jdbcType="INTEGER" />
+    <result column="interbuy" property="interbuy" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="REAL" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="is_ship" property="isShip" jdbcType="CHAR" />
+    <result column="is_volume" property="isVolume" jdbcType="CHAR" />
+    <result column="seo_titel" property="seoTitel" jdbcType="VARCHAR" />
+    <result column="seo_keyword" property="seoKeyword" jdbcType="VARCHAR" />
+    <result column="seo_desc" property="seoDesc" jdbcType="VARCHAR" />
+    <result column="relate_goods" property="relateGoods" jdbcType="VARCHAR" />
+    <result column="give" property="give" jdbcType="VARCHAR" />
+    <result column="label" property="label" jdbcType="CHAR" />
+    <result column="busi_remark" property="busiRemark" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="CHAR" />
+    <result column="no_reason" property="noReason" jdbcType="VARCHAR" />
+    <result column="info_state" property="infoState" jdbcType="CHAR" />
+    <result column="in_date" property="inDate" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="volume" property="volume" jdbcType="REAL" />
+    <result column="infoattr_id" property="infoattrId" jdbcType="CHAR" />
+    <result column="is_virtual" property="isVirtual" jdbcType="CHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.xingfugo.business.terminal.module.GoodsWithBLOBs" extends="BaseResultMap" >
+    <result column="goods_detail" property="goodsDetail" jdbcType="LONGVARCHAR" />
+    <result column="ship_price" property="shipPrice" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <resultMap id="UpdateResultMap" type="com.xingfugo.business.terminal.module.UpdateGoods" extends="ResultMapWithBLOBs" >
+    <result column="trade_id" property="tradeId" jdbcType="BIGINT" />
+    <result column="oper_type" property="operType" jdbcType="CHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+	g.cust_id,g.cat_attr,g.size_attr,g.goods_name,g.goods_no,g.goods_wd,g.brand_id,
+	g.goods_desc,g.img_path,g.goods_video,g.self_cat,g.up_date,g.down_date,g.market_price,g.sale_price,
+	g.cost_price,g.mem_price,g.total_stock,g.now_stock,g.warn_stock,g.saled_num,g.give_inter,
+	g.interbuy,g.weight,g.unit,g.is_ship,g.is_volume,g.seo_titel,g.seo_keyword,g.seo_desc,g.relate_goods,
+	g.give,g.label,g.busi_remark,g.is_del,g.no_reason,g.info_state,g.in_date,g.user_id,g.volume,
+	g.infoattr_id,g.is_virtual
+  </sql>
+  
+  <sql id="Blob_Column_List" >
+    g.goods_detail, g.ship_price
+  </sql>
+  
+  <sql id="Update_Column_List" >
+    tmp.oper_type, tmp.trade_id, tmp.info_id goods_id
+  </sql>
+  
+  <select id="selectUpdateList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'goods'
+	  group by info_id, oper_type) tmp left join goods g on tmp.info_id = g.goods_id
+    where tmp.trade_id &gt; #{tradeId,jdbcType=BIGINT} 
+    order by trade_id asc limit ${limit}
+  </select>
+  
+    <select id="selectAllList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'goods'
+	  group by info_id, oper_type) tmp left join goods g on tmp.info_id = g.goods_id
+    order by trade_id asc 
+  </select>
+</mapper>

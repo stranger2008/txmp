@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.LotteryOrderDao">
+     
+    <insert id="insertAccount" parameterType="com.xingfugo.business.outapi.lottery.module.LotteryOrder">
+		insert into api_lottery_order (order_no,cust_id,resultcode,period,gameid,single_date,end_date,boards,betmultir,totalamount,wagerdata,in_date) 
+			values	(#{order_no},#{cust_id},#{resultcode},#{period},#{gameid} ,#{single_date},#{end_date},#{boards},#{betmultir},#{totalamount},#{wagerdata},#{in_date}
+		)
+	</insert>
+
+    <select id="getLotteryOrderByUserId" resultType="com.xingfugo.business.outapi.lottery.module.LotteryOrder">
+         select *  from api_lottery_order  where cust_id =#{cust_id} 
+    </select>
+    
+     <delete id="deleteLotteryAccount" parameterType="String">
+		DELETE FROM  api_lottery_order WHERE order_no=#{orderNo}
+	</delete>
+	
+	<select id="getList" parameterType="map" resultType="map">
+		SELECT * FROM api_lottery_order
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_no)">
+				AND order_no = #{order_no}
+			</if>
+		</where>
+	</select>
+
+</mapper>

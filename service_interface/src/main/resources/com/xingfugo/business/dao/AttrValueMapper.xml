@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.dao.AttrValueMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.module.AttrValue" >
+    <id column="trade_id" property="trade_id" jdbcType="CHAR" />
+    <result column="attr_id" property="attr_id" jdbcType="CHAR" />
+    <result column="attr_value" property="attr_value" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectByTradeId" resultType="map" parameterType="java.lang.String">
+  	select * , (select attr_name from categoryattr t where v.attr_id=t.attr_id) attr_name  from attrvalue v where trade_id in (${tradeIds})
+  </select>
+  
+  <select id="selectByAttr_id" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from attrvalue where attr_id in (${tradeIds})
+  </select>
+  <insert id="insert" parameterType="com.xingfugo.business.module.AttrValue">
+	INSERT INTO attrvalue(trade_id, attr_id, attr_value) VALUES (#{trade_id}, #{attr_id}, #{attr_value})
+  </insert>
+  
+  <update id="update" parameterType="com.xingfugo.business.module.AttrValue">
+	UPDATE attrvalue SET attr_value = #{attr_value} WHERE trade_id = #{trade_id}
+  </update>
+  
+  <delete id="delete" parameterType="string">
+	DELETE FROM attrvalue WHERE trade_id = #{trade_id}
+  </delete>
+  
+  <select id="getList" parameterType="map" resultType="map">
+  	SELECT trade_id, attr_id, attr_value FROM attrvalue
+  	<where>
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(attr_id)">
+			AND attr_id = #{attr_id}
+		</if>
+	</where>
+  </select>
+  
+  <delete id="deleteByAttrId" parameterType="string">
+	DELETE FROM attrvalue WHERE attr_id = #{attr_id}
+  </delete>
+  
+  <select id="selectById" resultType="com.xingfugo.business.module.AttrValue" parameterType="java.lang.String">
+  	SELECT trade_id, attr_id, attr_value FROM attrvalue WHERE trade_id = #{trade_id}
+  </select>
+   
+</mapper>

@@ -1,0 +1,176 @@
+/*清零样式*/
+* { margin: 0; padding: 0;}
+h1,h2,h3,h4,h5,h6 { font-size: 100%; font-style: normal; font-weight:normal; line-height:normal; padding:0; margin:0;}
+ul,ol,li {list-style: none;}
+em,i { font-style: normal;}
+img { border: none;}
+input,img { vertical-align: middle;}
+body { color: #000; font-family:"微软雅黑"; background: #FFF; font-size:12px; min-width:320px; height: auto;}
+a{ font-size:14px; color:#333; text-decoration:none}
+a:hover{ color:#c70003;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after { display: block; content: ''; clear: both; visibility: hidden;}
+.none { display: none;
+}
+.no-spacing { margin: 0; padding: 0;}
+.margin-center { margin: 0 auto; text-align: center;}
+.center { text-align: center;}
+.margin-auto { margin: 0 auto;}
+input:focus {
+    outline:none;
+}
+input[type="submit"], input[type="reset"], input[type="button"], button { -webkit-appearance: none; /*去掉苹果的默认UI来渲染按钮*/}
+
+/*公共样式*/
+.comWdh{ width:320px; min-width:320px; min-height:100%; margin:0 auto; overflow:hidden;}
+.w480{ width:100%; height:100%; min-width:320px; min-height:100%; margin:0 auto; overflow:hidden;}
+.content{ min-width:320px;}
+
+.full-img { width: 100%; height: auto!important; overflow:hidden;}
+.full-div { width: 100%; height: auto!important;}
+.hidden{ overflow:hidden;}
+
+.position{ height:26px; line-height:26px; padding:0 10px; background:#eaedf4; border-bottom:2px solid #c80000;}
+.position a{ font-size:14px; color:#505050;}
+.position a:hover{ color:#c80000;}
+
+.mt5{ margin:0 5px;}
+.mg-t5{ margin-top:5px;}
+.w50{ width:50%;}
+.tbl-type{ display:table; width:100%;}
+.tbl-cell{ display:table-cell;}
+.sign_btn{ width:100%; height:38px; line-height:38px; display: inline-block; background-color:#c80000; border:1px solid #d44300; color:#fff; font-family:"微软雅黑"; font-size:14px; cursor:pointer; margin-top:20px;}
+.red-pri{ color:#c80000;}
+
+
+/*底部*/
+.footer{ height:141px; border:1px solid #e0e0e0; background:#eaedf4;}
+.footer_btn{ padding:10px; font-size:14px; color: #666e79;}
+.footer .user-info { -webkit-box-flex: 1; display: -webkit-box; text-align: left; }
+.footer .user-info span:nth-child(2) { display: inline-block; margin:0 10px;}
+.footer .user-info a { color: #666e79; font-size:14px; font-family:"微软雅黑";}
+.footer .gotop { }
+.footer .gotop a { color:#666e79; font-size:14px; font-family:"微软雅黑"; position: relative; padding-left:10px; display: inline-block;}
+
+.copyright{ line-height:40px; color: #666e79; font-size:14px; font-family:"黑体"; text-align:center;}
+.footer_nav{ text-align:center;}
+.footer_nav a{ padding:0 16px; font-size:14px; font-weight:bold; color:#666e79;}
+.footer_nav .hover_footer{ color:#b0b4bd;}
+
+/*机票预订*/
+.header{ position:relative; height:48px;font-size:18px; color:#fff; background-color:#af0000;}
+.return-btn{ position: absolute; top:9px; left:10px;}
+.header-txt{ line-height:48px;}
+.header-txt2{ position:absolute; top:0; left:30px; line-height:48px;}
+.header-btn{ position: absolute; top:9px; right:10px;}
+.airticket{ padding:0 10px;}
+.airticket select{ background-color:#fff; height:37px; line-height:37px; width:100%;}
+.airticket option{ padding:3px; height:24px;}
+.arkt-cont{ margin:10px 0; border:1px solid #d7d7d7;}
+.arkt-lst{ }
+.arkt-li{ width:100%; padding:10px 0; border-bottom:1px solid #ccc;}
+.arkt-lst .city,.air-ul .city,.bank-num .city{ width:85px; display:inline-block; text-align:right; padding-right:10px; font-size:16px; line-height:37px;}
+.arkt-lst .city-txt,.air-ul .city-txt,.bank-num .city-txt{ width:100%; line-height:37px; font-size:14px; vertical-align:middle; padding:0 10px;}
+.arkt-lst .city-ipt,.air-ul .city-ipt,.bank-num .city-ipt{ width:100%; color:#ccc; border:1px solid #d7d7d7; height:37px; text-indent:10px; font-size:14px;}
+.date{ color:#000; text-indent:10px;}
+.ci-icon{ display: inline-block; position:absolute; top:0; left:10px; padding-left:80px; width:21px; height:31px; background:url(../images/calendar.png) 100% 8px no-repeat; vertical-align:top;}
+.sel-box{ display:inline-block; width:100%;}
+.time-sel{ background-color:#fff; border:1px solid #d7d7d7;}
+.sear-btn2{ display:block; border:none; width:100%; height:40px; line-height:40px; color:#fff; font-size:20px; font-family:"微软雅黑"; border-radius:2px; -webkit-border-radius:2px; border:1px solid #d44300; background:-webkit-gradient(linear,left top,left bottom,from(#ff8642),color-stop(.5,#ff8642),to(#ff6e36)); font-size:16px; cursor:pointer;}
+.city-start{ width:100%; margin:10px 0;}
+.city-start li{ border-top:1px dashed #d7d7d7; padding:10px 0 10px 6px; cursor:pointer; position:relative;}
+.m5{ margin:5px;}
+.m10{ margin:10px;}
+.myticket{ vertical-align:top;}
+.myticket .hide{ display:inline-block; width:20px; height:20px; margin-left:10px; background:url(../images/h-hide.png) no-repeat;}
+.close{ text-align:center; font-size:16px;}
+.cal-tab{ width:100%; background-color:#f6f6f6; text-align:center; font-size:16px; color:#505050;}
+.cal-tab td{ height:45px; line-height:45px; border-bottom:1px solid #d7d7d7; border-right:1px solid #d7d7d7; color:#d7d7d7;}
+.cal-tab h3{ text-align:center;}
+.cal-prev,.cal-next{ display:inline-block; width:30px; height:30px; line-height:30px; border:1px solid #000; border:0; background-color:#c80000; color:#fff; box-shadow:1px 1px 1px #ccc;}
+.month{ padding:0 20px;}
+.cal-tab th{ height:35px; line-height:35px; background-color:#ebedf5; color:#666e79;}
+.cal-tab .on-date{ background:#c80000; color:#fff;}
+.cal-tab .able{ color:#505050;}
+
+	/*航班列表*/
+.p-top{ height:55px; font-size:16px; color:#505050;}
+.p-top-spn{ line-height:24px;}
+.p-top a{ display:inline-block; line-height:55px; font-size:16px;}
+.p-prev{ position:relative; padding-left:25px;}
+.p-next{ position:relative; padding-right:25px;}
+.p-prev b{ position:absolute; top:0; left:0; display:inline-block; width:20px; height:55px; background:url(../images/prev-icon.png) no-repeat 10px 19px;}
+.p-next b{ position:absolute; top:0; right:0;  display:inline-block; width:20px; height:55px; background:url(../images/prev-icon.png) no-repeat -15px 19px;}
+.pd5{ padding:0 5px;}
+.flight-li{ width:100%; background-color:#fff1eb;}
+.flight-li a{ border-top:1px dashed #d7d7d7; margin:0 5px; position:relative; display:block; color:#8f8f8f;}
+.ft-img{ position:absolute; top:20px; left:10px; width:30px; height:100%; vertical-align:middle;}
+.info{ display: inline-block; margin-left:40px; padding:15px 0;}
+.flight-li b{ position: absolute; top:40px; right:5px; width: 0px; height: 0px; border:8px transparent solid;
+ border-top-color: #a5a3a1; vertical-align:middle;}
+.ft-id{ color:#666e79;}
+.ft-price{ position:absolute; top:20px; right:30px; text-align:right; margin-right:10px;}
+.repons{ background-color:#ffe5d9;}
+.book-btn{ width:80px; height:40px; line-height:40px; font-size:16px; color:#fff; background-color:#c80000; border:0; cursor:pointer; margin:25px 10px 0 0; font-weight:bold;}
+
+	/*填写订单*/
+.arkt-tit{ height:40px; line-height:40px; background:#ffd7c4; position:relative;}
+.arkt-tit h2{ line-height:40px; color:#e70000; font-size:16px; padding-left:15px;}
+.air-info{ padding:20px 28px; border-top:1px solid #d7d7d7; border-bottom:1px solid #d7d7d7; color:#666e79; font-size:16px;}
+.air-ul{ border-bottom:1px solid #d7d7d7; padding-bottom:20px;}
+.air-ul li{ width:100%; margin-top:20px;}
+.air-a{ position:relative;}
+.per-txt{ width:100%; color:#8f8f8f; border:1px solid #d7d7d7; height:37px; text-indent:10px; font-size:14px; vertical-align:middle;}
+.arr2{ position:absolute;top:12px; right:20px; width:7px; height:14px; background:url(../images/arr-r.png) no-repeat;}
+.rdo{ margin-right:3px; width:20px; height:20px;}
+.rdo-ct{ font-size:14px; margin-right:15px;}
+.star{ position:absolute; top:2px; right:20px; color:#c80000;}
+.star2{ position:absolute; top:2px; right:40px; color:#c80000;}
+.hint-p{ color:#8f8f8f; font-size:14px; margin-left:20px; line-height:22px;}
+.air-div{ width:100%; position:relative; border-bottom:1px dashed #d7d7d7; padding-bottom:20px;}
+.cal-btn{ width:100%; height:38px; line-height:38px; display: inline-block; background:-webkit-gradient(linear,left top,left bottom,from(#ff8642),color-stop(.5,#ff8642),to(#ff6e36)); border:1px solid #d44300; color:#fff; font-family:"微软雅黑"; font-size:14px; cursor:pointer; margin-top:20px;}
+.plr10{ padding:0 10px 20px 10px;}
+.red-p{ color:#c80000;}
+
+
+	/*添加联系人*/
+.add-user{ position:absolute; top:0; right:0; color:#505050; background:url(../images/add.gif) 0 10px no-repeat; padding:0 10px 0 25px;}
+.user-comm,.allorder{ padding:0 10px; font-size:16px;}
+.user-comm li,.allorder li{ border-bottom:1px dashed #d7d7d7; padding:20px 0; color:#505050;}
+.chkbox{ margin-right:10px; color:#666e79;}
+.num2{ margin-left:23px; color:#8f8f8f; line-height:25px;}
+
+
+	/*添加成功*/
+.addok{ border:1px solid #d7d7d7; margin:10px 0; font-size:16px;}
+.addok .addok-p{ color:#8f8f8f; font-size:16px; margin-top:100px;}
+.addok .addok-ipt{ width:80px; height:40px; line-height:40px; color:#fff; border:0; background-color:#c80000; cursor:pointer; font-weight:bold; font-size:16px; font-family:"微软雅黑"; margin:50px 0 100px 0;}
+.addok .red{ color:#e70000;}
+
+	/*订单添加成功*/
+.ok-title{ margin:40px 0; text-align:center; line-height:25px;}
+.pri-spn{ max-width:350px; margin:0 auto; color:#8f8f8f; line-height:25px; padding:0 20px; text-align:left;}
+.pri-spn span{ display:inline-block;}
+.pri-tit{ margin-right:20px;} 
+
+	/*幸福收银台*/
+.bank-num{ position:relative; margin-top:15px;}
+.close2{ position:absolute; top:8px; right:12px; width:22px; height:22px; background:url(../images/close2.png) no-repeat;}
+.bank-num .bank-ipt{ font-size:12px; color:#8f8f8f;}
+.quick-pay{ height:30px; line-height:30px; text-indent:15px; padding:10px 0; font-size:16px; border-bottom:1px dashed #d7d7d7;}
+.city2{ width:80px; display:inline-block; text-align:right; font-size:16px; line-height:37px;}
+.city-txt2{ width:100%; line-height:37px; font-size:14px; vertical-align:middle; padding-right:10px;}
+
+.bankInfo{ border-bottom:1px dashed #d7d7d7;}
+.bankInfo-cont{ max-width:320px; height:55px; margin:0 auto; padding:20px;}
+.bankInfo span{ margin:5px 0 0 15px; font-size:16px; line-height:22px;}
+.section{ margin:0 5px; border-bottom:1px dashed #d7d7d7; padding-bottom:15px;}
+.mark{ position:absolute; top:8px; right:12px; width:22px; height:22px; background:url(../images/mark.png) no-repeat;}
+.payok-btn{ width:100%; height:40px; line-height:40px; display: inline-block; background-color:#b2b2b2; border:0; color:#fff; font-family:"微软雅黑"; font-size:16px; cursor:pointer; margin-top:20px;}
+.cd-ipt{ width:70%; color:#ccc; border:1px solid #d7d7d7; height:37px; text-indent:10px; font-size:12px;}
+.send-btn{ position:absolute; top:0; right:10px; width:30%; max-width:110px; line-height:39px; height:39px; background-color:#c80000; color:#fff; border:0; font-family:"微软雅黑"; font-size:12px; cursor:pointer; vertical-align:top; }
+.hint-ipt{ display:block; height:23px; line-height:23px; font-size:16px; color:#c80000; background:url(../images/hint.png) no-repeat; padding-left:30px; padding-right:10px; margin-left:80px; margin-top:5px;}
+
+
+.pd{ padding:7px 0;}

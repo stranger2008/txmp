@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.dao.SellerGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.module.SellerGoods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="cat_attr" property="catAttr" jdbcType="VARCHAR" />
+    <result column="membercat" property="membercat" jdbcType="VARCHAR" />
+    <result column="size_attr" property="sizeAttr" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_wd" property="goodsWd" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brand_id" jdbcType="INTEGER" />
+    <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR" />
+    <result column="img_path" property="imgPath" jdbcType="VARCHAR" />
+    <result column="goods_video" property="goodsVideo" jdbcType="VARCHAR" />
+    <result column="self_cat" property="selfCat" jdbcType="VARCHAR" />
+    <result column="up_date" property="upDate" jdbcType="TIMESTAMP" />
+    <result column="down_date" property="downDate" jdbcType="TIMESTAMP" />
+    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
+    <result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+    <result column="mem_price" property="memPrice" jdbcType="VARCHAR" />
+    <result column="total_stock" property="totalStock" jdbcType="INTEGER" />
+    <result column="now_stock" property="nowStock" jdbcType="INTEGER" />
+    <result column="warn_stock" property="warnStock" jdbcType="INTEGER" />
+    <result column="saled_num" property="saledNum" jdbcType="INTEGER" />
+    <result column="give_inter" property="giveInter" jdbcType="INTEGER" />
+    <result column="interbuy" property="interbuy" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="REAL" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="is_ship" property="isShip" jdbcType="CHAR" />
+    <result column="is_volume" property="isVolume" jdbcType="CHAR" />
+    <result column="seo_titel" property="seoTitel" jdbcType="VARCHAR" />
+    <result column="seo_keyword" property="seoKeyword" jdbcType="VARCHAR" />
+    <result column="seo_desc" property="seoDesc" jdbcType="VARCHAR" />
+    <result column="relate_goods" property="relateGoods" jdbcType="VARCHAR" />
+    <result column="give" property="give" jdbcType="VARCHAR" />
+    <result column="label" property="label" jdbcType="CHAR" />
+    <result column="busi_remark" property="busiRemark" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="CHAR" />
+    <result column="no_reason" property="noReason" jdbcType="VARCHAR" />
+    <result column="info_state" property="infoState" jdbcType="CHAR" />
+    <result column="in_date" property="inDate" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="volume" property="volume" jdbcType="REAL" />
+    <result column="infoattr_id" property="infoattrId" jdbcType="CHAR" />
+    <result column="is_virtual" property="isVirtual" jdbcType="CHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.xingfugo.business.module.SellerGoodsWithBLOBs" extends="BaseResultMap" >
+    <result column="goods_detail" property="goodsDetail" jdbcType="LONGVARCHAR" />
+    <result column="ship_price" property="shipPrice" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    goods_id, cust_id, cat_attr, membercat,size_attr, goods_name, goods_no, goods_wd, brand_id, 
+    goods_desc, img_path, goods_video, self_cat, up_date, down_date, market_price, sale_price, 
+    cost_price, mem_price, total_stock, now_stock, warn_stock, saled_num, give_inter, 
+    interbuy, weight, unit, is_ship, is_volume, seo_titel, seo_keyword, seo_desc, relate_goods, 
+    give, label, busi_remark, is_del, no_reason,  in_date, user_id, volume, 
+    infoattr_id, is_virtual
+  </sql>
+  
+  <sql id="Blob_Column_List" >
+    goods_detail, ship_price
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update goods set is_del = '0'
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deletegoodsByPrimaryKey" parameterType="java.lang.Integer" >
+    DELETE FROM goods where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="returnByPrimaryKey" parameterType="java.lang.Integer" >
+    update goods set is_del = '1'
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="batchDelete" parameterType="list" >
+    update goods set is_del = '0'
+    where goods_id in
+    <foreach collection="list" open="(" close=")" separator="," item="goodsId" >
+     #{goodsId,jdbcType=INTEGER}
+    </foreach> 
+  </delete>
+  <delete id="batchreturn" parameterType="list" >
+    update goods set is_del = '1'
+    where goods_id in
+    <foreach collection="list" open="(" close=")" separator="," item="goodsId" >
+     #{goodsId,jdbcType=INTEGER}
+    </foreach> 
+  </delete>
+  
+  <insert id="insert" parameterType="com.xingfugo.business.module.SellerGoodsWithBLOBs" >
+    insert into goods (cust_id, cat_attr,membercat,
+      size_attr, goods_name, goods_no, 
+      goods_wd, brand_id, goods_desc, 
+      img_path, goods_video, self_cat, 
+      up_date, down_date, market_price, 
+      sale_price, cost_price, mem_price, 
+      total_stock, now_stock, warn_stock, 
+      saled_num, give_inter, interbuy, 
+      weight, unit, is_ship, is_volume, 
+      seo_titel, seo_keyword, seo_desc, 
+      relate_goods, give, label, 
+      busi_remark, is_del, no_reason, 
+      info_state, in_date, user_id, 
+      volume, infoattr_id, is_virtual, 
+      goods_detail, ship_price)
+    values (#{custId,jdbcType=INTEGER}, #{catAttr,jdbcType=VARCHAR}, #{membercat,jdbcType=VARCHAR},
+      #{sizeAttr,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsNo,jdbcType=VARCHAR}, 
+      #{goodsWd,jdbcType=VARCHAR}, #{brand_id,jdbcType=INTEGER}, #{goodsDesc,jdbcType=VARCHAR}, 
+      #{imgPath,jdbcType=VARCHAR}, #{goodsVideo,jdbcType=VARCHAR}, #{selfCat,jdbcType=VARCHAR}, 
+      #{upDate,jdbcType=TIMESTAMP}, #{downDate,jdbcType=TIMESTAMP}, #{marketPrice,jdbcType=DECIMAL}, 
+      #{salePrice,jdbcType=DECIMAL}, #{costPrice,jdbcType=DECIMAL}, #{memPrice,jdbcType=VARCHAR}, 
+      #{totalStock,jdbcType=INTEGER}, #{nowStock,jdbcType=INTEGER}, #{warnStock,jdbcType=INTEGER}, 
+      #{saledNum,jdbcType=INTEGER}, #{giveInter,jdbcType=INTEGER}, #{interbuy,jdbcType=INTEGER}, 
+      #{weight,jdbcType=REAL}, #{unit,jdbcType=VARCHAR}, #{isShip,jdbcType=CHAR}, #{isVolume,jdbcType=CHAR}, 
+      #{seoTitel,jdbcType=VARCHAR}, #{seoKeyword,jdbcType=VARCHAR}, #{seoDesc,jdbcType=VARCHAR}, 
+      #{relateGoods,jdbcType=VARCHAR}, #{give,jdbcType=VARCHAR}, #{label,jdbcType=CHAR}, 
+      #{busiRemark,jdbcType=VARCHAR}, #{isDel,jdbcType=CHAR}, #{noReason,jdbcType=VARCHAR}, 
+      #{infoState,jdbcType=CHAR}, now(), #{userId,jdbcType=INTEGER}, 
+      #{volume,jdbcType=REAL}, #{infoattrId,jdbcType=CHAR}, #{isVirtual,jdbcType=CHAR}, 
+      #{goodsDetail,jdbcType=LONGVARCHAR}, #{shipPrice,jdbcType=LONGVARCHAR})
+	<selectKey keyProperty="goodsId" resultType="java.lang.Integer" order="AFTER">
+		select LAST_INSERT_ID()
+	</selectKey>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xingfugo.business.module.SellerGoodsWithBLOBs" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="catAttr != null" >
+        cat_attr,
+      </if>
+      <if test="membercat != null" >
+        membercat,
+      </if>
+      <if test="sizeAttr != null" >
+        size_attr,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="goodsWd != null" >
+        goods_wd,
+      </if>
+      <if test="brand_id != null" >
+        brand_id,
+      </if>
+      <if test="goodsDesc != null" >
+        goods_desc,
+      </if>
+      <if test="imgPath != null" >
+        img_path,
+      </if>
+      <if test="goodsVideo != null" >
+        goods_video,
+      </if>
+      <if test="selfCat != null" >
+        self_cat,
+      </if>
+      <if test="upDate != null" >
+        up_date,
+      </if>
+      <if test="downDate != null" >
+        down_date,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="salePrice != null" >
+        sale_price,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="memPrice != null" >
+        mem_price,
+      </if>
+      <if test="totalStock != null" >
+        total_stock,
+      </if>
+      <if test="nowStock != null" >
+        now_stock,
+      </if>
+      <if test="warnStock != null" >
+        warn_stock,
+      </if>
+      <if test="saledNum != null" >
+        saled_num,
+      </if>
+      <if test="giveInter != null" >
+        give_inter,
+      </if>
+      <if test="interbuy != null" >
+        interbuy,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="isShip != null" >
+        is_ship,
+      </if>
+      <if test="isVolume != null" >
+        is_volume,
+      </if>
+      <if test="seoTitel != null" >
+        seo_titel,
+      </if>
+      <if test="seoKeyword != null" >
+        seo_keyword,
+      </if>
+      <if test="seoDesc != null" >
+        seo_desc,
+      </if>
+      <if test="relateGoods != null" >
+        relate_goods,
+      </if>
+      <if test="give != null" >
+        give,
+      </if>
+      <if test="label != null" >
+        label,
+      </if>
+      <if test="busiRemark != null" >
+        busi_remark,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="noReason != null" >
+        no_reason,
+      </if>
+      <if test="infoState != null" >
+        info_state,
+      </if>
+      <if test="inDate != null" >
+        in_date,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="volume != null" >
+        volume,
+      </if>
+      <if test="infoattrId != null" >
+        infoattr_id,
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual,
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail,
+      </if>
+      <if test="shipPrice != null" >
+        ship_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="catAttr != null" >
+        #{catAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="membercat != null" >
+         #{membercat,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeAttr != null" >
+        #{sizeAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsWd != null" >
+        #{goodsWd,jdbcType=VARCHAR},
+      </if>
+      <if test="brand_id != null" >
+        #{brand_id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDesc != null" >
+        #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imgPath != null" >
+        #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsVideo != null" >
+        #{goodsVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="selfCat != null" >
+        #{selfCat,jdbcType=VARCHAR},
+      </if>
+      <if test="upDate != null" >
+        #{upDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downDate != null" >
+        #{downDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salePrice != null" >
+        #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memPrice != null" >
+        #{memPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="totalStock != null" >
+        #{totalStock,jdbcType=INTEGER},
+      </if>
+      <if test="nowStock != null" >
+        #{nowStock,jdbcType=INTEGER},
+      </if>
+      <if test="warnStock != null" >
+        #{warnStock,jdbcType=INTEGER},
+      </if>
+      <if test="saledNum != null" >
+        #{saledNum,jdbcType=INTEGER},
+      </if>
+      <if test="giveInter != null" >
+        #{giveInter,jdbcType=INTEGER},
+      </if>
+      <if test="interbuy != null" >
+        #{interbuy,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="isShip != null" >
+        #{isShip,jdbcType=CHAR},
+      </if>
+      <if test="isVolume != null" >
+        #{isVolume,jdbcType=CHAR},
+      </if>
+      <if test="seoTitel != null" >
+        #{seoTitel,jdbcType=VARCHAR},
+      </if>
+      <if test="seoKeyword != null" >
+        #{seoKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="seoDesc != null" >
+        #{seoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="relateGoods != null" >
+        #{relateGoods,jdbcType=VARCHAR},
+      </if>
+      <if test="give != null" >
+        #{give,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=CHAR},
+      </if>
+      <if test="busiRemark != null" >
+        #{busiRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=CHAR},
+      </if>
+      <if test="noReason != null" >
+        #{noReason,jdbcType=VARCHAR},
+      </if>
+      <if test="infoState != null" >
+        #{infoState,jdbcType=CHAR},
+      </if>
+      <if test="inDate != null" >
+        #{inDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=REAL},
+      </if>
+      <if test="infoattrId != null" >
+        #{infoattrId,jdbcType=CHAR},
+      </if>
+      <if test="isVirtual != null" >
+        #{isVirtual,jdbcType=CHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        #{goodsDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shipPrice != null" >
+        #{shipPrice,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xingfugo.business.module.SellerGoodsWithBLOBs" >
+    update goods
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="catAttr != null" >
+        cat_attr = #{catAttr,jdbcType=VARCHAR},
+      </if>
+       <if test="membercat != null" >
+        membercat = #{membercat,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeAttr != null" >
+        size_attr = #{sizeAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsWd != null" >
+        goods_wd = #{goodsWd,jdbcType=VARCHAR},
+      </if>
+      <if test="brand_id != null" >
+        brand_id = #{brand_id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDesc != null" >
+        goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imgPath != null" >
+        img_path = #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsVideo != null" >
+        goods_video = #{goodsVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="selfCat != null" >
+        self_cat = #{selfCat,jdbcType=VARCHAR},
+      </if>
+      <if test="upDate != null" >
+        up_date = #{upDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downDate != null" >
+        down_date = #{downDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="marketPrice != null" >
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salePrice != null" >
+        sale_price = #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memPrice != null" >
+        mem_price = #{memPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="totalStock != null" >
+        total_stock = #{totalStock,jdbcType=INTEGER},
+      </if>
+      <if test="nowStock != null" >
+        now_stock = #{nowStock,jdbcType=INTEGER},
+      </if>
+      <if test="warnStock != null" >
+        warn_stock = #{warnStock,jdbcType=INTEGER},
+      </if>
+      <if test="saledNum != null" >
+        saled_num = #{saledNum,jdbcType=INTEGER},
+      </if>
+      <if test="giveInter != null" >
+        give_inter = #{giveInter,jdbcType=INTEGER},
+      </if>
+      <if test="interbuy != null" >
+        interbuy = #{interbuy,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="isShip != null" >
+        is_ship = #{isShip,jdbcType=CHAR},
+      </if>
+      <if test="isVolume != null" >
+        is_volume = #{isVolume,jdbcType=CHAR},
+      </if>
+      <if test="seoTitel != null" >
+        seo_titel = #{seoTitel,jdbcType=VARCHAR},
+      </if>
+      <if test="seoKeyword != null" >
+        seo_keyword = #{seoKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="seoDesc != null" >
+        seo_desc = #{seoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="relateGoods != null" >
+        relate_goods = #{relateGoods,jdbcType=VARCHAR},
+      </if>
+      <if test="give != null" >
+        give = #{give,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        label = #{label,jdbcType=CHAR},
+      </if>
+      <if test="busiRemark != null" >
+        busi_remark = #{busiRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=CHAR},
+      </if>
+      <if test="noReason != null" >
+        no_reason = #{noReason,jdbcType=VARCHAR},
+      </if>
+      <if test="infoState != null" >
+        info_state = #{infoState,jdbcType=CHAR},
+      </if>
+      <if test="inDate != null" >
+        in_date = #{inDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=REAL},
+      </if>
+      <if test="infoattrId != null" >
+        infoattr_id = #{infoattrId,jdbcType=CHAR},
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual = #{isVirtual,jdbcType=CHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shipPrice != null" >
+        ship_price = #{shipPrice,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xingfugo.business.module.SellerGoodsWithBLOBs" >
+    update goods
+    set cust_id = #{custId,jdbcType=INTEGER},
+      cat_attr = #{catAttr,jdbcType=VARCHAR},
+      membercat = #{membercat,jdbcType=VARCHAR},
+      size_attr = #{sizeAttr,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_no = #{goodsNo,jdbcType=VARCHAR},
+      goods_wd = #{goodsWd,jdbcType=VARCHAR},
+      brand_id = #{brand_id,jdbcType=INTEGER},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      goods_video = #{goodsVideo,jdbcType=VARCHAR},
+      self_cat = #{selfCat,jdbcType=VARCHAR},
+      up_date = #{upDate,jdbcType=TIMESTAMP},
+      down_date = #{downDate,jdbcType=TIMESTAMP},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      sale_price = #{salePrice,jdbcType=DECIMAL},
+      cost_price = #{costPrice,jdbcType=DECIMAL},
+      mem_price = #{memPrice,jdbcType=VARCHAR},
+      total_stock = #{totalStock,jdbcType=INTEGER},
+      now_stock = #{nowStock,jdbcType=INTEGER},
+      warn_stock = #{warnStock,jdbcType=INTEGER},
+      saled_num = #{saledNum,jdbcType=INTEGER},
+      give_inter = #{giveInter,jdbcType=INTEGER},
+      interbuy = #{interbuy,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=REAL},
+      unit = #{unit,jdbcType=VARCHAR},
+      is_ship = #{isShip,jdbcType=CHAR},
+      is_volume = #{isVolume,jdbcType=CHAR},
+      seo_titel = #{seoTitel,jdbcType=VARCHAR},
+      seo_keyword = #{seoKeyword,jdbcType=VARCHAR},
+      seo_desc = #{seoDesc,jdbcType=VARCHAR},
+      relate_goods = #{relateGoods,jdbcType=VARCHAR},
+      give = #{give,jdbcType=VARCHAR},
+      label = #{label,jdbcType=CHAR},
+      busi_remark = #{busiRemark,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=CHAR},
+      no_reason = #{noReason,jdbcType=VARCHAR},
+      info_state = #{infoState,jdbcType=CHAR},
+      in_date = #{inDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      volume = #{volume,jdbcType=REAL},
+      infoattr_id = #{infoattrId,jdbcType=CHAR},
+      is_virtual = #{isVirtual,jdbcType=CHAR},
+      goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR},
+      ship_price = #{shipPrice,jdbcType=LONGVARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  
+ <update id="updateBaseInfoByPrimaryKeyWithBLOBs" parameterType="com.xingfugo.business.module.SellerGoodsWithBLOBs" >
+    update goods
+    set 
+      cat_attr = #{catAttr,jdbcType=VARCHAR},
+      membercat = #{membercat,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_wd = #{goodsWd,jdbcType=VARCHAR},
+      brand_id = #{brand_id,jdbcType=INTEGER},
+      is_virtual = #{isVirtual,jdbcType=CHAR},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      up_date = #{upDate,jdbcType=TIMESTAMP},
+      down_date = #{downDate,jdbcType=TIMESTAMP},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      sale_price = #{salePrice,jdbcType=DECIMAL},
+      warn_stock = #{warnStock,jdbcType=INTEGER},
+      is_ship = #{isShip,jdbcType=CHAR},
+      busi_remark = #{busiRemark,jdbcType=VARCHAR},
+      goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR},
+      ship_price = #{shipPrice,jdbcType=LONGVARCHAR},
+      info_state = #{infoState, jdbcType=CHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+    
+  <update id="updateByPrimaryKey" parameterType="com.xingfugo.business.module.SellerGoods" >
+    update goods
+    set cust_id = #{custId,jdbcType=INTEGER},
+      cat_attr = #{catAttr,jdbcType=VARCHAR},
+      membercat = #{membercat,jdbcType=VARCHAR},
+      size_attr = #{sizeAttr,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_no = #{goodsNo,jdbcType=VARCHAR},
+      goods_wd = #{goodsWd,jdbcType=VARCHAR},
+      brand_id = #{brand_id,jdbcType=INTEGER},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      goods_video = #{goodsVideo,jdbcType=VARCHAR},
+      self_cat = #{selfCat,jdbcType=VARCHAR},
+      up_date = #{upDate,jdbcType=TIMESTAMP},
+      down_date = #{downDate,jdbcType=TIMESTAMP},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      sale_price = #{salePrice,jdbcType=DECIMAL},
+      cost_price = #{costPrice,jdbcType=DECIMAL},
+      mem_price = #{memPrice,jdbcType=VARCHAR},
+      total_stock = #{totalStock,jdbcType=INTEGER},
+      now_stock = #{nowStock,jdbcType=INTEGER},
+      warn_stock = #{warnStock,jdbcType=INTEGER},
+      saled_num = #{saledNum,jdbcType=INTEGER},
+      give_inter = #{giveInter,jdbcType=INTEGER},
+      interbuy = #{interbuy,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=REAL},
+      unit = #{unit,jdbcType=VARCHAR},
+      is_ship = #{isShip,jdbcType=CHAR},
+      is_volume = #{isVolume,jdbcType=CHAR},
+      seo_titel = #{seoTitel,jdbcType=VARCHAR},
+      seo_keyword = #{seoKeyword,jdbcType=VARCHAR},
+      seo_desc = #{seoDesc,jdbcType=VARCHAR},
+      relate_goods = #{relateGoods,jdbcType=VARCHAR},
+      give = #{give,jdbcType=VARCHAR},
+      label = #{label,jdbcType=CHAR},
+      busi_remark = #{busiRemark,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=CHAR},
+      no_reason = #{noReason,jdbcType=VARCHAR},
+      info_state = #{infoState,jdbcType=CHAR},
+      in_date = #{inDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      volume = #{volume,jdbcType=REAL},
+      infoattr_id = #{infoattrId,jdbcType=CHAR},
+      is_virtual = #{isVirtual,jdbcType=CHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateStockByPrimaryKey">
+  	update goods set 
+  		total_stock = total_stock + #{amount,jdbcType=INTEGER}, 
+  		now_stock = now_stock + #{amount,jdbcType=INTEGER}
+  	where goods_id = #{goodsId}
+  </update>
+  
+  <update id="updateDownDateByPrimaryKey">
+  	update goods set 
+  		down_date = #{downDate,jdbcType=TIMESTAMP} 
+  	where goods_id = #{goodsId}
+  </update>
+</mapper>

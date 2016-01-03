@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsaskDao">
+    
+    <select id="getGoodsaskByPage" resultType="map"
+    parameterType="com.xingfugo.business.module.query.GoodsaskQueryForm">
+        select g.*,d.goods_name,u.user_name,m.cust_name from goodsask g left join goods d on g.goods_id=d.goods_id
+        left join memberuser u on g.user_id = u.user_id
+        left join member m on g.cust_id = m.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and g.user_id=#{user_id} 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.cust_id=#{cust_id} 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(sear_days)">
+				and <![CDATA[ ( TO_DAYS(NOW()) - TO_DAYS(g.c_date)) <= #{sear_days} ]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and g.goods_id=#{goods_id} 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_name)">
+				and d.goods_name like concat('%', #{goods_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_content)">
+				and g.c_content like concat('%', #{c_content}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(re_content)">
+				and g.re_content like concat('%', #{re_content}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_date_begin)">
+				and c_date &gt;= #{c_date_begin}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_date_end)">
+				<![CDATA[ AND DATE(c_date) < DATE_SUB(#{c_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(re_date_begin)">
+				and re_date &gt;= #{re_date_begin}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(re_date_end)">
+				<![CDATA[ AND DATE(re_date) < DATE_SUB(#{re_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+		
+		</where>
+        ORDER BY g.c_date DESC,g.re_date DESC
+    </select>
+    
+    <select id="getGoodsaskByGoodsid" resultType="int" parameterType="int">
+        select count(trade_id) as ct from goodsask g where g.goods_id=#{value}
+    </select>
+    
+    <select id="getRecontCountByNowUserid" resultType="int" parameterType="int">
+        select count(trade_id) ct from goodsask where re_content != '' and user_id=#{value} and TO_DAYS(now()) = TO_DAYS(re_date)
+    </select>
+    
+    <select id="get" resultType="com.xingfugo.business.module.Goodsask" parameterType="int">
+        select * from goodsask where trade_id=#{value}
+    </select>
+    
+    <insert id="insertGoodsask" parameterType="com.xingfugo.business.module.Goodsask">
+		insert into goodsask(goods_id,cust_id,user_id,c_content,c_date,star)values(#{goods_id},#{cust_id},#{user_id},#{c_content},now(),#{star})
+		<selectKey keyProperty="trade_id" resultType="java.lang.Integer" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="reply" parameterType="com.xingfugo.business.module.Goodsask">
+		update goodsask set re_content=#{re_content},re_date=NOW() WHERE trade_id=#{trade_id}
+	</update>
+    
+    <delete id="deleteGoodsask" parameterType="int">
+		DELETE FROM goodsask WHERE trade_id=#{id}
+	</delete>
+	
+	<delete id="batchDeleteGoodsask" parameterType="list">
+		DELETE FROM goodsask WHERE trade_id in
+		<foreach collection="list" open="(" close=")" separator="," item="id" >
+		#{id}
+		</foreach>
+	</delete>
+	
+    <delete id="delete" parameterType="string">
+		DELETE FROM goodsask WHERE trade_id in (${value})
+	</delete>
+	
+</mapper>

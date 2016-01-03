@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.LinkDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Link">
+    	SELECT link_id,link_name,link_group,area_attr,url,sort_no,is_display,img_path,plat_type FROM link WHERE link_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Link">
+		UPDATE link SET link_id=#{link_id},link_name=#{link_name},link_group=#{link_group},area_attr=#{area_attr},url=#{url},sort_no=#{sort_no},is_display=#{is_display},img_path=#{img_path},plat_type=#{plat_type} WHERE link_id=${link_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Link">
+		INSERT INTO link (link_name,link_group,area_attr,url,sort_no,is_display,img_path,plat_type) VALUES (#{link_name},#{link_group},#{area_attr},#{url},#{sort_no},#{is_display},#{img_path},#{plat_type})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM link WHERE link_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT link_id,link_name,link_group,area_attr,url,sort_no,is_display,img_path,plat_type  from link
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(link_name)">
+				and link_name like concat('%', #{link_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(url)">
+				and url like concat('%', #{url}, '%')
+			</if>
+		</where>
+		ORDER BY sort_no ASC,link_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT link_id,link_name,link_group,area_attr,url,sort_no,is_display,img_path,plat_type  from link
+		<where>
+			
+		</where>
+		ORDER BY link_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Link">
+		INSERT INTO link (link_id,link_name,link_group,area_attr,url,sort_no,is_display,img_path,plat_type) VALUES (#{link_id},#{link_name},#{link_group},#{area_attr},#{url},#{sort_no},#{is_display},#{img_path},#{plat_type})
+		<selectKey keyProperty="link_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

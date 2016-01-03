@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<conf>
+	<!-- 文件处理临时目录 -->
+	<tmpDir>D:/terminal/temp/</tmpDir>
+	<!-- 转变上传的文件目录 -->
+	<sendDir>D:/terminal/send/</sendDir>
+	<!-- 备份上传的zip文件目录 -->
+	<bakDir>D:/terminal/back/</bakDir>
+	<!-- 是否备份上传的zip文件 -->
+	<isBak>true</isBak>
+	<!-- 针对本地路径的图片地址，图片存储的根目录 -->
+	<imgDir>D:/img/</imgDir>
+	<!-- zip文件推送地址 -->
+	<httpUploadURL>http://192.168.1.13:8080/xfg_data/upload.json</httpUploadURL>
+</conf>

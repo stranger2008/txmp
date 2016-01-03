@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.CommparaDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Commpara">
+    	SELECT para_id,para_code,para_name,para_key,para_value,sort_no,enabled FROM commpara WHERE para_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Commpara">
+		UPDATE commpara SET para_code=#{para_code},para_name=#{para_name},para_key=#{para_key},para_value=#{para_value},sort_no=#{sort_no},enabled=#{enabled} WHERE para_id=${para_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Commpara">
+		INSERT INTO commpara (para_code,para_name,para_key,para_value,sort_no,enabled) VALUES (#{para_code},#{para_name},#{para_key},#{para_value},#{sort_no},#{enabled})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM commpara WHERE para_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT para_id,para_code,para_name,para_key,para_value,sort_no,enabled  from commpara
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_code)">
+				and para_code like concat('%', #{para_code}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_name)">
+				and para_name like concat('%', #{para_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_key)">
+				and para_key like concat('%', #{para_key}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_value)">
+				and para_value like concat('%', #{para_value}, '%')
+			</if>
+			
+		</where>
+		ORDER BY para_code ASC,sort_no ASC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		select * from commpara 
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_code)">
+				and para_code=#{para_code}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_name)">
+				and para_name=#{para_name}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_value)">
+				and para_value=#{para_value} 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(para_key)">
+				and para_key=#{para_key} 
+			</if>
+		</where>
+		ORDER BY para_code ASC,sort_no ASC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Commpara">
+		INSERT INTO commpara (para_code,para_name,para_key,para_value,sort_no,enabled) VALUES (#{para_code},#{para_name},#{para_key},#{para_value},#{sort_no},#{enabled})
+		<selectKey keyProperty="para_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

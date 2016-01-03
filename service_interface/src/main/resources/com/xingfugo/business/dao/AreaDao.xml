@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.AreaDao">
+
+	<cache eviction="LRU" readOnly="true" 
+		type="com.xingfugo.business.module.mybatis.MybatisRedisCache">
+	</cache>
+	<!--  useCache="false" -->
+
+	<update id="update" parameterType="com.xingfugo.business.module.Area">
+		UPDATE area SET area_name=#{area_name},en_name=#{en_name},up_area_id=#{up_area_id},area_level=#{area_level},sort_no=#{sort_no},is_city=#{is_city},is_open=#{is_open} WHERE area_id=${area_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Area">
+		INSERT INTO area (area_id,area_name,en_name,up_area_id,area_level,sort_no,is_city,is_open) VALUES (#{area_id},#{area_name},#{en_name},#{up_area_id},#{area_level},#{sort_no},#{is_city},#{is_open})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM area WHERE area_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT area_id, area_name, en_name, up_area_id, area_level, sort_no, is_city, is_open  from area
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(area_name)">
+				and area_name like concat('%', #{area_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_area_id)">
+				and up_area_id like concat('%', #{up_area_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_open)">
+				and is_open like concat('%', #{is_open}, '%')
+			</if>
+			
+		</where>
+		ORDER BY sort_no DESC,area_name ASC,area_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT area_id, area_name, en_name, up_area_id, area_level, sort_no, is_city, is_open  from area
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_area_id)">
+				and up_area_id like concat('%', #{up_area_id}, '%')
+			</if>
+		</where>
+		ORDER BY area_name ASC,area_id DESC
+	</select>
+	
+	<select id="getOpenWebArea" resultType="map">
+        select * from area where is_open='1' order by sort_no DESC,en_name ASC
+    </select>
+    
+    <select id="getByPk" resultType="com.xingfugo.business.module.Area" parameterType="string">
+        select * from area where area_id=#{value}
+    </select>
+    
+    <select id="getAreaListByUpareaid" resultType="map" parameterType="string">
+        select * from area where up_area_id=#{id} order by sort_no DESC,en_name ASC
+    </select>
+    
+    <select id="getAreaNameListByIds" resultType="map" parameterType="list">
+        select area_id, area_name from area 
+        where area_id in
+        <foreach collection="list" open="(" close=")" separator="," item="id" >
+        #{id}
+        </foreach> 
+        order by area_level ASC
+    </select>
+    
+    <select id="getAreaAttrNameByAreaIdAttr" resultType="map" parameterType="string">
+        select area_name from area where area_id in (${value}) ORDER BY area_level ASC
+    </select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Area">
+		INSERT INTO area (area_name,en_name,up_area_id,area_level,sort_no,is_city,is_open) VALUES (#{area_name},#{en_name},#{up_area_id},#{area_level},#{sort_no},#{is_city},#{is_open})
+		<selectKey keyProperty="area_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

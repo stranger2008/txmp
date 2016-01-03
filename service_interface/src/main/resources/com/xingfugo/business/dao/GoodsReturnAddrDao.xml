@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsReturnAddrDao">
+
+	<resultMap type="com.xingfugo.business.module.GoodsReturnAddr" id="goodsReturnAddr">
+		<id property="trade_id" column="trade_id"/>
+		<result property="link_id" column="link_id"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="area_attr" column="area_attr"/>
+		<result property="addr" column="addr"/>
+		<result property="user_id" column="user_id"/>
+		<result property="user_type" column="user_type"/>
+	</resultMap>
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.GoodsReturnAddr">
+    	SELECT trade_id,link_id,name,phone,area_attr,addr,user_id,user_type FROM inc_goods_return_addr WHERE trade_id=${value}
+	</select>
+	
+	<select id="getByLinkId" parameterType="map" resultMap="goodsReturnAddr">
+    	SELECT trade_id,link_id,name,phone,area_attr,addr,user_id,user_type FROM inc_goods_return_addr
+    	 <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(link_id)">
+				and link_id = #{link_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_type)">
+				and user_type = #{user_type}
+			</if>
+		</where>
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.GoodsReturnAddr">
+		UPDATE inc_goods_return_addr SET link_id=#{link_id},name=#{name},phone=#{phone},area_attr=#{area_attr},addr=#{addr},user_id=#{user_id},user_type=#{user_type} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.GoodsReturnAddr">
+		INSERT INTO inc_goods_return_addr (link_id,name,phone,area_attr,addr,user_id,user_type) VALUES (#{link_id},#{name},#{phone},#{area_attr},#{addr},#{user_id},#{user_type})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM inc_goods_return_addr WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,link_id,name,phone,area_attr,addr,user_id,user_type  from inc_goods_return_addr
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(link_id)">
+				and link_id like concat('%', #{link_id}, '%')
+			</if>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,link_id,name,phone,area_attr,addr,user_id,user_type  from inc_goods_return_addr
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.GoodsReturnAddr">
+		INSERT INTO inc_goods_return_addr (link_id,name,phone,area_attr,addr,user_id,user_type) VALUES (#{link_id},#{name},#{phone},#{area_attr},#{addr},#{user_id},#{user_type})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

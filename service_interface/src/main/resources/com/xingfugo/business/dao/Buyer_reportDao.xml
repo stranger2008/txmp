@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Buyer_reportDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Buyer_report">
+    	SELECT report_id,goods_id,user_id,cust_id,r_type,r_desc,img_evidence,status,remark,in_date FROM buyer_report WHERE report_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Buyer_report">
+		UPDATE buyer_report SET goods_id=#{goods_id},user_id=#{user_id},cust_id=#{cust_id},r_type=#{r_type},r_desc=#{r_desc},img_evidence=#{img_evidence},status=#{status},remark=#{remark} WHERE report_id=${report_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Buyer_report">
+		INSERT INTO buyer_report (goods_id,user_id,cust_id,r_type,r_desc,img_evidence,status,remark,in_date) VALUES (#{goods_id},#{user_id},#{cust_id},#{r_type},#{r_desc},#{img_evidence},#{status},#{remark},NOW())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM buyer_report WHERE report_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT m.cust_name,g.goods_name,b.report_id,b.goods_id,b.user_id,b.cust_id,b.r_type,b.r_desc,b.img_evidence,b.status,remark,b.in_date  from buyer_report  b
+		left join goods  g on   g.goods_id = b.goods_id
+		left join member m on   m.cust_id = b.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and  b.user_id = #{user_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and  b.goods_id = #{goods_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and  b.cust_id = #{cust_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				and m.cust_name like concat('%', #{cust_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(r_type)">
+				and b.r_type like concat('%', #{r_type}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+				and b.status like concat('%', #{status}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(b.in_date) >= UNIX_TIMESTAMP(#{in_date_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_end)">
+				<![CDATA[ AND DATE(b.in_date) < DATE_SUB(#{in_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY  b.in_date ASC,report_id ASC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT m.cust_name,g.goods_name,b.report_id,b.goods_id,b.user_id,b.cust_id,b.r_type,b.r_desc,b.img_evidence,b.status,remark,b.in_date  from buyer_report  b
+		left join goods  g on   g.goods_id = b.goods_id
+		left join member m on   m.cust_id = b.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and  b.user_id = #{user_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and  b.goods_id = #{goods_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and  b.cust_id = #{cust_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				and m.cust_name like concat('%', #{cust_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(r_type)">
+				and b.r_type like concat('%', #{r_type}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+				and b.status like concat('%', #{status}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(b.in_date) >= UNIX_TIMESTAMP(#{in_date_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_end)">
+				<![CDATA[ AND DATE(b.in_date) < DATE_SUB(#{in_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY  b.in_date ASC,report_id ASC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Buyer_report">
+		INSERT INTO buyer_report (goods_id,user_id,cust_id,r_type,r_desc,img_evidence,status,remark,in_date) VALUES (#{goods_id},#{user_id},#{cust_id},#{r_type},#{r_desc},#{img_evidence},#{status},#{remark},#{in_date})
+		<selectKey keyProperty="report_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

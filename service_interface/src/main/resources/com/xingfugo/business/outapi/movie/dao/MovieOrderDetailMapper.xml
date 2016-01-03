@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.outapi.movie.dao.MovieOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.outapi.movie.module.local.MovieOrderDetail" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="all_money" property="allMoney" jdbcType="VARCHAR" />
+    <result column="single_price" property="singlePrice" jdbcType="VARCHAR" />
+    <result column="aoods_amount" property="goodsAmount" jdbcType="INTEGER" />
+    <result column="hall_name" property="hallName" jdbcType="VARCHAR" />
+    <result column="film_no" property="filmNo" jdbcType="VARCHAR" />
+    <result column="cinema_no" property="cinemaNo" jdbcType="VARCHAR" />
+    <result column="seq_no" property="seqNo" jdbcType="VARCHAR" />
+    <result column="seats" property="seats" jdbcType="VARCHAR" />
+    <result column="hall_no" property="hallNo" jdbcType="VARCHAR" />
+    <result column="film_name" property="filmName" jdbcType="VARCHAR" />
+    <result column="cinema_name" property="cinemaName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    Id, order_id, goods_id, goods_name, all_money, single_price, aoods_amount, hall_name, 
+    film_no, cinema_no, seq_no, seats, hall_no, film_name, cinema_name
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_movie_order_detail
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_movie_order_detail
+    where order_id = #{orderId,jdbcType=VARCHAR} limit 1
+  </select>
+  
+  <insert id="insert" parameterType="com.xingfugo.business.outapi.movie.module.local.MovieOrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into api_movie_order_detail (order_id, goods_id, goods_name, 
+      all_money, single_price, aoods_amount, 
+      hall_name, film_no, cinema_no, 
+      seq_no, seats, hall_no, 
+      film_name, cinema_name)
+    values (#{orderId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{allMoney,jdbcType=VARCHAR}, #{singlePrice,jdbcType=VARCHAR}, #{goodsAmount,jdbcType=INTEGER}, 
+      #{hallName,jdbcType=VARCHAR}, #{filmNo,jdbcType=VARCHAR}, #{cinemaNo,jdbcType=VARCHAR}, 
+      #{seqNo,jdbcType=VARCHAR}, #{seats,jdbcType=VARCHAR}, #{hallNo,jdbcType=VARCHAR}, 
+      #{filmName,jdbcType=VARCHAR}, #{cinemaName,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>

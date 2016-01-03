@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.CourseDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Course">
+    	SELECT info_id,cust_id,c_name,c_type,teacher,c_desc,user_id,in_date,img_path FROM course WHERE info_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Course">
+		UPDATE course SET c_name=#{c_name},c_type=#{c_type},img_path=#{img_path},teacher=#{teacher},c_desc=#{c_desc},in_date=now() WHERE info_id=${info_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Course">
+		INSERT INTO course (cust_id,c_name,c_type,teacher,c_desc,user_id,in_date,img_path) VALUES (#{cust_id},#{c_name},#{c_type},#{teacher},#{c_desc},#{user_id},now(),#{img_path})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM course WHERE info_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT info_id,cust_id,c_name,c_type,teacher,c_desc,user_id,in_date,img_path  from course
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_name)">
+				and c_name like concat('%', #{c_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_type)">
+				and c_type like concat('%', #{c_type}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(teacher)">
+				and teacher like concat('%', #{teacher}, '%')
+			</if>
+			
+		</where>
+		ORDER BY info_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT info_id,cust_id,c_name,c_type,teacher,c_desc,user_id,in_date,img_path  from course
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_name)">
+				and c_name like concat('%', #{c_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(c_type)">
+				and c_type like concat('%', #{c_type}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(teacher)">
+				and teacher like concat('%', #{teacher}, '%')
+			</if>
+		</where>
+		ORDER BY info_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Course">
+		INSERT INTO course (cust_id,c_name,c_type,teacher,c_desc,user_id,in_date,img_path) VALUES (#{cust_id},#{c_name},#{c_type},#{teacher},#{c_desc},#{user_id},#{in_date},#{img_path})
+		<selectKey keyProperty="info_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.MemberinterDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Memberinter">
+    	SELECT user_id,credit_sum,credit_usable,credit_exceed,credit_freeze FROM memberinter WHERE user_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Memberinter">
+		UPDATE memberinter SET credit_sum=#{credit_sum},credit_usable=#{credit_usable},credit_exceed=#{credit_exceed},credit_freeze=#{credit_freeze} WHERE user_id=${user_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Memberinter">
+		INSERT INTO memberinter (credit_sum,credit_usable,credit_exceed,credit_freeze) VALUES (#{credit_sum},#{credit_usable},#{credit_exceed},#{credit_freeze})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM memberinter WHERE user_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT mi.user_id,mi.credit_sum,mi.credit_usable,mi.credit_exceed,mi.credit_freeze ,mu.user_name 
+		from memberinter mi
+		LEFT JOIN memberuser mu
+		ON mi.user_id = mu.user_id
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and user_id like concat('%', #{user_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and mu.user_name like concat('%', #{user_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(min_credit_num)">
+				<![CDATA[and credit_sum >=  CAST(#{min_credit_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(max_credit_num)">
+				<![CDATA[and credit_sum <= CAST(#{max_credit_num} AS DECIMAL(10, 2))]]>
+			</if>
+		</where>
+		ORDER BY user_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT user_id,credit_sum,credit_usable,credit_exceed,credit_freeze  from memberinter
+		<where>
+			
+		</where>
+		ORDER BY user_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Memberinter">
+		INSERT INTO memberinter (credit_sum,credit_usable,credit_exceed,credit_freeze) VALUES (#{credit_sum},#{credit_usable},#{credit_exceed},#{credit_freeze})
+		<selectKey keyProperty="user_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

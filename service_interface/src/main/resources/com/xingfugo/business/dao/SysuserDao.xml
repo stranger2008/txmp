@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.SysuserDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Sysuser">
+    	SELECT user_id,user_name,nike_name,passwd,user_type,role_id,real_name,email,loginnum,logintime,loginip,state,org_id FROM sysuser WHERE user_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Sysuser">
+		UPDATE sysuser SET user_name=#{user_name},nike_name=#{nike_name},user_type=#{user_type},role_id=#{role_id},real_name=#{real_name},email=#{email},loginnum=#{loginnum},logintime=#{logintime},loginip=#{loginip},state=#{state},org_id=#{org_id} WHERE user_id=${user_id}
+	</update>
+	
+	<update id="updateUserPasswd" parameterType="com.xingfugo.business.module.Sysuser">
+		UPDATE sysuser SET passwd=#{passwd} WHERE user_id=${user_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Sysuser">
+		INSERT INTO sysuser (user_name,nike_name,passwd,user_type,role_id,real_name,email,loginnum,logintime,loginip,state,org_id) VALUES (#{user_name},#{nike_name},#{passwd},#{user_type},#{role_id},#{real_name},#{email},#{loginnum},#{logintime},#{loginip},#{state},#{org_id})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM sysuser WHERE user_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT user_id,user_name,nike_name,passwd,user_type,role_id,real_name,email,loginnum,logintime,loginip,state,org_id  from sysuser
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and user_name like concat('%', #{user_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(real_name)">
+				and real_name like concat('%', #{real_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(state)">
+				and state = #{state}
+			</if>
+		</where>
+		ORDER BY user_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+        select * from sysuser
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				user_name=#{user_name}
+			</if>
+		</where>
+		 order by user_name desc
+    </select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Sysuser">
+		INSERT INTO sysuser (user_name,nike_name,passwd,user_type,role_id,real_name,email,loginnum,logintime,loginip,state,org_id) VALUES (#{user_name},#{nike_name},#{passwd},#{user_type},#{role_id},#{real_name},#{email},#{loginnum},#{logintime},#{loginip},#{state},#{org_id})
+		<selectKey keyProperty="user_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="isUsernameExist" resultType="map" parameterType="map">
+		select * from sysuser
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				AND user_id!=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				AND user_name=#{user_name}
+			</if>
+		</where>
+	</select>
+
+</mapper>
+

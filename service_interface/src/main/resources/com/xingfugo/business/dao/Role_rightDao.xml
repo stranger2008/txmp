@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Role_rightDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Role_right">
+    	SELECT right_id,right_name,syscode,menu_attr,url,remark FROM role_right WHERE right_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Role_right">
+		UPDATE role_right SET right_name=#{right_name},syscode=#{syscode},menu_attr=#{menu_attr},url=#{url},remark=#{remark} WHERE right_id=${right_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Role_right">
+		INSERT INTO role_right (right_id,right_name,syscode,menu_attr,url,remark) VALUES (#{right_id},#{right_name},#{syscode},#{menu_attr},#{url},#{remark})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM role_right WHERE right_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT right_id,right_name,syscode,menu_attr,url,remark from role_right
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(syscode)">
+				and syscode = #{syscode}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(right_name)">
+				and right_name like concat('%', #{right_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(url)">
+				and url like concat('%', #{url}, '%')
+			</if>
+		</where>
+		ORDER BY right_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT right_id,right_name,syscode,menu_attr,url,remark  from role_right
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(syscode)">
+				and syscode = #{syscode}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(right_name)">
+				and right_name like concat('%', #{right_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(url)">
+				and url like concat('%', #{url}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(menu_attr)">
+				and menu_attr = #{menu_attr}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(right_ids)">
+				AND right_id in (${right_ids})
+			</if>
+		</where>
+		ORDER BY right_id DESC
+	</select>
+	
+	<select id="getUserRole_rights" resultType="map" parameterType="map">
+		SELECT r.right_id right_id,r.right_name right_name,r.syscode syscode,r.menu_attr menu_attr,r.url url,r.remark remark from role_right r
+		INNER JOIN sysmenu s
+		ON s.menu_id = r.menu_attr
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(syscode)">
+				AND r.syscode = #{syscode}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(right_ids)">
+				AND r.right_id IN (${right_ids})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+				AND s.enabled = #{enabled}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Role_right">
+		INSERT INTO role_right (right_name,syscode,menu_attr,url,remark) VALUES (#{right_name},#{syscode},#{menu_attr},#{url},#{remark})
+		<selectKey keyProperty="right_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

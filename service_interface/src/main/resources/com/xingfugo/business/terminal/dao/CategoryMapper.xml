@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.terminal.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.terminal.module.Category" >
+    <id column="cat_id" property="catId" jdbcType="CHAR" />
+    <result column="cat_name" property="catName" jdbcType="VARCHAR" />
+    <result column="en_name" property="enName" jdbcType="VARCHAR" />
+    <result column="word_index" property="wordIndex" jdbcType="CHAR" />
+    <result column="up_cat_id" property="upCatId" jdbcType="CHAR" />
+    <result column="cat_level" property="catLevel" jdbcType="CHAR" />
+    <result column="module_type" property="moduleType" jdbcType="VARCHAR" />
+    <result column="is_display" property="isDisplay" jdbcType="CHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="member_add" property="memberAdd" jdbcType="CHAR" />
+    <result column="seotitle" property="seotitle" jdbcType="VARCHAR" />
+    <result column="seokeyword" property="seokeyword" jdbcType="VARCHAR" />
+    <result column="seodesc" property="seodesc" jdbcType="VARCHAR" />
+    <result column="mem_type" property="memType" jdbcType="VARCHAR" />
+    <result column="cat_simple" property="catSimple" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.xingfugo.business.terminal.module.Category" extends="BaseResultMap" >
+    <result column="cat_intr" property="catIntr" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <resultMap id="UpdateResultMap" type="com.xingfugo.business.terminal.module.UpdateCategory" extends="ResultMapWithBLOBs" >
+    <result column="trade_id" property="tradeId" jdbcType="BIGINT" />
+    <result column="oper_type" property="operType" jdbcType="CHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+	c.cat_name,c.en_name,c.word_index,c.up_cat_id,c.cat_level,c.module_type,c.is_display,
+	c.sort_no,c.member_add,c.seotitle,c.seokeyword,c.seodesc,c.mem_type,c.cat_simple
+  </sql>
+  
+  <sql id="Blob_Column_List" >
+    c.cat_intr
+  </sql>
+  
+  <sql id="Update_Column_List" >
+    tmp.oper_type, tmp.trade_id, tmp.info_id cat_id
+  </sql>
+  
+  <select id="selectUpdateList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'category'
+	  group by info_id, oper_type) tmp left join category c on tmp.info_id = c.cat_id
+    where tmp.trade_id &gt; #{tradeId,jdbcType=BIGINT} 
+    order by trade_id asc limit ${limit}
+  </select>
+  
+    <select id="selectAllList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'category'
+	  group by info_id, oper_type) tmp left join category c on tmp.info_id = c.cat_id
+    order by trade_id asc 
+  </select>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.terminal.dao.AdvinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.terminal.module.Advinfo" >
+    <id column="adv_id" property="advId" jdbcType="INTEGER" />
+    <result column="pos_id" property="posId" jdbcType="INTEGER" />
+    <result column="adv_name" property="advName" jdbcType="VARCHAR" />
+    <result column="adv_desc" property="advDesc" jdbcType="VARCHAR" />
+    <result column="img_path" property="imgPath" jdbcType="VARCHAR" />
+    <result column="flash_url" property="flashUrl" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="in_date" property="inDate" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  
+    <resultMap id="ResultMapWithBLOBs" type="com.xingfugo.business.terminal.module.Advinfo" extends="BaseResultMap" >
+    <result column="adv_code" property="advCode" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <resultMap id="UpdateResultMap" type="com.xingfugo.business.terminal.module.UpdateAdvinfo" extends="ResultMapWithBLOBs" >
+    <result column="trade_id" property="tradeId" jdbcType="BIGINT" />
+    <result column="oper_type" property="operType" jdbcType="CHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  	a.adv_id,a.pos_id,a.adv_name,a.adv_desc,a.img_path,a.flash_url,a.link_url,a.title,a.content,a.start_date,a.end_date,a.remark,a.in_date
+  </sql>
+  
+   <sql id="Blob_Column_List" >
+   a.adv_code
+  </sql>
+  
+  <sql id="Update_Column_List" >
+    tmp.oper_type, tmp.trade_id, tmp.info_id area_id
+  </sql>
+  
+  <select id="selectUpdateList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Blob_Column_List"/>
+    ,
+    <include refid="Base_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'area'
+	  group by info_id, oper_type) tmp left join advinfo a on tmp.info_id = a.area_id
+    where tmp.trade_id &gt; #{tradeId,jdbcType=BIGINT}
+    order by trade_id asc limit ${limit}
+  </select>
+  
+  
+    <select id="selectAllList" resultMap="UpdateResultMap" >
+    select 1 as oper_type,
+    <include refid="Blob_Column_List"/>
+    ,
+    <include refid="Base_Column_List" />
+	from advinfo a 
+  </select>
+</mapper>

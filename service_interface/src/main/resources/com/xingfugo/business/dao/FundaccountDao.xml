@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.FundaccountDao">
+
+	<select id="getFundaccountByCustidAndCusttype" parameterType="map" resultType="com.xingfugo.business.module.Fundaccount">
+		SELECT account_no ,cust_id ,cust_type ,fund_num ,use_num ,freeze_num ,pay_passwd ,enabled ,in_date
+		FROM fundaccount WHERE cust_id = #{cust_id} AND cust_type = #{cust_type}
+	</select>
+	
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Fundaccount">
+    	SELECT account_no,cust_id,cust_type,fund_num,use_num,freeze_num,pay_passwd,enabled,in_date FROM fundaccount WHERE account_no=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Fundaccount">
+		UPDATE fundaccount SET cust_id=#{cust_id},cust_type=#{cust_type},fund_num=#{fund_num},use_num=#{use_num},freeze_num=#{freeze_num},pay_passwd=#{pay_passwd},enabled=#{enabled},in_date=#{in_date} WHERE account_no=${account_no}
+	</update>
+	
+	<update id="updateAccountStatus" parameterType="com.xingfugo.business.module.Fundaccount">
+		UPDATE fundaccount
+		SET enabled=#{enabled}
+		WHERE account_no IN (${account_no})
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Fundaccount">
+		INSERT INTO fundaccount (account_no, cust_id,cust_type,fund_num,use_num,freeze_num,pay_passwd,enabled,in_date) VALUES (#{account_no}, #{cust_id},#{cust_type},#{fund_num},#{use_num},#{freeze_num},#{pay_passwd},#{enabled},#{in_date})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM fundaccount WHERE account_no in (${value})
+	</delete>
+	
+	<select id="getFundaccountListOfMemberuserByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT fa.account_no account_no, fa.fund_num fund_num,fa.use_num use_num, fa.freeze_num freeze_num, fa.pay_passwd pay_passwd, fa.enabled enabled, fa.in_date in_date
+			, fa.cust_id cust_id, fa.cust_type cust_type
+			, mu.user_name user_name, mu.real_name user_real_name
+		FROM fundaccount fa
+		LEFT JOIN memberuser mu
+		ON fa.cust_id = mu.user_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+				AND fa.account_no LIKE concat('%', #{account_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_type)">
+				and fa.cust_type = #{cust_type}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				AND mu.user_name LIKE CONCAT('%', #{cust_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(min_fund_num)">
+				<![CDATA[and fa.fund_num >=  CAST(#{min_fund_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(max_fund_num)">
+				<![CDATA[and fa.fund_num <= CAST(#{max_fund_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+				and fa.enabled = #{enabled}
+			</if>
+			
+		</where>
+		ORDER BY fa.fund_num DESC
+	</select>
+	
+	<select id="getFundaccountListOfMemberByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT fa.account_no account_no, fa.fund_num fund_num,fa.use_num use_num, fa.freeze_num freeze_num, fa.pay_passwd pay_passwd, fa.enabled enabled, fa.in_date in_date
+			, fa.cust_id cust_id, fa.cust_type cust_type
+			, m.cust_name cust_name, m.user_name cust_user_name
+		FROM fundaccount fa
+		LEFT JOIN member m
+		ON fa.cust_id = m.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+				AND fa.account_no LIKE concat('%', #{account_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_type)">
+				and fa.cust_type = #{cust_type}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_name)">
+				AND m.cust_name LIKE CONCAT('%', #{cust_name}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(min_fund_num)">
+				<![CDATA[and fa.fund_num >=  CAST(#{min_fund_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(max_fund_num)">
+				<![CDATA[and fa.fund_num <= CAST(#{max_fund_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+				and fa.enabled = #{enabled}
+			</if>
+			
+		</where>
+		ORDER BY fa.fund_num DESC
+	</select>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT fa.account_no account_no, fa.fund_num fund_num,fa.use_num use_num, fa.freeze_num freeze_num, fa.pay_passwd pay_passwd, fa.enabled enabled, fa.in_date in_date
+			, fa.cust_id cust_id, fa.cust_type cust_type
+		FROM fundaccount fa
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+				AND fa.account_no LIKE concat('%', #{account_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_type)">
+				and fa.cust_type = #{cust_type}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(min_fund_num)">
+				<![CDATA[and fa.fund_num >=  CAST(#{min_fund_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(max_fund_num)">
+				<![CDATA[and fa.fund_num <= CAST(#{max_fund_num} AS DECIMAL(10, 2))]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+				and fa.enabled = #{enabled}
+			</if>
+			
+		</where>
+		ORDER BY fa.account_no DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT account_no,cust_id,cust_type,fund_num,use_num,freeze_num,pay_passwd,enabled,in_date  from fundaccount
+		<where>
+			
+		</where>
+		ORDER BY account_no DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Fundaccount">
+		INSERT INTO fundaccount (cust_id,cust_type,fund_num,use_num,freeze_num,pay_passwd,enabled,in_date) VALUES (#{cust_id},#{cust_type},#{fund_num},#{use_num},#{freeze_num},#{pay_passwd},#{enabled},#{in_date})
+		<selectKey keyProperty="account_no" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateFund_numAndUse_numOfFundaccount" parameterType="com.xingfugo.business.module.Fundaccount">
+		UPDATE fundaccount SET fund_num=#{fund_num} ,use_num=#{use_num} WHERE account_no=${account_no}
+	</update>
+	
+	<update id="updateFund_numAndFreeze_numOfFundaccount" parameterType="com.xingfugo.business.module.Fundaccount">
+		UPDATE fundaccount SET fund_num=#{fund_num}, freeze_num=#{freeze_num} WHERE account_no=${account_no}
+	</update>
+	
+	<update id="updateUse_numAndFreeze_numOfFundaccount" parameterType="com.xingfugo.business.module.Fundaccount">
+		UPDATE fundaccount SET use_num=#{use_num}, freeze_num=#{freeze_num} WHERE account_no=${account_no}
+	</update>
+	
+	<update id="updateFund_numAndUse_numAndFreeze_numOfFundaccount" parameterType="com.xingfugo.business.module.Fundaccount">
+		UPDATE fundaccount SET fund_num=#{fund_num} ,use_num=#{use_num}, freeze_num=#{freeze_num} WHERE account_no=${account_no}
+	</update>
+
+</mapper>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Buyer_complaint_megDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Buyer_complaint_meg">
+    	SELECT meg_id,com_id,content,u_type,in_date FROM buyer_complaint_meg WHERE meg_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Buyer_complaint_meg">
+		UPDATE buyer_complaint_meg SET com_id=#{com_id},content=#{content},u_type=#{u_type} WHERE meg_id=${meg_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Buyer_complaint_meg">
+		INSERT INTO buyer_complaint_meg (com_id,content,u_type,in_date) VALUES (#{com_id},#{content},#{u_type},NOW())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM buyer_complaint_meg WHERE meg_id in (${value})
+	</delete>
+	
+	<delete id="deleteComplaintMeg" parameterType="string">
+		DELETE FROM buyer_complaint_meg WHERE com_id = #{com_id}
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT meg_id,com_id,content,u_type,in_date  from buyer_complaint_meg
+		<where>
+			
+		</where>
+		ORDER BY meg_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT meg_id,com_id,content,u_type,in_date  from buyer_complaint_meg
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(com_id)">
+				and com_id = #{com_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(u_type)">
+				and u_type = #{u_type}
+			</if>
+		</where>
+		ORDER BY in_date DESC,meg_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Buyer_complaint_meg">
+		INSERT INTO buyer_complaint_meg (com_id,content,u_type,in_date) VALUES (#{com_id},#{content},#{u_type},#{in_date})
+		<selectKey keyProperty="meg_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

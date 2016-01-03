@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.FundhistoryDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Fundhistory">
+    	SELECT trade_id,account_no,fund_in,fund_out,balance,action_type,reason,in_date,user_id, cust_id FROM fundhistory WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Fundhistory">
+		UPDATE fundhistory SET account_no=#{account_no},fund_in=#{fund_in},fund_out=#{fund_out},balance=#{balance},action_type=#{action_type},reason=#{reason},in_date=#{in_date},user_id=#{user_id},cust_id=#{cust_id} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Fundhistory">
+		INSERT INTO fundhistory (account_no,fund_in,fund_out,balance,action_type,reason,in_date,user_id, cust_id) VALUES (#{account_no},#{fund_in},#{fund_out},#{balance},#{action_type},#{reason},#{in_date},#{user_id},#{cust_id})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM fundhistory WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT fh.trade_id trade_id ,fh.account_no account_no ,fh.fund_in fund_in ,fh.fund_out fund_out
+			,fh.balance balance ,fh.action_type action_type ,fh.reason reason ,fh.in_date in_date
+			,fh.user_id user_id ,mu.user_name user_name
+			,fh.cust_id cust_id,m.cust_name cust_name
+		FROM fundhistory fh
+		<!-- 个人会员 -->
+		LEFT JOIN memberuser mu
+		ON fh.user_id = mu.user_id
+		LEFT JOIN member m
+		ON fh.cust_id = m.cust_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+				AND fh.account_no = #{account_no}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(fund_in)">
+				AND fh.fund_in like concat('%', #{fund_in}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(fund_out)">
+				AND fh.fund_out like concat('%', #{fund_out}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(balance)">
+				AND fh.balance like concat('%', #{balance}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(action_type)">
+				AND fh.action_type = #{action_type}
+			</if>
+			
+			<if test="in_date_range == '1'.toString()">
+				<![CDATA[ AND DATE(fh.in_date) >= DATE_SUB(CURDATE(), INTERVAl 3 MONTH)]]>
+			</if>
+			
+			<if test="in_date_range == '-1'.toString()">
+				<![CDATA[ AND DATE(fh.in_date) < DATE_SUB(CURDATE(), INTERVAl 3 MONTH)]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(start_in_date)">
+				<![CDATA[ AND UNIX_TIMESTAMP(fh.in_date) >= UNIX_TIMESTAMP(#{start_in_date})]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(end_in_date)">
+				<![CDATA[ AND DATE(fh.in_date) < DATE_SUB(#{end_in_date}, INTERVAl -1 DAY)]]>
+			</if>
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,account_no,fund_in,fund_out,balance,action_type,reason,in_date,user_id,cust_id  from fundhistory
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Fundhistory">
+		INSERT INTO fundhistory (account_no,fund_in,fund_out,balance,action_type,reason,in_date,user_id,cust_id) VALUES (#{account_no},#{fund_in},#{fund_out},#{balance},#{action_type},#{reason},#{in_date},#{user_id},#{cust_id})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.MembercatDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Membercat">
+    	SELECT cat_id,cat_name,cust_id,up_cat_id,cat_level,sort_no,is_display,in_date FROM membercat WHERE cat_id='${value}'
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Membercat">
+		UPDATE membercat SET cat_name=#{cat_name},cust_id=#{cust_id},up_cat_id=#{up_cat_id},cat_level=#{cat_level},sort_no=#{sort_no},is_display=#{is_display},in_date=#{in_date} WHERE cat_id='${cat_id}'
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Membercat">
+		INSERT INTO membercat (cat_id,cat_name,cust_id,up_cat_id,cat_level,sort_no,is_display,in_date) VALUES (#{cat_id},#{cat_name},#{cust_id},#{up_cat_id},#{cat_level},#{sort_no},#{is_display},NOW())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM membercat WHERE cat_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT cat_id,cat_name,cust_id,up_cat_id,cat_level,sort_no,is_display,in_date  from membercat
+		<where>
+			
+		</where>
+		ORDER BY cat_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT cat_id,cat_name,cust_id,up_cat_id,cat_level,sort_no,is_display,in_date  from membercat
+		<where>
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and cust_id=#{cust_id}
+		</if>
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_level)">
+				and cat_level=#{cat_level}
+		</if>
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_display)">
+				and is_display=#{is_display}
+		</if>	
+		</where>
+		ORDER BY sort_no ASC,cat_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Membercat">
+		INSERT INTO membercat (cat_name,cust_id,up_cat_id,cat_level,sort_no,is_display,in_date) VALUES (#{cat_name},#{cust_id},#{up_cat_id},#{cat_level},#{sort_no},#{is_display},#{in_date})
+		<selectKey keyProperty="cat_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getCatMapByIds" resultType="map" parameterType="string">
+        select cat_id,cat_name,cust_id,up_cat_id,cat_level,sort_no,is_display,in_date from membercat where cat_id in (${value})
+    </select>
+
+</mapper>
+

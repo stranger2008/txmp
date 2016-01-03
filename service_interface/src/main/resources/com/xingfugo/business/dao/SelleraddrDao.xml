@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.SelleraddrDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Selleraddr">
+    	SELECT addr_id,cust_id,cust_name,area_attr,address,cell_phone,post_code,in_date,is_default FROM selleraddr WHERE addr_id=${value}
+	</select>
+
+	<select id="getDefaultSelleraddr" resultType="com.xingfugo.business.module.Selleraddr" parameterType="string">
+        select * from selleraddr where cust_id = #{cust_id} and is_default='1'
+    </select>
+	<update id="update" parameterType="com.xingfugo.business.module.Selleraddr">
+		UPDATE selleraddr SET cust_id=#{cust_id},cust_name=#{cust_name},area_attr=#{area_attr},address=#{address},cell_phone=#{cell_phone},post_code=#{post_code},is_default=#{is_default} WHERE addr_id=${addr_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Selleraddr">
+		INSERT INTO selleraddr (addr_id,cust_id,cust_name,area_attr,address,cell_phone,post_code,in_date,is_default) VALUES (#{addr_id},#{cust_id},#{cust_name},#{area_attr},#{address},#{cell_phone},#{post_code},#{in_date},#{is_default})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM selleraddr WHERE addr_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT addr_id,cust_id,cust_name,area_attr,address,cell_phone,post_code,in_date,is_default  from selleraddr
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				cust_id = #{cust_id}
+			</if>
+		</where>
+		ORDER BY in_date DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT addr_id,cust_id,cust_name,area_attr,address,cell_phone,post_code,in_date,is_default  from selleraddr
+		<where>
+			
+		</where>
+		ORDER BY addr_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Selleraddr">
+		INSERT INTO selleraddr (cust_id,cust_name,area_attr,address,cell_phone,post_code,in_date,is_default) VALUES (#{cust_id},#{cust_name},#{area_attr},#{address},#{cell_phone},#{post_code},#{in_date},#{is_default})
+		<selectKey keyProperty="addr_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateIsDefaultAddr" parameterType="string">
+		UPDATE selleraddr SET is_default='0' WHERE cust_id =${cust_id}
+	</update>
+	
+	<update id="updateIsDefaultAddr_0" parameterType="string">
+		UPDATE selleraddr SET is_default='0' WHERE cust_id =${cust_id}
+	</update>
+	
+	<update id="updateselleraddr" parameterType="com.xingfugo.business.module.Selleraddr">
+		UPDATE selleraddr SET cust_name=#{cust_name},area_attr=#{area_attr},address=#{address},cell_phone=#{cell_phone},is_default=#{is_default},cell_phone=#{cell_phone} WHERE addr_id=${addr_id}
+	</update>
+	
+	<select id="getSelleraddrByUserId" resultType="map" parameterType="string" >
+        select * from selleraddr where cust_id=#{cust_id} order by is_default desc,in_date desc
+    </select>
+
+</mapper>
+

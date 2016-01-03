@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.terminal.dao.HandleRecordMapper" >
+
+  <resultMap type="com.xingfugo.business.terminal.module.HandleRecord" id="BaseResultMap">
+  	<result column="model_name" property="modelName" jdbcType="VARCHAR" />
+  	<result column="record_no" property="recordNo" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select model_name, record_no from terminal_data
+  </select>
+  
+  <insert id="insert" parameterType="com.xingfugo.business.terminal.module.HandleRecord" >
+  	insert terminal_data(model_name, record_no) values(#{modelName}, #{recordNo})
+  </insert>
+  
+  <update id="update" parameterType="com.xingfugo.business.terminal.module.HandleRecord" >
+  	update terminal_data set record_no = #{recordNo} where model_name = #{modelName}
+  </update>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.ContactsDao">
+    
+    <select id="contactsListById" resultType="map" parameterType="int">
+        select contact_id, user_id,linkman,linkphone,linkmail,otherLinkMethod,defaultlinkman from api_air_contacts 
+        where user_id =#{id}     order by linkman ASC
+    </select>
+     
+    <insert id="insertContacts" parameterType="com.xingfugo.business.outapi.airline.module.Contacts" >
+    	<selectKey resultType="java.lang.Integer" keyProperty="contact_id" order="AFTER" >
+      		select LAST_INSERT_ID()
+    	</selectKey>
+		insert into api_air_contacts(user_id,linkman,linkphone,linkmail,otherLinkMethod,defaultlinkman)values(#{user_id},#{linkman},#{linkphone},#{linkmail},#{otherLinkMethod},#{defaultlinkman})
+	</insert>
+	
+    <delete id="deleteContactsById" parameterType="String">
+		DELETE FROM  api_air_contacts WHERE contact_id=#{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Inc_shipinfoDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Inc_shipinfo">
+    	SELECT trade_id,link_id,ship_id,ship_no,ship_desc,ship_img,user_id,user_type,in_date FROM inc_shipinfo WHERE trade_id=${value}
+	</select>
+	<select id="getByLinkId" parameterType="map" resultType="com.xingfugo.business.module.Inc_shipinfo">
+    	SELECT trade_id,link_id,ship_id,ship_no,ship_desc,ship_img,user_id,user_type,in_date ,(select para_key from commpara where para_code="ship_id" and para_value= ship_id) ship_name
+    	FROM inc_shipinfo
+    	 <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(link_id)">
+				and link_id = #{link_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_type)">
+				and user_type = #{user_type}
+			</if>
+		</where>
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Inc_shipinfo">
+		UPDATE inc_shipinfo SET link_id=#{link_id},ship_id=#{ship_id},ship_no=#{ship_no},ship_desc=#{ship_desc},ship_img=#{ship_img},user_id=#{user_id},user_type=#{user_type},in_date=#{in_date} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Inc_shipinfo">
+		INSERT INTO inc_shipinfo (link_id,ship_id,ship_no,ship_desc,ship_img,user_id,user_type,in_date) VALUES (#{link_id},#{ship_id},#{ship_no},#{ship_desc},#{ship_img},#{user_id},#{user_type},NOW())
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM inc_shipinfo WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,link_id,ship_id,ship_no,ship_desc,ship_img,user_id,user_type,in_date  from inc_shipinfo
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(link_id)">
+				and link_id like concat('%', #{link_id}, '%')
+			</if>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT isi.trade_id trade_id, isi.link_id link_id, isi.ship_id ship_id, isi.ship_no ship_no, isi.ship_desc ship_desc
+			, isi.ship_img ship_img, isi.user_id user_id, isi.user_type user_type, isi.in_date in_date
+			<if test="hasShipName == '1'.toString()">
+			, c.para_key ship_name
+			</if>
+		FROM inc_shipinfo isi
+		<if test="hasShipName == '1'.toString()">
+		LEFT JOIN commpara c
+		ON isi.ship_id=c.para_value AND c.para_code='ship_id'
+		</if>
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(link_id)">
+				AND isi.link_id = #{link_id}
+			</if>
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Inc_shipinfo">
+		INSERT INTO inc_shipinfo (link_id,ship_id,ship_no,ship_desc,ship_img,user_id,user_type,in_date) VALUES (#{link_id},#{ship_id},#{ship_no},#{ship_desc},#{ship_img},#{user_id},#{user_type},NOW())
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.LotteryAccountDao">
+     
+    <insert id="insertAccount" parameterType="com.xingfugo.business.outapi.lottery.module.LotteryAccount">
+		insert into api_lottery_account (user_id,certificatetype,phonenum,certificatenum,wagercardnum,wagercardpwd,fullName) 
+		values	(#{user_id},#{certificatetype},#{phonenum},#{certificatenum},#{wagercardnum},#{wagercardpwd} ,#{fullName})
+	</insert>
+
+    <select id="getLotteryAccountByUserId" resultType="com.xingfugo.business.outapi.lottery.module.LotteryAccount">
+         select *  from api_lottery_account  where user_id =#{userId} 
+    </select>
+    
+    <update id="updateLotteryAccount" parameterType="com.xingfugo.business.outapi.lottery.module.LotteryAccount" >
+    	update api_lottery_account set certificatetype = #{certificatetype}, phonenum = #{phonenum}, certificatenum = #{certificatenum}, certificatenum = #{certificatenum},  wagercardnum = #{wagercardnum},fullName=#{fullName},  wagercardpwd = #{wagercardpwd}  where account_id = #{account_id}
+  	</update>
+
+</mapper>

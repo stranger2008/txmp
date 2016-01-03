@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.ShopconfigDao">
+    
+    <select id="getShopconfig" resultType="com.xingfugo.business.module.Shopconfig" parameterType="int">
+        select *,
+        	(select count(1)  from goods 
+        	where cust_id=#{id}	and is_del = '1' and info_state = '1') goods_count
+  		from shopconfig where cust_id=#{cust_id} limit 1
+    </select>
+    
+    <select id="getShopconfigById" resultType="com.xingfugo.business.module.Shopconfig" parameterType="int">
+        select *,
+        	(select count(1)  from goods 
+        	where cust_id=#{id}	and is_del = '1' and info_state = '1') goods_count
+  		from shopconfig where shop_id=#{shop_id} limit 1
+    </select>
+    
+    <update id="update" parameterType="com.xingfugo.business.module.Shopconfig" >
+    	update shopconfig set shop_name=#{shop_name},shop_logo=#{shop_logo},shop_intro=#{shop_intro},busi_range=#{busi_range},contant_man=#{contant_man},mobile=#{mobile},phone=#{phone},
+    	email=#{email},qq=#{qq},msn=#{msn},area_attr=#{area_attr},address=#{address} where cust_id=#{cust_id}
+    </update>
+    
+    <insert id="insert" parameterType="com.xingfugo.business.module.Shopconfig" >
+    	insert into shopconfig(cust_id,shop_name,shop_logo,shop_intro,busi_range,contant_man,mobile,phone,
+    	email,qq,msn,area_attr,address,is_close,in_date)
+		values(#{cust_id},#{shop_name},#{shop_logo},#{shop_intro},#{busi_range},#{contant_man},#{mobile},#{phone},
+    	#{email},#{qq},#{msn},#{area_attr},#{address},#{is_close},NOW())
+    </insert>
+    
+    <delete id="deleteShopconfigByCustid" parameterType="string">
+		DELETE FROM shopconfig WHERE cust_id in (${value})
+	</delete>
+	
+	<select id="selectShopconfigWithAreaNameByCustid" parameterType="int" resultType="com.xingfugo.business.module.Shopconfig">
+		SELECT sc.shop_id shop_id, sc.shop_name shop_name, sc.shop_logo shop_logo, sc.shop_site shop_site, sc.shop_intro shop_intro
+			, sc.busi_range busi_range, sc.busi_mode busi_mode,sc.contant_man contant_man, sc.email email, sc.qq qq, sc.msn msn
+			, sc.alliwang alliwang, sc.mobile mobile, sc.phone phone, sc.address address, sc.is_close is_close, sc.in_date in_date
+			, sc.banner_image banner_image, sc.adv_image adv_image, sc.start_area start_area, sc.reach_area reach_area
+			, sc.ship_type ship_type, sc.area_attr, sc.user_id
+			, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, sc.area_attr)) area_attr_name
+			
+		FROM shopconfig sc
+		WHERE sc.cust_id = #{cust_id}
+	</select>
+	
+	<select id="selectShopconfigDetail" parameterType="map" resultType="map">
+		SELECT sc.shop_id shop_id, sc.shop_name shop_name, sc.shop_logo shop_logo, sc.shop_site shop_site, sc.shop_intro shop_intro
+			, sc.busi_range busi_range, sc.busi_mode busi_mode,sc.contant_man contant_man, sc.email email, sc.qq qq, sc.msn msn
+			, sc.alliwang alliwang, sc.mobile mobile, sc.phone phone, sc.address address, sc.is_close is_close, sc.in_date in_date
+			, sc.banner_image banner_image, sc.adv_image adv_image, sc.start_area start_area, sc.reach_area reach_area
+			, sc.ship_type ship_type, sc.area_attr, sc.user_id, sc.cust_id cust_id
+			<if test="hasAreaName == '1'.toString()">
+			, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, sc.area_attr)) area_attr_name
+			</if>
+			<if test="hasMember == '1'.toString()">
+			, m.cust_name cust_name
+			</if>
+			<if test="hasLevel == '1'.toString()">
+			, ml.level_code level_code, ml.level_name level_name
+			</if>
+		FROM shopconfig sc
+		<if test="hasMember == '1'.toString()">
+		INNER JOIN member m
+		ON sc.cust_id = m.cust_id
+		</if>
+		<if test="hasLevel == '1'.toString()">
+		LEFT JOIN levelinfo ll
+		<![CDATA[ON sc.cust_id = ll.cust_id AND TO_DAYS(ll.start_date) <= TO_DAYS(NOW()) AND TO_DAYS(ll.end_date) >= TO_DAYS(NOW())]]>
+		LEFT JOIN memberlevel ml
+		ON ll.level_code = ml.level_code
+		</if>
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				AND sc.cust_id = #{cust_id}
+			</if>
+		</where>
+	</select>
+    
+    <select id="getitemsBycustid" resultType="com.xingfugo.business.module.Shopconfig" parameterType="string">
+        select * from shopconfig s
+        where cust_id=#{cust_id} 
+
+    </select>
+    
+</mapper>

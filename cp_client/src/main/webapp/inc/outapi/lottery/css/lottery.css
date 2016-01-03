@@ -1,0 +1,174 @@
+/*清零样式*/
+* { margin: 0; padding: 0;}
+h1,h2,h3,h4,h5,h6 { font-size: 100%; font-style: normal; font-weight:normal; line-height:normal; padding:0; margin:0;}
+ul,ol,li {list-style: none;}
+em,i { font-style: normal;}
+img { border: none;}
+input,img { vertical-align: middle;}
+body { color: #000; font-family:"微软雅黑"; background: #FFF; font-size:12px; min-width:320px; height: auto;}
+a{ font-size:14px; color:#333; text-decoration:none}
+a:hover{ color:#c70003;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after { display: block; content: ''; clear: both; visibility: hidden;}
+.none { display: none;
+}
+.no-spacing { margin: 0; padding: 0;}
+.margin-center { margin: 0 auto; text-align: center;}
+.center { text-align: center;}
+.margin-auto { margin: 0 auto;}
+input:focus {
+    outline:none;
+}
+input[type="submit"], input[type="reset"], input[type="button"], button { -webkit-appearance: none; /*去掉苹果的默认UI来渲染按钮*/}
+
+/*公共样式*/
+.comWdh{ width:320px; min-width:320px; min-height:100%; margin:0 auto; overflow:hidden;}
+.w480{ width:100%; height:100%; min-width:320px; min-height:100%; margin:0 auto; overflow:hidden;}
+.content{ min-width:320px;}
+
+.full-img { width: 100%; height: auto!important; overflow:hidden;}
+.full-div { width: 100%; height: auto!important;}
+.hidden{ overflow:hidden;}
+
+.position{ height:26px; line-height:26px; padding:0 10px; background:#eaedf4; border-bottom:2px solid #c80000;}
+.position a{ font-size:14px; color:#505050;}
+.position a:hover{ color:#c80000;}
+
+.mt5{ margin:0 5px;}
+.mg-t5{ margin-top:5px;}
+.w50{ width:50%;}
+.tbl-type{ display:table; width:100%;}
+.tbl-cell{ display:table-cell;}
+.pd10{ padding:0 10px;}
+
+/*底部*/
+.footer{ height:141px; border:1px solid #e0e0e0; background:#eaedf4;}
+.footer_btn{ padding:10px; font-size:14px; color: #666e79;}
+.footer .user-info { -webkit-box-flex: 1; display: -webkit-box; text-align: left; }
+.footer .user-info span:nth-child(2) { display: inline-block; margin:0 10px;}
+.footer .user-info a { color: #666e79; font-size:14px; font-family:"微软雅黑";}
+.footer .gotop { }
+.footer .gotop a { color:#666e79; font-size:14px; font-family:"微软雅黑"; position: relative; padding-left:10px; display: inline-block;}
+
+.copyright{ line-height:40px; color: #666e79; font-size:14px; font-family:"黑体"; text-align:center;}
+.footer_nav{ text-align:center;}
+.footer_nav a{ padding:0 16px; font-size:14px; font-weight:bold; color:#666e79;}
+.footer_nav .hover_footer{ color:#b0b4bd;}
+
+
+/*彩票头部样式*/
+.header{ position:relative; height:48px;font-size:18px; color:#fff; background-color:#af0000;}
+.return-btn{ position: absolute; top:9px; left:10px;}
+.header-txt{ line-height:48px;}
+.header-txt2{ position:absolute; top:0; left:30px; line-height:48px;}
+.header-btn{ position: absolute; top:9px; right:10px;}
+
+/*首页*/
+.lot-bg{ background-color:#f9f9f9;}
+.lottery{ margin-top:10px;} 
+.lottery-tit{ height:40px; line-height:40px; margin:0 10px; border-bottom:3px solid #ba2636;}
+.lottery-tit ul{}
+.lottery-tit ul li{ width:25%; text-align:center; border-top:1px solid #ccc; border-left:1px solid #ccc;}
+.lottery-tit ul li:last-child{ border-right:1px solid #ccc;}
+.lot-hover{ background-color:#ba2636;}
+.lot-hover a{ color:#fff;}
+.lott-bar{}
+.lottery-cont ul li{ position:relative; height:90px; border:1px solid #d7d7d7; border-top:0; background-color:#fff; margin:0 10px; padding:5px 0}
+.lott-img{ display:block; width:90px; height:90px; margin:0 10px;}
+.lott-img img{ width:90px; height:90px; vertical-align:middle;}
+.lott-info h3{color:#505050; font-size:18px; margin-bottom:5px;}
+.lott-info p{ display: inline-block; width:auto; display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical; overflow:hidden; color:#8f8f8f; font-size:14px; padding-right:30px;}
+
+.arr-lott{ position:absolute; width:11px; height:20px; top:45%; right:10px; background: url(../images/arr-lott.png) no-repeat;}
+.more{ border:1px solid #d7d7d7; border-top:0; background:#fff; margin:0 10px 10px 10px; text-align:center; padding:15px  0;}
+.more a{ color:#8f8f8f;}
+
+.lott-info-ul{ padding-bottom:15px; margin-top:10px;}
+.lott-info-ul span{ float:left; display:block; width:18px; height:18px; line-height:18px; border:3px solid #e68c8c; border-radius:18px; text-align:center; color:#c80000; font-size:10px; margin-right:2px;}
+.lott-info-ul .blue{ border:3px solid #91d2ff; color:#0a9cfe; }
+
+.lottBuy{ margin:10px; border:1px solid #d7d7d7; background-color:#fff;}
+.lottBuy h3{ margin:0 5px; border-bottom:1px dotted #d7d7d7; text-align:center; padding:10px 0; font-size:16px;}
+.lottBuy-img{ margin:0 auto; max-width:435px; min-height:106px; min-width:291px; min-height:72px; padding:12px 6px;}
+.lottBuy-img img{ max-width:435px; min-height:106px; min-width:291px; min-height:72px;}
+
+/*彩种介绍*/
+.Intro3D{ margin:10px 0; border:1px solid #d7d7d7; background-color:#fff;}
+.Intro3D-tit{ height:60px; line-height:60px; background:#f9e5e5; color:#505050; font-size:20px; border-bottom:1px solid #d5c1c1; text-align:center;}
+.Intro3D-img{ padding:15px 0; text-align:center;}
+.Intro3D-p{ margin:0 5px; padding:25px 10px; color:#8f8f8f; line-height:30px; font-size:16px; border-top:1px dotted #ccc; }
+
+/*开奖公告*/
+.Intro3D-Notice{ margin-bottom:10px; border:1px solid #d7d7d7;}
+.Intro3D-Notice h3{ color:#666e79; margin:15px 15px 8px 15px; font-size:16px;}
+.Intro3D-Notice ul{ height: auto; padding-bottom:15px; margin:0 15px;}
+.Intro3D-Notice ul li{ float:left; margin-right:5px; margin-bottom:5px;}
+.number{ display:inline-block; width:23px; height:23px; line-height:23px; border:3px solid #e68c8c; border-radius:23px; text-align:center; color:#c80000; font-size:14px;}
+.Intro3D-Notice .blue{ border:3px solid #91d2ff; color:#0a9cfe; }
+.notice-usr{ margin-left:15px; margin-bottom:8px; color:#8f8f8f; font-size:14px;}
+
+/*帮助*/
+.help{ margin:10px 0; border:1px solid #d7d7d7; background-color:#fff;}
+.help-tit{ height:49px; line-height:49px; background: url(../images/help-bg.gif) repeat-x; color:#505050; font-size:20px; border-bottom:1px solid #d5c1c1; text-align:center;}
+.help-cont li{ position:relative; padding-left:18px; height:49px; line-height:49px; background:#fff; border-bottom:1px solid #d3d3d3;}
+.help-cont li:last-child{ border-bottom:0;}
+.help-cont li a{ display:block; color:#8f8f8f; font-size:14px;}
+.arr-hlp{ position:absolute; width:11px; height:20px; top:15px; right:10px; background: url(../images/arr-hlp.png) no-repeat;}
+.helpDet-tit{ height:49px; line-height:49px; background:#fff; color:#505050; font-size:20px; text-align:center;}
+.help-p{ margin:0 5px; padding:25px 10px; color:#8f8f8f; line-height:30px; font-size:16px; border-top:1px dotted #ccc; }
+
+/*双色球*/
+.double{ margin:10px 0; border:1px solid #d7d7d7; background-color:#fff;}
+.double-tit{ height:60px; line-height:60px; font-size:20px; text-align:center;}
+.double-tit span{ font-size:16px; margin-left:10px;}
+.double-time{ height:37px; line-height:37px; font-size:12px; background-color:#d7d7d7;}
+.double-time a{ display:inline-block; width: auto; height:27px; line-height:27px; padding:0 8px; color:#505050; font-size:12px; background-color:#fff; margin:5px 0 5px 5px; text-align:center;}
+.double-time .sele-btn{ color:#fff; background-color:#c80000; }
+
+.double-spn{ margin-right:5px;}
+.double-cont{ overflow:hidden;}
+.double-cont h3{ height:40px; line-height:40px; padding:0 10px; font-size:14px;}
+.double-cont p{ padding-left:10px; font-size:12px; color:#8f8f8f;}
+.double-cont ul{ padding:10px; overflow:hidden; margin-bottom:10px;}
+.double-cont ul li{ float:left; display:inline-block; width:23px; height:23px; line-height:23px; border:3px solid #e68c8c; border-radius:23px; text-align:center; margin-right:5px; margin-top:5px;}
+.double-cont ul a{ color:#c80000; font-size:14px; }
+.double-cont .ball-hover{ background-color:#c80000;}
+.double-cont .ball-hover a{ color:#fff;}
+.double-cont .double-ul2 li{ border:3px solid #91d2ff;color:#0a9cfe;}
+.double-cont  .double-ul2 a{ color:#0a9cfe; font-size:14px; }
+.double-cont .double-ul2 .ball-hover{ background-color:#0a9cfe;}
+.double-cont .double-ul2 .ball-hover a{color:#fff;}
+.sele-num{ padding:10px;}
+.sele-num-tit{ font-weight:100; margin-right:5px; color:#8f8f8f;}
+.number-red{ color:#c80000; margin:0 2px; font-weight:100;}
+.number-blue{ color:#0a9cfe; margin:0 2px; font-weight:100;}
+.pdlr10{ padding:0 10px 10px 10px;}
+.sure-btn{ width:100%; height:38px; line-height:38px; display: inline-block; background-color:#c80000; border:1px solid #d44300; color:#fff; font-family:"微软雅黑"; font-size:16px; cursor:pointer;}
+.clear-btn{ width:100%; height:38px; line-height:38px; display: inline-block; background:-webkit-gradient(linear,left top,left bottom,from(#ff8642),color-stop(.5,#ff8642),to(#ff6e36)); border:1px solid #d44300; color:#fff; font-family:"微软雅黑"; font-size:16px; cursor:pointer;}
+.double-h4{ padding:10px 0; border-bottom:1px dashed #d7d7d7; margin:0 5px; font-size:14px; color:#8f8f8f;}
+.double-h4 b{ font-size:16px; font-weight:100; color:#505050; margin-right:10px;}
+
+/*双色球3-付款*/
+.double-rule{ border-top:1px solid #d7d7d7;}
+.double-btn{ padding:15px 0; margin:0 5px; border-bottom:1px dashed #d0d0d0;}
+.double-btn a{ display:inline-block; height:35px; line-height:35px; color:#fff; font-size:14px; background-color:#c80000;}
+.selenum-btn{ text-align:right; padding:0 5px; margin-left:5px;}
+.selenum-btn img{ vertical-align:top; margin:5px 5px 0 0;}
+.cle-num{ text-align:center; padding:0 10px; margin-right:5px;}
+.double-lst li{ position:relative; height:40px; line-height:40px; padding-left:5px; font-size:14px; border-bottom:1px dashed #d0d0d0; margin:0 5px;}
+.close-db{ position:absolute; right:0; top:0; width:30px; height:40px; background: url(../images/close-db.png) no-repeat; background-position:0 6px;}
+.agree-db{ color:#8f8f8f; font-size:14px; margin:15px 0; text-align:center;}
+.agree-db input,.agree-db2 input{ vertical-align: middle; margin-right:5px;}
+.buyinfo-db{ width:97%; padding:10px 0; margin:0 5px; border-bottom:1px dashed #d0d0d0; font-size:16px; color:#505050;}
+.buyinfo-db li{ height:30px; line-height:30px; text-align:center;}
+.buyinfo-db li:nth-child(2){ border-left:1px solid #d3d3d3;}
+.num-ipt{ width:70px; height:30px; border:1px solid #d7d7d7; margin:0 5px; text-align:center; font-size:16px; color:#505050;}
+.agree-db2{ color:#505050; font-size:14px; margin:0px;}
+.total-db{ margin-right:10px; color:#505050; font-size:16px;}
+
+.sele3d-btn{ margin:10px 0 10px 10px;}
+.sele3d-btn a{ display:inline-block; width: auto; height:27px; line-height:27px; padding:0 15px; border:1px solid #d7d7d7; color:#505050; font-size:12px; margin-right:5px; text-align:center;}
+.sele3d-btn .sele3d-btn-h{ color:#fff; font-size:12px; border:1px solid #c80000; background-color:#c80000;}
+.unit-tit{ display:inline-block; height:50px; line-height:50px; font-size:14px; margin-left:10px;}
+.select-hy{ margin-left:8px;}

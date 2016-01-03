@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.AdvertiseDao">
+    
+    <select id="getAllAdvertiseList" resultType="com.xingfugo.business.module.Advertise"
+    	parameterType="string">
+		select adv.pos_id, adv.img_path, adv.link_url ,adv.adv_desc ,adv.title
+		from advinfo adv INNER JOIN advpos pos on adv.pos_id = pos.pos_id
+		where pos.cat_attr like concat('%', #{pos_type}, '%')
+		and now() BETWEEN adv.start_date and adv.end_date
+		order by pos.sort_no asc, adv.start_date desc, adv.adv_id asc
+    </select>
+
+</mapper>

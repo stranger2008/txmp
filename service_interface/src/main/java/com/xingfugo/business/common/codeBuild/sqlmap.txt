@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.{CLASSNAME}Dao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.{CLASSNAME}">
+    	SELECT {fieldkeylist}[field_node],{/fieldkeylist} FROM {TABLENAME} WHERE {TABLEKEY}=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.{CLASSNAME}">
+		UPDATE {TABLENAME} SET {fieldlist}[field_node_u]=#{[field_u_node]},{/fieldlist} WHERE {TABLEKEY}=${{TABLEKEY}}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.{CLASSNAME}">
+		INSERT INTO {TABLENAME} ({fieldlist}[field_node],{/fieldlist}) VALUES ({fieldlist}#{[field_u_node]},{/fieldlist})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM {TABLENAME} WHERE {TABLEKEY} in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT {fieldkeylist}[field_node],{/fieldkeylist}  from {TABLENAME}
+		<where>
+			{searchlist}
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty([field_name])">
+				and [field_name] like concat('%', #{[field_name]}, '%')
+			</if>
+			{/searchlist}
+		</where>
+		ORDER BY {TABLEKEY} DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT {fieldkeylist}[field_node],{/fieldkeylist}  from {TABLENAME}
+		<where>
+			
+		</where>
+		ORDER BY {TABLEKEY} DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.{CLASSNAME}">
+		INSERT INTO {TABLENAME} ({fieldlist}[field_node],{/fieldlist}) VALUES ({fieldlist}#{[field_u_node]},{/fieldlist})
+		<selectKey keyProperty="{TABLEKEY}" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>

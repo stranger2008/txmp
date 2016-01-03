@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsDao">
+    <cache eviction="LRU" readOnly="true" 
+		type="com.xingfugo.business.module.mybatis.MybatisRedisCache">
+	</cache>
+    <select id = "getTotalNum" resultType="int" parameterType="com.xingfugo.business.module.query.GoodsQueryForm">
+    	select count(0) from (
+    	select g.*, m.cust_name cust_name ,(select group_concat(value_id) from infoattr where infoattr_id = g.infoattr_id) attr_value_id
+        from goods g
+		inner join member m on g.cust_id = m.cust_id 
+        <where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_onsell)">
+				<![CDATA[g.up_date < NOW() AND down_date > NOW()]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+				AND g.info_state = #{info_state}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				AND g.is_del = #{is_del}
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_id)">
+				and g.cat_attr like concat('%', #{cat_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(membercat)">
+				and g.membercat like concat('%', #{membercat}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(area_id)">
+				and m.area_attr like concat('%', #{area_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(label)">
+				and g.label = #{label}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(key)">
+				and (g.goods_wd like concat('%', #{key}, '%') or g.goods_name like concat('%', #{key}, '%'))
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_name)">
+				AND g.goods_name LIKE CONCAT('%', #{goods_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_no)">
+				AND g.goods_no LIKE CONCAT('%', #{goods_no}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				AND g.cat_attr LIKE CONCAT('%', #{cat_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_states)">
+				AND g.info_state IN (${info_states})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(brand_id)">
+				AND g.brand_id in (${brand_id})
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(maxPrice)">
+				and #{maxPrice} >= g.sale_price 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(minPrice)">
+				and g.sale_price  >= #{minPrice} 
+			</if>
+		</where>
+		<if test="valIdList!=null">
+			HAVING 
+			<foreach collection="valIdList" item="valid"  open="(" separator="and" close=")">
+			  attr_value_id like  CONCAT('%', ${valid}, '%') 
+			</foreach> 
+		</if>
+    	)row_count
+    </select>
+    <select id="getGoodsList" resultType="map"
+    	parameterType="com.xingfugo.business.module.query.GoodsQueryForm">
+        select g.*, m.cust_name cust_name ,(select group_concat(value_id) from infoattr where infoattr_id = g.infoattr_id) attr_value_id
+        from goods g
+		inner join member m on g.cust_id = m.cust_id 
+        <where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_onsell)">
+				<![CDATA[g.up_date < NOW() AND down_date > NOW()]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+				AND g.info_state = #{info_state}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				AND g.is_del = #{is_del}
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_id)">
+				and g.cat_attr like concat('%', #{cat_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(membercat)">
+				and g.membercat like concat('%', #{membercat}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(area_id)">
+				and m.area_attr like concat('%', #{area_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(label)">
+				and g.label = #{label}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(key)">
+				and (g.goods_wd like concat('%', #{key}, '%') or g.goods_name like concat('%', #{key}, '%'))
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_name)">
+				AND g.goods_name LIKE CONCAT('%', #{goods_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_no)">
+				AND g.goods_no LIKE CONCAT('%', #{goods_no}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				AND g.cat_attr LIKE CONCAT('%', #{cat_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_states)">
+				AND g.info_state IN (${info_states})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(brand_id)">
+				AND g.brand_id  in (${brand_id})
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(maxPrice)">
+				and #{maxPrice} >= g.sale_price 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(minPrice)">
+				and g.sale_price  >= #{minPrice} 
+			</if>
+		</where>
+		<if test="valIdList!=null">
+			HAVING 
+			<foreach collection="valIdList" item="valid"  open="(" separator="and" close=")">
+			  attr_value_id like  CONCAT('%', ${valid} , '%') 
+			</foreach> 
+		</if>
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pg.sortField)">
+			order by ${pg.sortField}
+		</if>
+		limit ${pg.currentPageStartIndex} , ${pg.sizePerPage} 
+    </select>
+    
+     <select id="getGoodsListByPage" resultType="map"
+    	parameterType="com.xingfugo.business.module.query.GoodsQueryForm">
+        select g.*, m.cust_name cust_name ,(select group_concat(value_id) from infoattr where infoattr_id = g.infoattr_id) attr_value_id
+        from goods g
+		inner join member m on g.cust_id = m.cust_id 
+        <where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_onsell)">
+				<![CDATA[g.up_date < NOW() AND down_date > NOW()]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_state)">
+				AND g.info_state = #{info_state}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				AND g.is_del = #{is_del}
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_id)">
+				and g.cat_attr like concat('%', #{cat_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(membercat)">
+				and g.membercat like concat('%', #{membercat}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(area_id)">
+				and m.area_attr like concat('%', #{area_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(label)">
+				and g.label = #{label}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(key)">
+				and (g.goods_wd like concat('%', #{key}, '%') or g.goods_name like concat('%', #{key}, '%'))
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_name)">
+				AND g.goods_name LIKE CONCAT('%', #{goods_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_no)">
+				AND g.goods_no LIKE CONCAT('%', #{goods_no}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				AND g.cat_attr LIKE CONCAT('%', #{cat_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_states)">
+				AND g.info_state IN (${info_states})
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(brand_id)">
+				AND g.brand_id like CONCAT('%', #{brand_id}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(maxPrice)">
+				and #{maxPrice} >= g.sale_price 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(minPrice)">
+				and g.sale_price  >= #{minPrice} 
+			</if>
+		</where>
+		<if test="valIdList!=null">
+			HAVING 
+			<foreach collection="valIdList" item="valid"  open="(" separator="and" close=")">
+			  attr_value_id like  CONCAT('%', #{valid}, '%') 
+			</foreach> 
+		</if>
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pg.sortField)">
+			order by ${pg.sortField}
+		</if>
+    </select>
+    
+    <select id="getGoodsDetailById" resultType="map" parameterType="int">
+        select * , down_date &lt; now() isdown from goods where goods_id=#{id}
+    </select>
+    
+    <select id="getGoodsOfUserLikeWeGuess" resultType="map">
+        select * from goods where is_del='1' and info_state='1' limit 6
+    </select>
+    
+    <select id="getGoodsDetailListByIds" resultType="map" parameterType="list">
+        select * from goods where goods_id in
+        <foreach collection="list" open="(" close=")" separator="," item="id" >
+        #{id}
+        </foreach>
+    </select>
+    
+    <select id="getGoodsDetailWithCustById" resultType="map" parameterType="int">
+        select g.*, s.shop_name 
+        from goods g left join shopconfig s on g.cust_id = s.cust_id 
+        where g.goods_id=#{id}
+    </select>
+    
+    <select id="getGoodsDetailListWithCustByIds" resultType="map" parameterType="list">
+        select g.*, s.shop_name 
+        from goods g left join shopconfig s on g.cust_id = s.cust_id 
+        where g.goods_id in
+        <foreach collection="list" open="(" close=")" separator="," item="id" >
+        #{id}
+        </foreach>
+    </select>
+    
+    <update id="updateStockAndSaledNum" parameterType="int" >
+    	update goods set now_stock=now_stock-1, saled_num=saled_num+1
+    	where goods_id=#{id}
+    </update>
+    
+    <update id="batchUpdateStockAndSaledNum" parameterType="list" >
+		UPDATE goods 
+		    SET now_stock = now_stock - CASE goods_id 
+				<foreach collection="list" separator=" " item="item" >
+				 WHEN #{item.goods_id} THEN #{item.amount}
+				</foreach>
+		    END,
+		    saled_num = saled_num + CASE goods_id 
+				<foreach collection="list" separator=" " item="item" >
+				 WHEN #{item.goods_id} THEN #{item.amount}
+				</foreach>
+		    END
+		WHERE goods_id IN 
+		<foreach collection="list" open="(" separator="," close=")" item="item" >
+		#{item.goods_id}
+		</foreach>
+    </update>
+    
+    <update id="batchUpdateStockAndSaledNumByRollback" parameterType="list" >
+		UPDATE goods 
+		    SET now_stock = now_stock + CASE goods_id 
+				<foreach collection="list" separator=" " item="item" >
+				 WHEN #{item.goods_id} THEN #{item.amount}
+				</foreach>
+		    END,
+		    saled_num = saled_num - CASE goods_id 
+				<foreach collection="list" separator=" " item="item" >
+				 WHEN #{item.goods_id} THEN #{item.amount}
+				</foreach>
+		    END
+		WHERE goods_id IN 
+		<foreach collection="list" open="(" separator="," close=")" item="item" >
+		#{item.goods_id}
+		</foreach>
+    </update>
+    
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Goods">
+		SELECT g.goods_id goods_id, g.cust_id cust_id,g.cat_attr cat_attr, g.size_attr size_attr, g.goods_name goods_name, g.goods_no goods_no, g.goods_wd goods_wd
+			, g.brand_id brand_id, g.goods_desc goods_desc, g.img_path img_path, g.goods_video goods_video, g.goods_detail goods_detail, g.self_cat self_cat
+			, g.up_date up_date, g.down_date down_date, g.market_price market_price, g.sale_price sale_price, g.cost_price cost_price, g.mem_price mem_price
+			, g.total_stock total_stock, g.now_stock now_stock, g.warn_stock warn_stock, g.saled_num saled_num, g.give_inter give_inter, g.interbuy interbuy
+			, g.weight weight, g.unit unit, g.is_ship is_ship, g.is_volume is_volume, g.seo_titel seo_titel, g.seo_keyword seo_keyword, g.seo_desc seo_desc
+			, g.relate_goods relate_goods, g.give give, g.label label, g.busi_remark busi_remark, g.is_del is_del, g.no_reason no_reason, g.info_state info_state
+			, g.in_date in_date, g.user_id user_id, g.ship_price ship_price, g.volume volume, g.infoattr_id infoattr_id, g.is_virtual is_virtual
+			, m.cust_name cust_name, gb.brand_name brand_name
+		FROM goods g
+		LEFT JOIN member m
+		ON g.cust_id = m.cust_id
+		LEFT JOIN goodsbrand gb
+		ON g.brand_id = gb.brand_id
+		WHERE g.goods_id = ${value}
+	</select>
+	
+	<update id="updateGoodsStatus" parameterType="map">
+		UPDATE goods
+		SET info_state = #{info_state}, no_reason = #{no_reason}
+		WHERE goods_id in (${goods_id})
+	</update>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM goods WHERE goods_id in (${value})
+	</delete>
+	
+	<select id="getGoodsStatusCounts" resultType="map" parameterType="com.xingfugo.business.module.query.GoodsQueryForm">
+		SELECT COUNT(g.info_state) cnt, g.info_state info_state
+		FROM goods g
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				AND g.is_del = #{is_del}
+			</if>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_id)">
+				and g.cat_attr like concat('%', #{cat_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(info_states)">
+				and g.info_state in (${info_states})
+			</if>
+		</where>
+		GROUP BY g.info_state
+		ORDER BY g.info_state ASC
+	</select>
+	
+	<select id="getListForStatic" resultType="map" parameterType="map">
+		select * from goods
+		<where>			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_attr)">
+				AND  cat_attr like concat('%', #{cat_attr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(brand_id)">
+				AND  brand_id =#{brand_id}
+			</if>
+		</where>
+		order by goods_id desc limit ${start},${row}
+	</select>
+	
+	<select id="getAllListForStatic" resultType="map">
+		select * from goods
+	</select>
+	
+	<update id="returnByPrimaryKey" parameterType="java.lang.Integer" >
+	    update goods set is_del = '1'
+	    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="delete_0" parameterType="java.lang.Integer" >
+	    update goods set is_del = '0'
+	    where goods_id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="batchreturn" parameterType="list" >
+    update goods set is_del = '1'
+    where goods_id in
+    <foreach collection="list" open="(" close=")" separator="," item="goodsId" >
+     #{goodsId,jdbcType=INTEGER}
+    </foreach> 
+  </delete>
+    
+</mapper>

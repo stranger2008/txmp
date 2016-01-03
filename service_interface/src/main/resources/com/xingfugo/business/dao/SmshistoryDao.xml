@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.SmshistoryDao">
+    
+    <select id="getRegCodeByPhone" resultType="string" parameterType="string">
+        select content from smshistory where phoneattr=#{value} and 30 > ((UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(send_date))/60) order by send_date desc limit 1
+    </select>
+    
+    <insert id="insertSmsInfo" parameterType="com.xingfugo.business.module.Smshistory">
+		insert into smshistory(phoneattr,content,sms_desc,send_date) values(#{phoneattr},#{content},#{sms_desc},now())
+	</insert>
+
+	
+	 <select id="getPhoneBySendDate" resultType="string" parameterType="string">
+        select ((UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(send_date)))  from smshistory where phoneattr=#{value} and 30 > ((UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(send_date))/60) order by send_date desc limit 1
+    </select>
+	
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,phoneattr,content,sms_desc,send_date  from  smshistory
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(phoneattr)">
+				and phoneattr like concat('%', #{phoneattr}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(sms_desc)">
+				and sms_desc like concat('%', #{sms_desc}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(send_date_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(send_date) >= UNIX_TIMESTAMP(#{send_date_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(send_date_end)">
+				<![CDATA[ AND DATE(send_date) < DATE_SUB(#{send_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+		</where>
+		ORDER BY send_date DESC ,trade_id  DESC
+	</select>
+	
+	<select id="hasPhonenumber" resultType="string" parameterType="string">
+        select * from smshistory where phoneattr=#{value}
+    </select>
+
+    <delete id="delete" parameterType="string">
+		DELETE FROM smshistory WHERE trade_id in (${value})
+	</delete>
+	
+</mapper>

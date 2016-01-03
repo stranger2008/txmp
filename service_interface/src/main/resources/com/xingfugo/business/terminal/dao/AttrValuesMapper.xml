@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.terminal.dao.AttrValuesMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.terminal.module.AttrValue" >
+    <id column="attr_trade_id" property="trade_id" jdbcType="CHAR" />
+    <result column="attr_id" property="attrId" jdbcType="CHAR" />
+    <result column="attr_value" property="attrValue" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="UpdateResultMap" type="com.xingfugo.business.terminal.module.UpdateAttrValue" extends="BaseResultMap" >
+    <result column="trade_id" property="tradeId" jdbcType="BIGINT" />
+    <result column="oper_type" property="operType" jdbcType="CHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+	c.trade_id attr_trade_id,c.attr_id,c.attr_value
+  </sql>
+  
+  <sql id="Update_Column_List" >
+    tmp.oper_type, tmp.trade_id, tmp.info_id cat_id
+  </sql>
+  
+  <select id="selectUpdateList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'attrvalue'
+	  group by info_id, oper_type) tmp left join attrvalue c on tmp.info_id = c.trade_id
+    where tmp.trade_id &gt; #{tradeId,jdbcType=BIGINT} 
+    order by tmp.trade_id asc limit ${limit}
+  </select>
+  
+    <select id="selectAllList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'attrvalue'
+	  group by info_id, oper_type) tmp left join attrvalue c on tmp.info_id = c.trade_id
+    order by tmp.trade_id asc 
+  </select>
+</mapper>

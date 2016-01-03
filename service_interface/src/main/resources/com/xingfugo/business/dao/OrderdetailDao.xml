@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.OrderdetailDao">
+    
+    <insert id="batchInsertOrderdetail">
+		insert into orderdetail (order_id,goods_id,order_price,order_num,goods_attr,remark) 
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.order_id},#{item.goods_id},#{item.order_price},#{item.order_num},#{item.goods_attr},#{item.remark})
+		</foreach>
+	</insert>
+	
+	<select id="getOrderdetailList" resultType="map" parameterType="string">
+        select o.*,g.goods_name,g.img_path from orderdetail o left join goods g on o.goods_id = g.goods_id where order_id=#{value}
+    </select>
+    
+    <select id="getOrderdetailByOrderIds" resultType="map">
+        select distinct o.*,g.img_path,g.goods_name from orderdetail o left join goods g on o.goods_id = g.goods_id where o.order_id in
+        <foreach collection="list" open="(" separator="," close=")" item="pId" >
+        	#{pId}
+        </foreach>
+        order by o.order_id desc
+    </select>
+    
+    <select id="getOrderdetailForGoodsreturn" resultType="map" parameterType="map">
+        select o.trade_id,o.order_price,o.order_num,o.goods_attr,o.goods_id,o.order_id,s.goods_name,s.img_path from orderdetail o left join goods s on o.goods_id = s.goods_id 
+         <where>
+        	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(trade_id)">
+				and o.trade_id = #{trade_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				and o.order_id=#{order_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and o.goods_id=#{goods_id}
+			</if>
+		</where>
+    </select>
+    
+    <select id="getGoodsorderevaldetail" resultType="map" parameterType="string">
+    
+    		select 
+			o.trade_id o_tradeid,o.order_price,o.order_num,o.goods_attr,o.goods_id,o.order_id,s.goods_name,s.img_path,ge.trade_id eval_trade ,se.order_id se_orderid,se.package_score_eval,se.service_score_eval,se.speed_score_eval from orderdetail o 
+			left join goods s on o.goods_id = s.goods_id 
+			left join goodseval ge on ge.order_id= #{value} and  o.goods_id=ge.goods_id
+			left join sellereval se on se.order_id= #{value} 
+			
+			where o.order_id= #{value} 
+			group by o.goods_id
+    	
+    </select>
+    
+    <select id="getsellereval" resultType="map" parameterType="string">
+    
+    		select se.order_id, se.package_score_eval,se.service_score_eval,se.speed_score_eval from sellereval se
+			
+			where se.order_id= #{value}
+    	
+    </select>
+    
+</mapper>

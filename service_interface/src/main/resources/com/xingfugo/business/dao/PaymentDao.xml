@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.PaymentDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Payment">
+    	SELECT pay_id,pay_code,pay_name,pay_desc,enabled,sort_no,client_attr FROM payment WHERE pay_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Payment">
+		UPDATE payment SET pay_code=#{pay_code},pay_name=#{pay_name},pay_desc=#{pay_desc},enabled=#{enabled},sort_no=#{sort_no},client_attr=#{client_attr} WHERE pay_id=${pay_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Payment">
+		INSERT INTO payment (pay_code,pay_name,pay_desc,enabled,sort_no,client_attr) VALUES (#{pay_code},#{pay_name},#{pay_desc},#{enabled},#{sort_no},#{client_attr})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM payment WHERE pay_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT pay_id,pay_code,pay_name,pay_desc,enabled,sort_no,client_attr  from payment
+		<where>
+			
+		</where>
+		ORDER BY sort_no ASC,pay_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT pay_id,pay_code,pay_name,pay_desc,enabled,sort_no,client_attr  from payment
+		<where>
+			
+		</where>
+		ORDER BY sort_no ASC,pay_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Payment">
+		INSERT INTO payment (pay_code,pay_name,pay_desc,enabled,sort_no,client_attr) VALUES (#{pay_code},#{pay_name},#{pay_desc},#{enabled},#{sort_no},#{client_attr})
+		<selectKey keyProperty="pay_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+   	<select id="isPaycodeExist" resultType="map" parameterType="map">
+        select * from payment
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pay_code)">
+				pay_code=#{pay_code}
+			</if>
+		</where>
+    </select>   
+    
+</mapper>
+

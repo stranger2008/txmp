@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.AdvinfoDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Advinfo">
+    	SELECT adv_id,pos_id,adv_name,adv_desc,adv_code,img_path,flash_url,link_url,title,content,start_date,end_date,remark,in_date FROM advinfo WHERE adv_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Advinfo">
+		UPDATE advinfo SET adv_name=#{adv_name},adv_desc=#{adv_desc},adv_code=#{adv_code},img_path=#{img_path},flash_url=#{flash_url},link_url=#{link_url},title=#{title},content=#{content},start_date=#{start_date},end_date=#{end_date},remark=#{remark} WHERE adv_id=${adv_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Advinfo">
+		INSERT INTO advinfo (pos_id,adv_name,adv_desc,adv_code,img_path,flash_url,link_url,title,content,start_date,end_date,remark,in_date) VALUES (#{pos_id},#{adv_name},#{adv_desc},#{adv_code},#{img_path},#{flash_url},#{link_url},#{title},#{content},#{start_date},#{end_date},#{remark},#{in_date})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM advinfo WHERE adv_id in (${value})
+	</delete>
+	<delete id="deleteByPosId" parameterType="string">
+		DELETE FROM advinfo WHERE pos_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT adv_id,pos_id,adv_name,adv_desc,adv_code,img_path,flash_url,link_url,title,content,start_date,end_date,remark,in_date  from advinfo
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pos_id)">
+				and pos_id = #{pos_id}
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(adv_name)">
+				and adv_name like concat('%', #{adv_name}, '%')
+			</if>
+			
+		</where>
+		ORDER BY adv_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT adv_id,pos_id,adv_name,adv_desc,adv_code,img_path,flash_url,link_url,title,content,start_date,end_date,remark,in_date  from advinfo
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pos_id)">
+				and pos_id in (#{pos_id})
+			</if>
+		</where>
+		ORDER BY adv_id DESC
+	</select>
+	
+	<select id="getListForStatic" resultType="map" parameterType="map">
+		select adv_id,pos_id,adv_name,adv_desc,adv_code,img_path,flash_url,link_url,title,content,start_date,end_date,remark,in_date  from advinfo
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(pos_id)">
+				and pos_id=#{pos_id}
+			</if>
+		</where>
+		limit ${start},${row}
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Advinfo">
+		INSERT INTO advinfo (pos_id,adv_name,adv_desc,adv_code,img_path,flash_url,link_url,title,content,start_date,end_date,remark,in_date) VALUES (#{pos_id},#{adv_name},#{adv_desc},#{adv_code},#{img_path},#{flash_url},#{link_url},#{title},#{content},#{start_date},#{end_date},#{remark},#{in_date})
+		<selectKey keyProperty="adv_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

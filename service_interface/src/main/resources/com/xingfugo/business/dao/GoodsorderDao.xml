@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsorderDao">
+    
+    <insert id="batchInsertGoodsorder">
+    	INSERT INTO goodsorder 
+		(order_id,buy_cust_id,sale_cust_id,consignee,area_attr,
+		address,zip_code,telephone,mobile,goods_amount,
+		ship_free,tax_invoice,discount,discount_money,dis_explain,
+		insured,tatal_amount,inter_money,buy_mode,pay_id,
+		send_mode,order_state,pay_state,send_state,order_time,
+		pay_time,send_time,mem_remark,invoice_type,invoice_top,
+		company_name,ident_number,regis_address,regis_tel,open_bank,
+		bank_account,invoice_content,give_inter,order_src,order_goods_desc,is_del)
+		 VALUES 
+		 <foreach collection="list" item="item" index="index" separator=",">
+			 (
+				 #{item.order_id},#{item.buy_cust_id},#{item.sale_cust_id},#{item.consignee},#{item.area_attr},
+				 #{item.address},#{item.zip_code},#{item.telephone},#{item.mobile},#{item.goods_amount},
+				 #{item.ship_free},#{item.tax_invoice},#{item.discount},#{item.discount_money},#{item.dis_explain},
+				 #{item.insured},#{item.tatal_amount},#{item.inter_money},#{item.buy_mode},#{item.pay_id},
+				 #{item.send_mode},#{item.order_state},#{item.pay_state},#{item.send_state},now(),
+				 #{item.pay_time},#{item.send_time},#{item.mem_remark},#{item.invoice_type},#{item.invoice_top},
+				 #{item.company_name},#{item.ident_number},#{item.regis_address},#{item.regis_tel},#{item.open_bank},
+				 #{item.bank_account},#{item.invoice_content},#{item.give_inter},#{item.order_src},#{item.order_goods_desc},#{item.is_del}
+			 )
+    	 </foreach>
+	</insert>
+	
+	<select id="getGoodsorderByPage" resultType="map" 
+		parameterType="com.xingfugo.business.module.query.GoodsorderQueryForm">
+        select c.para_key order_state_name,g.* from goodsorder g left join commpara c ON g.order_state=c.para_value and c.para_code='order_state'
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and g.buy_cust_id=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.sale_cust_id=#{cust_id} 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_state)">
+				and g.order_state in (${order_state})
+			</if>
+			<choose>
+				<when test="'lottery'==order_type">and g.order_type like concat('%',#{order_type},'%')</when>
+				<otherwise>
+				<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_type)">
+					and g.order_type=#{order_type} 
+				</if>
+				</otherwise>
+			</choose>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(return_time)">
+				<![CDATA[ and ( TO_DAYS(NOW()) - TO_DAYS(g.receipt_time)) <= #{return_time} ]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(keywords)">
+				and ( g.order_id=#{keywords} OR order_id in (select o.order_id from orderdetail o,goods g where o.goods_id=g.goods_id and g.goods_name like concat('%', #{keywords}, '%')) ) 
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(sear_days)">
+				and <![CDATA[ ( TO_DAYS(NOW()) - TO_DAYS(g.order_time)) <= #{sear_days} ]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				and g.order_id like concat('%', #{order_id}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_name)">
+				and g.order_goods_desc like concat('%', #{goods_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_time_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(g.order_time) >= UNIX_TIMESTAMP(#{order_time_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_time_end)">
+				<![CDATA[ AND DATE(g.order_time) < DATE_SUB(#{order_time_end}, INTERVAl -1 DAY)]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				and is_del in (${is_del})
+			</if>
+		</where>
+        ORDER BY g.order_time DESC
+    </select>
+    
+    <select id="getAirLineorderByPage" resultType="map" parameterType="com.xingfugo.business.module.query.GoodsorderQueryForm">
+       		select c.para_key order_state_name,g.*,a.orgCity,a.dstCity,a.flightNo,a.date,a.depTime,	a.arriTime,a.passenger_id,a.contact_id,a.is_need_nvoice,a.journeysheet_id ,t.linkman	from goodsorder g  ,api_air_orderdetail a ,commpara c ,api_air_contacts t	where	g.order_type = 'airline' and	g.order_id =a.order_id and	g.order_state=c.para_value and	c.para_code='order_state' and	a.contact_id = t.contact_id 
+       		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and g.buy_cust_id=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				and g.is_del=#{is_del}
+			</if>
+        	ORDER BY g.order_time DESC
+    </select>
+    
+    <select id="getLotteryOrderListByPage" resultType="map" parameterType="com.xingfugo.business.module.query.GoodsorderQueryForm">
+	select  g.order_id,g.tatal_amount ,g.order_time,l.* ,c.para_key order_state_name,a.certificatenum,a.fullName,a.phonenum	from commpara c ,goodsorder g,api_lottery_order l,api_lottery_account a 
+		where g.order_id=l.order_no and g.order_state=c.para_value and  c.para_code='order_state'  
+       		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and g.buy_cust_id=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				and g.is_del=#{is_del}
+			</if>
+        	ORDER BY g.order_time DESC
+    </select>
+    
+    <select id="getOrderInfoByOrderNo" resultType="map" parameterType="com.xingfugo.business.module.query.GoodsorderQueryForm">
+		select a.journeysheet_id,a.order_id,a.orgcity,a.dstcity, a.flightno,a.date,a.deptime,a.arritime,i.* from api_air_orderdetail a left join (
+		select c.contact_id,c.linkman,c.linkphone,j.journeysheet_id,j.user_id,j.phone,j.area_attr,j.tel,j.name as jsname,p.name ,p.name as passengername,p.passenger_id
+		from 	api_air_contacts c,api_air_journeysheet j,api_air_passengers p) i  
+			on a.passenger_id = i.passenger_id 	and a.contact_id = i.contact_id 
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and i.user_id=#{user_id}
+			</if>
+				 where
+       		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				a.order_id =#{order_id }
+			</if>
+    </select>
+    
+    <select id="movieOrderListByPage" resultType="map" parameterType="com.xingfugo.business.module.query.GoodsorderQueryForm">
+	 	select  g.order_id as movie_order_id,g.mobile,g.goods_amount,g.tatal_amount,g.order_state,g.order_time,g.order_type,d.* ,c.para_key order_state_name  from goodsorder g , api_movie_order_detail d ,commpara c  where  
+	 		g.order_id = d.order_id  and order_type ='movie' and g.order_state=c.para_value and c.para_code='order_state'  
+	      	<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+					and g.buy_cust_id=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				and g.is_del=#{is_del}
+			</if>
+			ORDER BY g.order_time DESC
+    </select>
+    
+    <select id="getByPk" 
+    	resultType="com.xingfugo.business.module.Goodsorder" parameterType="string">
+        SELECT *
+		FROM goodsorder
+		WHERE order_id = #{value}
+    </select>
+    
+    <select id="getGoodsorderByOrderid" 
+    	resultType="com.xingfugo.business.module.Goodsorder" parameterType="string">
+        SELECT g.order_id order_id, g.buy_cust_id buy_cust_id, g.sale_cust_id sale_cust_id, g.consignee consignee, g.area_attr
+			, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, g.area_attr)) buy_area_attr_name
+			, g.address address, g.zip_code zip_code, g.mobile mobile, g.telephone telephone, g.order_time order_time
+			, g.tatal_amount tatal_amount, g.order_state order_state, g.goods_amount goods_amount, g.ship_free ship_free
+			, g.invoice_type invoice_type, g.invoice_top invoice_top, g.invoice_content invoice_content, g.company_name company_name
+			, c.para_key order_state_name, g.order_type order_type, g.pay_time pay_time, g.send_time send_time
+		FROM goodsorder g
+		LEFT JOIN commpara c
+		ON g.order_state=c.para_value AND c.para_code='order_state'
+		WHERE g.order_id = #{value}
+    </select>
+    
+    <select id="getOrderCount" resultType="map" parameterType="map">
+        select count(*) ct,g.order_state,(select para_key from commpara where para_value=g.order_state and para_code='order_state') order_state_name 
+        from goodsorder g 
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and g.sale_cust_id=#{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				and g.is_del=#{is_del}
+			</if>
+		</where>
+        group by order_state
+    </select>
+    
+    <update id="updateOrderState" parameterType="map">
+		UPDATE goodsorder SET order_state=#{order_state} WHERE order_id=#{order_id}
+	</update>
+	
+	<update id="updateOrderAndPayStatus" parameterType="map">
+		UPDATE goodsorder set order_state=#{order_state},pay_state=#{pay_state},pay_time=NOW() where order_id=#{order_id}
+	</update>
+	
+	<update id="userPay" parameterType="map">
+		UPDATE goodsorder SET order_state=#{order_state},pay_time=NOW() WHERE order_id=#{order_id}
+	</update>
+	
+	<update id="sellerDeliver" parameterType="map">
+		UPDATE goodsorder SET order_state=#{order_state},send_time=NOW() WHERE order_id=#{order_id}
+	</update>
+	
+	<update id="userReceipt" parameterType="map">
+		UPDATE goodsorder SET order_state=#{order_state},receipt_time=NOW() WHERE order_id=#{order_id}
+	</update>
+	
+	<select id="getUnpayOrderGoods" parameterType="map" resultType="map">
+        select o.order_id, o.goods_id,o.order_num amount from orderdetail o,goodsorder g where g.order_id = o.order_id and g.order_state=#{old_state} and ( TO_DAYS(NOW())-TO_DAYS(g.order_time) >= ${time} )
+    </select>
+	
+	<update id="updateUnpayOrder" parameterType="map">
+		update goodsorder set order_state=#{new_state} where order_state=#{old_state} and ( TO_DAYS(NOW())-TO_DAYS(order_time) >= ${time} )
+	</update>
+	
+	<update id="updateUnReceiptOrder" parameterType="map">
+		update goodsorder set order_state=#{new_state} where order_state=#{old_state} and ( TO_DAYS(NOW())-TO_DAYS(send_time) >= ${time} )
+	</update>
+	
+	<select id="selectGoodsorderDetailById" parameterType="string" resultType="map">
+		SELECT g.order_id order_id, g.buy_cust_id buy_cust_id, g.sale_cust_id sale_cust_id, g.consignee consignee, g.area_attr
+			, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, g.area_attr)) buy_area_attr_name
+			, g.address address, g.zip_code zip_code, g.mobile mobile, g.telephone telephone, g.order_time order_time
+			, g.tatal_amount tatal_amount, g.order_state order_state, g.goods_amount goods_amount, g.ship_free ship_free
+			, g.invoice_type invoice_type, g.invoice_top invoice_top, g.invoice_content invoice_content, g.company_name company_name
+			, c.para_key order_state_name, mu.user_name buy_cust_name, mu.cellphone buy_cellphone, m.cust_name cust_name, sc.mobile cust_mobile, sc.address cust_address
+			, (SELECT GROUP_CONCAT(a.area_name ORDER BY a.area_level ASC) FROM area a WHERE FIND_IN_SET(a.area_id, sc.area_attr)) cust_area_attr_name
+		FROM goodsorder g
+		LEFT JOIN commpara c
+		ON g.order_state=c.para_value AND c.para_code='order_state'
+		LEFT JOIN member m
+		ON g.sale_cust_id = m.cust_id
+		LEFT JOIN memberuser mu
+		ON g.buy_cust_id = mu.user_id
+		LEFT JOIN shopconfig sc
+		ON g.sale_cust_id = sc.cust_id
+		WHERE g.order_id = #{value}
+	</select>
+	
+	<select id="selectOrderCountGroupByOrderState" parameterType="map" resultType="map">
+		SELECT COUNT(1) cnt, go.order_state order_state, (SELECT para_key FROM commpara WHERE para_value=go.order_state AND para_code='order_state') order_state_name 
+		FROM goodsorder go
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				AND go.sale_cust_id = #{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_states)">
+				AND go.order_state IN (${order_states })
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_del)">
+				and g.is_del=#{is_del}
+			</if>
+		</where>
+		GROUP BY go.order_state
+	</select>
+	
+	<update id="cancellist" parameterType="String">
+		UPDATE goodsorder SET is_del='1' WHERE order_id=#{id}
+	</update>
+	
+	<update id="returncancel" parameterType="String">
+		UPDATE goodsorder SET is_del='0' WHERE order_id=#{id}
+	</update>
+	
+	<update id="removecancel" parameterType="String">
+		UPDATE goodsorder SET is_del='2' WHERE order_id=#{id}
+	</update>
+	
+	<select id="cancellists" resultType="map" 
+		parameterType="String">
+        select * from goodsorder 
+        <where>
+			is_del ='1'
+		</where>
+    </select>
+        <select id="getlistByOrderid" resultType="map" parameterType="string">
+		select * from goodsorder where order_id = #{order_id}
+		
+    </select>
+    
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.Api_air_orderdetailDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Api_air_orderdetail">
+    	SELECT order_id,orgCity,dstCity,flightNo,date,depTime,arriTime,passenger_id,contact_id,is_need_nvoice,journeysheet_id FROM api_air_orderdetail WHERE orderdetail_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Api_air_orderdetail">
+		UPDATE api_air_orderdetail SET order_id=#{order_id},orgCity=#{orgCity},dstCity=#{dstCity},flightNo=#{flightNo},date=#{date},depTime=#{depTime},arriTime=#{arriTime},passenger_id=#{passenger_id},contact_id=#{contact_id},is_need_nvoice=#{is_need_nvoice},journeysheet_id=#{journeysheet_id} WHERE orderdetail_id=${orderdetail_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Api_air_orderdetail">
+		INSERT INTO api_air_orderdetail (order_id,orgCity,dstCity,flightNo,date,depTime,arriTime,passenger_id,contact_id,is_need_nvoice,journeysheet_id) VALUES (#{order_id},#{orgCity},#{dstCity},#{flightNo},#{date},#{depTime},#{arriTime},#{passenger_id},#{contact_id},#{is_need_nvoice},#{journeysheet_id})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM api_air_orderdetail WHERE orderdetail_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT order_id,orgCity,dstCity,flightNo,date,depTime,arriTime,passenger_id,contact_id,is_need_nvoice,journeysheet_id  from api_air_orderdetail
+		<where>
+			
+		</where>
+		ORDER BY orderdetail_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT aaod.orderdetail_id orderdetail_id, aaod.order_id order_id, aaod.orgCity orgCity, aaod.dstCity dstCity
+			, aaod.flightNo flightNo, aaod.date date, aaod.depTime depTime, aaod.arriTime arriTime, aaod.is_need_nvoice is_need_nvoice
+			, aaod.passenger_id passenger_id, aaod.contact_id contact_id, aaod.journeysheet_id journeysheet_id
+			<if test="hasContactDetail == '1'.toString()">
+			, aac.user_id contact_user_id, aac.linkMan contact_linkMan, aac.linkphone contact_linkphone, aac.linkmail contact_linkmail
+			, aac.otherLinkMethod contact_otherLinkMethod, aac.defaultlinkman contact_defaultlinkman
+			</if>
+			<if test="hasPassengersDetail == '1'.toString()">
+			, aap.user_id passenger_user_id, aap.name passenger_name, aap.type passenger_type, aap.identityType passenger_identityType
+			, aap.birthday passenger_birthday, aap.defaultbyair passenger_defaultbyair
+			</if>
+			<if test="hasJourneysheetDetail == '1'.toString()">
+			, aaj.user_id journeysheet_user_id, aaj.name journeysheet_name, aaj.phone journeysheet_phone, aaj.area_attr journeysheet_area_attr
+			, aaj.address journeysheet_address, aaj.zipcode journeysheet_zipcode, aaj.tel journeysheet_tel, aaj.distributioninfo journeysheet_distributioninfo
+			</if>
+		FROM api_air_orderdetail aaod
+		<if test="hasContactDetail == '1'.toString()">
+		LEFT JOIN api_air_contacts aac
+		ON aaod.contact_id = aac.contact_id
+		</if>
+		<if test="hasPassengersDetail == '1'.toString()">
+		LEFT JOIN api_air_passengers aap
+		ON aaod.passenger_id = aap.passenger_id
+		</if>
+		<if test="hasJourneysheetDetail == '1'.toString()">
+		LEFT JOIN api_air_journeysheet aaj
+		ON aaod.journeysheet_id = aaj.journeysheet_id
+		</if>
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				AND aaod.order_id = #{order_id}
+			</if>
+		</where>
+		ORDER BY aaod.orderdetail_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Api_air_orderdetail">
+		INSERT INTO api_air_orderdetail (order_id,orgCity,dstCity,flightNo,date,depTime,arriTime,passenger_id,contact_id,is_need_nvoice,journeysheet_id) VALUES (#{order_id},#{orgCity},#{dstCity},#{flightNo},#{date},#{depTime},#{arriTime},#{passenger_id},#{contact_id},#{is_need_nvoice},#{journeysheet_id})
+		<selectKey keyProperty="orderdetail_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.SysconfigDao">
+	 
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Sysconfig">
+    	SELECT var_id ,var_name , var_value ,var_desc ,var_group , var_type , val_sys , module_type FROM sysconfig WHERE var_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Sysconfig">
+		UPDATE sysconfig SET  var_value=#{var_value},var_desc=#{var_desc}  WHERE var_id=${var_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Sysconfig">
+		INSERT INTO sysconfig (var_name,var_value,var_desc,var_group,var_type,val_sys,module_type) VALUES (#{var_name},#{var_value},#{var_desc},#{var_group},#{var_type},#{val_sys},#{module_type})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM sysconfig WHERE var_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT var_id ,var_name , var_value ,var_desc ,var_group , var_type , val_sys , module_type   from sysconfig
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(var_group)">
+				and var_group like concat('%', #{var_group}, '%')
+			</if>
+			
+		</where>
+		ORDER BY var_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT var_id ,var_name , var_value ,var_desc ,var_group , var_type , val_sys , module_type  from sysconfig
+		<where>
+			
+		</where>
+		ORDER BY var_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Sysconfig">
+		INSERT INTO sysconfig (var_name,var_value,var_desc,var_group,var_type,val_sys,module_type) VALUES (#{var_name},#{var_value},#{var_desc},#{var_group},#{var_type},#{val_sys},#{module_type})
+		<selectKey keyProperty="var_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getByVarName" resultType="java.lang.String" parameterType="java.lang.String">
+		select var_value from sysconfig where var_name = #{var_name}
+	</select>
+
+</mapper>
+

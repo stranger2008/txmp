@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.JourneysheetDao">
+     
+    <insert id="insertJourneySheet"  parameterType="com.xingfugo.business.outapi.airline.module.JourneySheet">
+    	 <selectKey resultType="java.lang.Integer" keyProperty="journeysheet_id" order="AFTER" >
+      	select LAST_INSERT_ID()
+    	</selectKey>
+		insert into api_air_journeysheet(user_id,name,phone,area_attr,address,zipcode,tel,distributioninfo)values
+			(#{user_id},#{name},#{phone},#{area_attr},#{address},#{zipcode},#{tel},#{distributioninfo})
+	</insert>
+	
+	<select id="getJourneySheetById" resultType="map" parameterType="string">
+        select * from api_air_journeysheet where user_id=#{id} order by journeysheet_id desc  
+    </select>
+    
+    
+    	<update id="updateJourneySheet" parameterType="com.xingfugo.business.outapi.airline.module.JourneySheet">
+			UPDATE api_air_journeysheet SET name=#{name},phone=#{phone},area_attr=#{area_attr},address=#{address},zipcode=#{zipcode},tel=#{tel},distributioninfo=#{distributioninfo}	 WHERE journeysheet_id=#{journeysheet_id}
+	</update>
+
+</mapper>

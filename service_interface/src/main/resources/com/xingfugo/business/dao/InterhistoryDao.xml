@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.InterhistoryDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Interhistory">
+    	SELECT trade_id,user_id,credit_in,credit_out,credit_remain,credit_action,reason,in_date,order_id,goods_id FROM interhistory WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Interhistory">
+		UPDATE interhistory SET user_id=#{user_id},credit_in=#{credit_in},credit_out=#{credit_out},credit_remain=#{credit_remain},credit_action=#{credit_action},reason=#{reason},in_date=#{in_date},order_id=#{order_id},goods_id=#{goods_id} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Interhistory">
+		INSERT INTO interhistory (user_id,credit_in,credit_out,credit_remain,credit_action,reason,in_date,order_id,goods_id) VALUES (#{user_id},#{credit_in},#{credit_out},#{credit_remain},#{credit_action},#{reason},#{in_date},#{order_id},#{goods_id})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM interhistory WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,user_id,credit_in,credit_out,credit_remain,credit_action,reason,in_date,order_id,goods_id  from interhistory
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(credit_action)">
+				and credit_action like concat('%', #{credit_action}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and user_id like concat('%', #{user_id}, '%')
+			</if>
+			<if test="in_date_range == '1'.toString()">
+				<![CDATA[ AND DATE(in_date) >= DATE_SUB(CURDATE(), INTERVAl 3 MONTH)]]>
+			</if>
+			
+			<if test="in_date_range == '-1'.toString()">
+				<![CDATA[ AND DATE(in_date) < DATE_SUB(CURDATE(), INTERVAl 3 MONTH)]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(start_in_date)">
+				<![CDATA[ AND UNIX_TIMESTAMP(in_date) >= UNIX_TIMESTAMP(#{start_in_date})]]>
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(end_in_date)">
+				<![CDATA[ AND DATE(in_date) < DATE_SUB(#{end_in_date}, INTERVAl -1 DAY)]]>
+			</if>
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,user_id,credit_in,credit_out,credit_remain,credit_action,reason,in_date,order_id,goods_id  from interhistory
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Interhistory">
+		INSERT INTO interhistory (user_id,credit_in,credit_out,credit_remain,credit_action,reason,in_date,order_id,goods_id) VALUES (#{user_id},#{credit_in},#{credit_out},#{credit_remain},#{credit_action},#{reason},#{in_date},#{order_id},#{goods_id})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

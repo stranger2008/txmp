@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.FundwithdrawDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Fundwithdraw">
+    	SELECT trade_id,order_no,account_no,trans_amt,card_no,usr_name,open_bank,sub_bank,prov,city,user_id,user_type,operate_date,status,audit_user_id,finish_date,remark FROM fundwithdraw WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Fundwithdraw">
+		UPDATE fundwithdraw SET order_no=#{order_no},account_no=#{account_no},trans_amt=#{trans_amt},card_no=#{card_no},usr_name=#{usr_name},open_bank=#{open_bank},sub_bank=#{sub_bank},prov=#{prov},city=#{city},user_id=#{user_id},user_type=#{user_type},operate_date=#{operate_date},status=#{status},audit_user_id=#{audit_user_id},finish_date=#{finish_date},remark=#{remark} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Fundwithdraw">
+		INSERT INTO fundwithdraw (order_no,account_no,trans_amt,card_no,usr_name,open_bank,sub_bank,prov,city,user_id,user_type,operate_date,status,audit_user_id,finish_date,remark) VALUES (#{order_no},#{account_no},#{trans_amt},#{card_no},#{usr_name},#{open_bank},#{sub_bank},#{prov},#{city},#{user_id},#{user_type},#{operate_date},#{status},#{audit_user_id},#{finish_date},#{remark})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM fundwithdraw WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,order_no,account_no,trans_amt,card_no,usr_name,open_bank,sub_bank,prov,city,user_id,user_type,operate_date,status,audit_user_id,finish_date,remark  from fundwithdraw
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_no)">
+				and order_no like concat('%', #{order_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+				and account_no like concat('%', #{account_no}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(trans_amt)">
+				and trans_amt like concat('%', #{trans_amt}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+				and status like concat('%', #{status}, '%')
+			</if>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,order_no,account_no,trans_amt,card_no,usr_name,open_bank,sub_bank,prov,city,user_id,user_type,operate_date,status,audit_user_id,finish_date,remark  from fundwithdraw
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Fundwithdraw">
+		INSERT INTO fundwithdraw (order_no,account_no,trans_amt,card_no,usr_name,open_bank,sub_bank,prov,city,user_id,user_type,operate_date,status,audit_user_id,finish_date,remark) VALUES (#{order_no},#{account_no},#{trans_amt},#{card_no},#{usr_name},#{open_bank},#{sub_bank},#{prov},#{city},#{user_id},#{user_type},#{operate_date},#{status},#{audit_user_id},#{finish_date},#{remark})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertGetId" parameterType="com.xingfugo.business.module.Fundwithdraw">
+		INSERT INTO fundwithdraw (order_no,account_no,trans_amt,card_no,usr_name,open_bank,sub_bank,prov,city,user_id,user_type,operate_date,status,audit_user_id,finish_date,remark)
+		VALUES (#{order_no},#{account_no},#{trans_amt},#{card_no},#{usr_name},#{open_bank},#{sub_bank},#{prov},#{city},#{user_id},#{user_type},NOW(),#{status},#{audit_user_id},#{finish_date},#{remark})
+		<selectKey keyProperty="trade_id" resultType="integer" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getFundwithdrawListOfMemberuserByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT fwd.trade_id trade_id, fwd.order_no order_no, fwd.account_no account_no, fwd.trans_amt trans_amt
+			, fwd.card_no card_no, fwd.usr_name usr_name, fwd.open_bank open_bank, fwd.sub_bank sub_bank
+			, fwd.prov prov, fwd.city city, fwd.user_id user_id, fwd.user_type user_type, fwd.operate_date operate_date
+			, fwd.status status, fwd.audit_user_id audit_user_id, fwd.finish_date finish_date, fwd.remark
+			, fa.fund_num fund_num, fa.use_num use_num, fa.freeze_num freeze_num, fa.enabled enabled
+			, mu.user_name user_name
+		FROM fundwithdraw fwd
+		LEFT JOIN fundaccount fa
+		ON fwd.account_no = fa.account_no
+		LEFT JOIN memberuser mu
+		ON fwd.user_id = mu.user_id
+		WHERE fwd.user_type = '0'
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+			AND fwd.account_no LIKE concat('%', #{account_no}, '%')
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+			AND mu.user_name LIKE CONCAT('%', #{user_name}, '%')
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(min_trans_amt)">
+			<![CDATA[AND fwd.trans_amt >= CAST(#{min_trans_amt} AS DECIMAL(10, 2))]]>
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(max_trans_amt)">
+			<![CDATA[AND fwd.trans_amt <= CAST(#{max_trans_amt} AS DECIMAL(10, 2))]]>
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+			AND fwd.status = #{status}
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+			AND fa.enabled = #{enabled}
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+			AND fwd.user_id = #{user_id}
+		</if>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getFundwithdrawListOfMemberByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT fwd.trade_id trade_id, fwd.order_no order_no, fwd.account_no account_no, fwd.trans_amt trans_amt
+			, fwd.card_no card_no, fwd.usr_name usr_name, fwd.open_bank open_bank, fwd.sub_bank sub_bank
+			, fwd.prov prov, fwd.city city, fwd.user_id user_id, fwd.user_type user_type, fwd.operate_date operate_date
+			, fwd.status status, fwd.audit_user_id audit_user_id, fwd.finish_date finish_date, fwd.remark
+			, fa.fund_num fund_num, fa.use_num use_num, fa.freeze_num freeze_num, fa.enabled enabled
+			, m.cust_name user_name
+		FROM fundwithdraw fwd
+		LEFT JOIN fundaccount fa
+		ON fwd.account_no = fa.account_no
+		LEFT JOIN member m
+		ON fwd.user_id = m.cust_id
+		WHERE fwd.user_type = '1'
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(account_no)">
+			AND fwd.account_no LIKE concat('%', #{account_no}, '%')
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+			AND m.cust_name LIKE CONCAT('%', #{user_name}, '%')
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(min_trans_amt)">
+			<![CDATA[AND fwd.trans_amt >= CAST(#{min_trans_amt} AS DECIMAL(10, 2))]]>
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(max_trans_amt)">
+			<![CDATA[AND fwd.trans_amt <= CAST(#{max_trans_amt} AS DECIMAL(10, 2))]]>
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(status)">
+			AND fwd.status = #{status}
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+			AND fa.enabled = #{enabled}
+		</if>
+		
+		<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+			AND fwd.user_id = #{user_id}
+		</if>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getFundwithdrawDetailOfMemberByTrade_id"  resultType="map" parameterType="integer">
+		SELECT fwd.trade_id trade_id, fwd.order_no order_no, fwd.account_no account_no, fwd.trans_amt trans_amt
+			, fwd.card_no card_no, fwd.usr_name usr_name, fwd.open_bank open_bank, fwd.sub_bank sub_bank
+			, fwd.prov prov, fwd.city city, fwd.user_id user_id, fwd.user_type user_type, fwd.operate_date operate_date
+			, fwd.status status, fwd.audit_user_id audit_user_id, fwd.finish_date finish_date, fwd.remark
+			, fa.fund_num fund_num, fa.use_num use_num, fa.freeze_num freeze_num, fa.enabled enabled
+			, m.cust_name user_name
+		FROM fundwithdraw fwd
+		LEFT JOIN fundaccount fa
+		ON fwd.account_no = fa.account_no
+		LEFT JOIN member m
+		ON fwd.user_id = m.cust_id
+		WHERE fwd.user_type = '1' AND fwd.trade_id = #{value}
+	</select>
+	
+	<select id="getFundwithdrawDetailOfMemberuserByTrade_id"  resultType="map" parameterType="integer">
+		SELECT fwd.trade_id trade_id, fwd.order_no order_no, fwd.account_no account_no, fwd.trans_amt trans_amt
+			, fwd.card_no card_no, fwd.usr_name usr_name, fwd.open_bank open_bank, fwd.sub_bank sub_bank
+			, fwd.prov prov, fwd.city city, fwd.user_id user_id, fwd.user_type user_type, fwd.operate_date operate_date
+			, fwd.status status, fwd.audit_user_id audit_user_id, fwd.finish_date finish_date, fwd.remark
+			, fa.fund_num fund_num, fa.use_num use_num, fa.freeze_num freeze_num, fa.enabled enabled
+			, mu.user_name user_name
+		FROM fundwithdraw fwd
+		LEFT JOIN fundaccount fa
+		ON fwd.account_no = fa.account_no
+		LEFT JOIN memberuser mu
+		ON fwd.user_id = mu.user_id
+		WHERE fwd.user_type = '0' AND fwd.trade_id = #{value}
+	</select>
+	
+	<update id="auditFundwithdraw" parameterType="com.xingfugo.business.module.Fundwithdraw">
+		UPDATE fundwithdraw
+		SET status=#{status}, audit_user_id=#{audit_user_id}, finish_date=#{finish_date}, remark=#{remark}
+		WHERE trade_id=#{trade_id}
+	</update>
+
+</mapper>
+

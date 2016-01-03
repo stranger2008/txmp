@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.UserDao">
+    
+    <select id="getMemberUserByUsername" parameterType="string" resultType="com.xingfugo.business.module.User">
+        select * from memberuser where user_name='${value}'
+    </select>
+    
+    <select id="getMemberUserById" resultType="map" parameterType="int">
+        select * from memberuser where user_id=#{user_id}
+    </select>
+    
+    <select id="getUserByMap" resultType="map" parameterType="map">
+        select * from memberuser
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cellphone)">
+				cellphone=#{cellphone}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_id)">
+				and user_id=#{user_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_name)">
+				and user_name=#{user_name}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(user_account)">
+				and ( user_name=#{user_account} OR cellphone=#{user_account} OR email=#{user_account} )
+			</if>
+		</where>
+    </select>
+	
+	<insert id="insertUserGetUserId" parameterType="com.xingfugo.business.module.User">
+		insert into memberuser(user_level,user_name,passwd,cellphone,state_code,login_time) values(#{user_level},#{user_name},#{passwd},#{cellphone},#{state_code},#{login_time})
+		<selectKey keyProperty="user_id" resultType="java.lang.Integer" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+    
+	<select id="exampleQueryMemberUserByPage" resultType="com.xingfugo.business.module.User" 
+		parameterType="com.xingfugo.business.module.query.ExampleUserQueryForm"> 
+		 select * from memberuser
+		<where>
+			<if test="user_name != null and user_name != ''">
+				user_name like concat('%', #{user_name}, '%')
+			</if>
+		</where>
+		<if test="pg.sortField != null and pg.sortField != ''">
+			order by ${pg.sortField}
+		</if>
+	</select>
+	
+	<update id="updatepwd" parameterType="com.xingfugo.business.module.User">
+		UPDATE memberuser SET passwd=#{passwd} WHERE user_id=#{user_id}
+	</update> 
+	
+	<select id="getUserByPhone" parameterType="string" resultType="com.xingfugo.business.module.User">
+    	SELECT *  from  memberuser  WHERE cellphone=${value}
+	</select>   
+</mapper>

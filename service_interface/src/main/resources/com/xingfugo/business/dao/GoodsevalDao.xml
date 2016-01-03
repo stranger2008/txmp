@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.GoodsevalDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Goodseval">
+    	SELECT trade_id,goods_id,order_id,buy_cust_id,sellert_id,g_eval,goods_score,g_comment,eval_date,reply_content,reply_date,good_num FROM goodseval WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Goodseval">
+		UPDATE goodseval SET goods_id=#{goods_id},order_id=#{order_id},buy_cust_id=#{buy_cust_id},sellert_id=#{sellert_id},g_eval=#{g_eval},goods_score=#{goods_score},g_comment=#{g_comment},eval_date=#{eval_date},reply_content=#{reply_content},reply_date=#{reply_date},good_num=#{good_num} WHERE trade_id=${trade_id}
+	</update>
+	
+	<update id="updateBytradeid" parameterType="map">
+		UPDATE goodseval SET good_num=#{good_num} WHERE goods_id=#{goods_id} and trade_id = #{trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Goodseval">
+		INSERT INTO goodseval (goods_id,order_id,buy_cust_id,sellert_id,g_eval,goods_score,g_comment,eval_date,reply_content,reply_date,good_num) VALUES (#{goods_id},#{order_id},#{buy_cust_id},#{sellert_id},#{g_eval},#{goods_score},#{g_comment},#{eval_date},#{reply_content},#{reply_date},#{good_num})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM goodseval WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,goods_id,order_id,buy_cust_id,sellert_id,g_eval,goods_score,g_comment,eval_date,reply_content,reply_date,good_num  from goodseval
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and goods_id like concat('%', #{goods_id}, '%')
+			</if>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,goods_id,order_id,buy_cust_id,sellert_id,g_eval,goods_score,g_comment,eval_date,reply_content,reply_date,good_num  from goodseval
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Goodseval">
+		INSERT INTO goodseval (goods_id,order_id,buy_cust_id,sellert_id,g_eval,goods_score,g_comment,eval_date,reply_content,reply_date,good_num) VALUES (#{goods_id},#{order_id},#{buy_cust_id},#{sellert_id},#{g_eval},#{goods_score},#{g_comment},#{eval_date},#{reply_content},#{reply_date},#{good_num})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getdetailByGoodsidAndOrderid" resultType="map" parameterType="string">
+		SELECT trade_id,order_id,goods_id,buy_cust_id,sellert_id,g_eval,goods_score,g_comment,eval_date,reply_content,reply_date,good_num  from goodseval
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				and order_id = #{order_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and goods_id = #{goods_id}
+			</if>
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<delete id="deletedetailByGoodsidAndOrderid"  parameterType="string">
+		DELETE FROM goodseval 
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(order_id)">
+				and order_id = #{order_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(goods_id)">
+				and goods_id = #{goods_id}
+			</if>
+		</where>
+	</delete>
+	
+	
+	 <select id="getGoodsevallist" resultType="map" parameterType="string">
+    
+    		select  ge.goods_id,ge.order_id,ge.buy_cust_id,ge.sellert_id,ge.g_eval,ge.trade_id ge_tradeid,ge.goods_score,ge.g_comment,ge.eval_date,ge.reply_content,ge.reply_date,ge.good_num ,m.cust_name ,m.contact_phone ,mu.user_name,sh.shop_name,ge.good_num hasClick from goodseval ge
+			left join member m on ge.sellert_id = m.cust_id
+			left join shopconfig sh on ge.sellert_id = sh.cust_id
+			left join memberuser mu on mu.user_id = ge.buy_cust_id
+			
+			
+			where ge.goods_id= #{value}
+    	
+    </select>
+    
+    <select id="getGoodsevallevel" resultType="map" parameterType="string">
+    
+    		select  CAST(sum(goods_score)/count(goods_id) AS DECIMAL(10, 0))  goodsscore  from goodseval 
+			
+			where goods_id= #{value}
+    	
+    </select>
+    
+    <select id="getsummember" resultType="map" parameterType="string">
+    
+    		select count(trade_id) summember from goodseval 
+			
+			where goods_id= #{value}
+    	
+    </select>
+    
+    <select id="getgoodsnum" resultType="map" parameterType="string">
+    
+    		select count(g_eval) sum ,g_eval  from goodseval 
+			
+			where goods_id= #{value}
+			group by g_eval 
+    	
+    </select>
+    
+    <select id="getSellerinfo" resultType="map" parameterType="string">
+    
+    		select m.user_name,m.address,m.phone,m.cust_name  ,se.package_score_eval,se.service_score_eval,se.speed_score_eval,sh.shop_name from member m 
+			left join sellereval se on m.cust_id=se.cust_id
+			left join shopconfig sh on m.cust_id=sh.cust_id
+			where m.cust_id=#{value}
+    	
+    </select>
+    
+    <select id="showSelecteval" resultType="map" parameterType="map">
+    
+    			select  g.goods_id,g.order_id,g.sellert_id,g.buy_cust_id,g.g_eval,g.goods_score,g.g_comment,g.eval_date,g.reply_content,g.reply_date,g.good_num ,m.cust_name,mu.user_name,sh.shop_name from goodseval g
+    		left join member m on g.sellert_id = m.cust_id
+    		left join memberuser mu on mu.user_id = g.buy_cust_id
+    		left join shopconfig sh on m.cust_id=sh.cust_id
+			where
+				g.goods_id = #{goods_id}  and g.g_eval = #{g_eval}
+
+    	
+    </select>
+
+	    <select id="getGoodnumByGoodsid" resultType="string" parameterType="string">
+    
+    		select sum(ge.good_num) from goodseval ge where ge.goods_id=#{value}
+    	
+    </select>
+
+</mapper>
+

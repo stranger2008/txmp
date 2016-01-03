@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.terminal.dao.AreaMapper" >
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.terminal.module.Area" >
+    <id column="area_id" property="areaId" jdbcType="CHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="en_name" property="enName" jdbcType="VARCHAR" />
+    <result column="up_area_id" property="upAreaId" jdbcType="CHAR" />
+    <result column="area_level" property="areaLevel" jdbcType="CHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="is_city" property="isCity" jdbcType="CHAR" />
+    <result column="seotitle" property="seotitle" jdbcType="VARCHAR" />
+    <result column="seokeyword" property="seokeyword" jdbcType="VARCHAR" />
+    <result column="seodesc" property="seodesc" jdbcType="VARCHAR" />
+    <result column="area_have" property="areaHave" jdbcType="VARCHAR" />
+    <result column="is_open" property="isOpen" jdbcType="CHAR" />
+  </resultMap>
+  
+  <resultMap id="UpdateResultMap" type="com.xingfugo.business.terminal.module.UpdateArea" extends="BaseResultMap" >
+    <result column="trade_id" property="tradeId" jdbcType="BIGINT" />
+    <result column="oper_type" property="operType" jdbcType="CHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    a.area_name, a.en_name, a.up_area_id, a.area_level, a.sort_no, a.is_city, a.seotitle, 
+    a.seokeyword, a.seodesc, a.area_have, a.is_open
+  </sql>
+  
+  <sql id="Update_Column_List" >
+    tmp.oper_type, tmp.trade_id, tmp.info_id area_id
+  </sql>
+  
+  <select id="selectUpdateList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'area'
+	  group by info_id, oper_type) tmp left join area a on tmp.info_id = a.area_id
+    where tmp.trade_id &gt; #{tradeId,jdbcType=BIGINT}
+    order by trade_id asc limit ${limit}
+  </select>
+  
+  
+    <select id="selectAllList" resultMap="UpdateResultMap" 
+  	parameterType="com.xingfugo.business.terminal.module.QueryForm" >
+    select 
+    <include refid="Update_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+	from
+	  (select max(trade_id) trade_id, info_id, oper_type 
+	  from indexrecord 
+	  where module_name = 'area'
+	  group by info_id, oper_type) tmp left join area a on tmp.info_id = a.area_id
+    order by trade_id asc 
+  </select>
+</mapper>

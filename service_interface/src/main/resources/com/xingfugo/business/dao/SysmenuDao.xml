@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.SysmenuDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Sysmenu">
+    	SELECT menu_id,menu_name,syscode,up_menu_id,menu_level,sort_no,enabled,url,target,oper_basic_right FROM sysmenu WHERE menu_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Sysmenu">
+		UPDATE sysmenu SET menu_name=#{menu_name},syscode=#{syscode},up_menu_id=#{up_menu_id},menu_level=#{menu_level},sort_no=#{sort_no},enabled=#{enabled},url=#{url},target=#{target},oper_basic_right=#{oper_basic_right} WHERE menu_id=${menu_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Sysmenu">
+		INSERT INTO sysmenu (menu_id,menu_name,syscode,up_menu_id,menu_level,sort_no,enabled,url,target,oper_basic_right) VALUES (#{menu_id},#{menu_name},#{syscode},#{up_menu_id},#{menu_level},#{sort_no},#{enabled},#{url},#{target},#{oper_basic_right})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM sysmenu WHERE menu_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT menu_id,menu_name,syscode,up_menu_id,menu_level,sort_no,enabled,url,target,oper_basic_right  from sysmenu
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(syscode)">
+				and syscode = #{syscode}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_menu_id)">
+				and up_menu_id=#{up_menu_id}
+			</if>
+		</where>
+		ORDER BY sort_no ASC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT menu_id,menu_name,syscode,up_menu_id,menu_level,sort_no,enabled,url,target,oper_basic_right  from sysmenu
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(syscode)">
+				and syscode = #{syscode}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_menu_id)">
+				and up_menu_id=#{up_menu_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(menu_level)">
+				and menu_level=#{menu_level}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(enabled)">
+				and enabled=#{enabled}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(menu_ids)">
+				AND menu_id in (${menu_ids})
+			</if>
+		</where>
+		ORDER BY menu_level ASC, sort_no ASC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Sysmenu">
+		INSERT INTO sysmenu (menu_name,syscode,up_menu_id,menu_level,sort_no,enabled,url,target,oper_basic_right) VALUES (#{menu_name},#{syscode},#{up_menu_id},#{menu_level},#{sort_no},#{enabled},#{url},#{target},#{oper_basic_right})
+		<selectKey keyProperty="menu_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getSysmenuListByMap" resultType="map" parameterType="map">
+        select * from sysmenu
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(syscode)">
+				syscode=#{syscode}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_menu_id)">
+				and up_menu_id=#{up_menu_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(menu_level)">
+				and menu_level=#{menu_level}
+			</if>
+			and enabled ='0'
+		</where>
+		order by sort_no asc
+    </select>
+    
+    <select id="getSysmenuListBySyscode" resultType="map" parameterType="map">
+    	SELECT * FROM sysmenu
+    	WHERE syscode=#{syscode}
+    	ORDER BY menu_level ASC
+    </select>
+    
+    <select id="getParentSysmenuByMenuid" resultType="map" parameterType="String">
+    	SELECT T2.menu_id, T2.menu_name, T2.syscode
+		FROM (
+		    SELECT
+		        @r AS _id,
+		        (SELECT @r := up_menu_id FROM sysmenu WHERE menu_id = _id) AS up_menu_id,
+		        @l := @l + 1 AS lvl
+		    FROM
+		        (SELECT @r := #{menu_id}, @l := 0) vars,
+		        sysmenu h
+			WHERE @r != 1111111111) T1
+		JOIN sysmenu T2
+		ON T1._id = T2.menu_id
+		ORDER BY T1.lvl DESC
+    </select>
+    
+    <select id="getChildrenSysmenuByMenuId" resultType="map" parameterType="String">
+    	SELECT *
+    	FROM sysmenu
+    	WHERE up_menu_id = #{menu_id}
+    </select>
+
+</mapper>
+

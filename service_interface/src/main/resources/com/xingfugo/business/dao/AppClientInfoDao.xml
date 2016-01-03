@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingfugo.business.dao.AppClientInfoDao" >
+  
+  <resultMap id="BaseResultMap" type="com.xingfugo.business.module.AppClientInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="app_os" property="appOs" jdbcType="TINYINT" />
+    <result column="app_os_version" property="appOsVersion" jdbcType="VARCHAR" />
+    <result column="app_device_type" property="appDeviceType" jdbcType="TINYINT" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+    <result column="mobile_model" property="mobileModel" jdbcType="VARCHAR" />
+    <result column="mobile_number" property="mobileNumber" jdbcType="VARCHAR" />
+    <result column="screen_resolution" property="screenResolution" jdbcType="VARCHAR" />
+    <result column="screen_density" property="screenDensity" jdbcType="VARCHAR" />
+    <result column="screen_dpi" property="screenDpi" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_id, app_os, app_os_version, app_device_type, app_version, mobile_model, 
+    mobile_number, screen_resolution, screen_density, screen_dpi, create_time, device_id
+  </sql>
+
+  <select id="selectByPage" resultMap="BaseResultMap"
+  	parameterType="com.xingfugo.business.module.mybatis.BasePageForm" >
+    select
+    <include refid="Base_Column_List" />
+    from app_client_info
+    order by create_time desc
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_client_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="com.xingfugo.business.module.AppClientInfo" >
+    insert into app_client_info (user_id, app_os, 
+      app_os_version, app_device_type, app_version, 
+      mobile_model, mobile_number, screen_resolution, 
+      screen_density, screen_dpi, create_time, device_id
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{appOs,jdbcType=TINYINT}, 
+      #{appOsVersion,jdbcType=VARCHAR}, #{appDeviceType,jdbcType=TINYINT}, #{appVersion,jdbcType=VARCHAR}, 
+      #{mobileModel,jdbcType=VARCHAR}, #{mobileNumber,jdbcType=VARCHAR}, #{screenResolution,jdbcType=VARCHAR}, 
+      #{screenDensity,jdbcType=VARCHAR}, #{screenDpi,jdbcType=VARCHAR}, now(),
+       #{deviceId,jdbcType=VARCHAR}
+      )
+	<selectKey keyProperty="id" resultType="int" order="AFTER">
+		select LAST_INSERT_ID()
+	</selectKey>
+  </insert>
+
+</mapper>

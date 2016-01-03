@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.LevelinfoDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Levelinfo">
+    	SELECT trade_id,cust_id,level_code,start_date,end_date,in_date,user_id,remark FROM levelinfo WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Levelinfo">
+		UPDATE levelinfo SET cust_id=#{cust_id},level_code=#{level_code},start_date=#{start_date},end_date=#{end_date},in_date=#{in_date},user_id=#{user_id},remark=#{remark} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Levelinfo">
+		INSERT INTO levelinfo (cust_id,level_code,start_date,end_date,in_date,user_id,remark) VALUES (#{cust_id},#{level_code},#{start_date},#{end_date},NOW(),#{user_id},#{remark})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM levelinfo WHERE trade_id in (${value})
+	</delete>
+	
+	<delete id="deleteByCustid" parameterType="string">
+		DELETE FROM levelinfo WHERE cust_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT ll.trade_id trade_id,ll.cust_id cust_id,ll.start_date start_date,ll.end_date end_date
+			,ll.remark remark,ll.user_id user_id,ll.in_date in_date,ll.level_code level_code
+			, ml.level_name level_name, su.user_name user_name
+		FROM levelinfo ll
+		LEFT JOIN memberlevel ml
+		ON ll.level_code = ml.level_code
+		LEFT JOIN sysuser su
+		ON ll.user_id = su.user_id
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and ll.cust_id = #{cust_id}
+			</if>
+		</where>
+		ORDER BY ll.start_date DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT ll.trade_id trade_id,ll.cust_id cust_id,ll.start_date start_date,ll.end_date end_date
+			,ll.remark remark,ll.user_id user_id,ll.in_date in_date,ll.level_code level_code
+			, ml.level_name level_name
+		FROM levelinfo ll
+		LEFT JOIN memberlevel ml
+		ON ll.level_code = ml.level_code
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cust_id)">
+				and ll.cust_id = #{cust_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(level_date)">
+				<![CDATA[and TO_DAYS(ll.start_date) <= TO_DAYS(#{level_date})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(level_date)">
+				<![CDATA[and TO_DAYS(ll.end_date) >= TO_DAYS(#{level_date})]]>
+			</if>
+		</where>
+		ORDER BY ll.start_date DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Levelinfo">
+		INSERT INTO levelinfo (cust_id,level_code,start_date,end_date,in_date,user_id,remark) VALUES (#{cust_id},#{level_code},#{start_date},#{end_date},#{in_date},#{user_id},#{remark})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+

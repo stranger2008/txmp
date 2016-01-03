@@ -1,0 +1,37 @@
+
+/*天下珠宝*/
+.titlst{ position:relative; background:url(../images/titlst-bg.png) repeat-x bottom; height:51px; line-height:40px; overflow:hidden; padding-left:20px;}
+.titlst-spn{ display: none}
+.tblw{ width: 23%;float: left;display: block}
+.titlst-spn a{ position:relative; display:block; text-align:center; color:#ae909a; font-size:14px; font-weight:bold; font-family:"微软雅黑";}
+.titlst-spn .active{ color:#6b2c4e;}
+.titlst-spn:last-child a{ margin:0;}
+.titlst-spn b{ display:none; position: absolute; bottom:-21px; left:45%; width:17px; height:7px; background: url(../images/on.png) no-repeat;  z-index:999;}
+.titlst-spn .on{ display:block;}
+a{cursor: pointer;}
+.titlst .prev{ cursor:pointer; z-index: 999; position:absolute; top:0; left:0; display:inline-block; width:19px; height:38px; background:url(../images/arr.png) no-repeat; background-position:0 0;}
+.titlst .prev:hover{ position:absolute; top:0; left:0; display:inline-block; width:19px; height:38px; background:url(../images/arr.png) no-repeat; background-position:-19px 0;}
+.titlst .prev:active{ position:absolute; top:0; left:0; display:inline-block; width:19px; height:38px; background:url(../images/arr.png) no-repeat; background-position:-19px 0;}
+.titlst .next{ cursor:pointer; z-index: 999; position:absolute; top:0; right:0; display:inline-block; width:19px; height:38px; background:url(../images/arr.png) no-repeat; background-position:-19px -38px;}
+.titlst .next:hover{ position:absolute; top:0; right:0; display:inline-block; width:19px; height:38px; background:url(../images/arr.png) no-repeat; background-position:0 -38px;}
+.titlst .next:active{ position:absolute; top:0; right:0; display:inline-block; width:19px; height:38px; background:url(../images/arr.png) no-repeat; background-position:0 -38px;}
+
+
+
+
+
+	/*珠宝列表*/
+.dmdlist{ display:none; padding:0 12px; height:auto;overflow:hidden}
+.dmdlist span a{ display:block; }
+.dmdlist .tbl-cell:first-child a{ margin:0 6px 5px 0;}
+.dmdlist .tbl-cell:last-child a{ margin:0 0 5px 6px;}
+.dmdlist span img{ }
+.dmd-name{ min-height:32px; line-height:32px; border-bottom:4px solid #d7d7d7; text-align:left; background-color:#fff; display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical; overflow:hidden;   }
+.dmd-name strong{ color:#b19b50; font-size:15px; margin-left:18px; }
+
+
+
+
+
+
+

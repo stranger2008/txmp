@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.CategoryDao">
+
+	 
+	<update id="update" parameterType="com.xingfugo.business.module.Category">
+		UPDATE category SET cat_name=#{cat_name},en_name=#{en_name},word_index=#{word_index},up_cat_id=#{up_cat_id},cat_level=#{cat_level},module_type=#{module_type},is_display=#{is_display},sort_no=#{sort_no},member_add=#{member_add},seotitle=#{seotitle},seokeyword=#{seokeyword},seodesc=#{seodesc},mem_type=#{mem_type},cat_intr=#{cat_intr},cat_simple=#{cat_simple} WHERE cat_id=${cat_id}
+	</update>
+
+	<update id="updateWhetherDisplay" parameterType="map">
+		UPDATE category SET is_display=#{is_display} WHERE cat_id in (${cat_id})
+	</update>
+	<insert id="insert" parameterType="com.xingfugo.business.module.Category">
+		INSERT INTO category (cat_id ,cat_name,en_name,word_index,up_cat_id,cat_level,module_type,is_display,sort_no,member_add,seotitle,seokeyword,seodesc,mem_type,cat_intr,cat_simple) VALUES (#{cat_id} ,#{cat_name},#{en_name},#{word_index},#{up_cat_id},#{cat_level},#{module_type},#{is_display},#{sort_no},#{member_add},#{seotitle},#{seokeyword},#{seodesc},#{mem_type},#{cat_intr},#{cat_simple})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM category WHERE cat_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT * from category
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_name)">
+				and cat_name like concat('%', #{cat_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_cat_id)">
+				and up_cat_id = #{up_cat_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_level)">
+				and cat_level = #{cat_level}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				and module_type = #{module_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_display)">
+				and is_display = #{is_display}
+			</if>
+		</where>
+		ORDER BY sort_no, cat_id DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT * from category
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_name)">
+				and cat_name like concat('%', #{cat_name}, '%')
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_cat_id)">
+				and up_cat_id = #{up_cat_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_level)">
+				and cat_level = #{cat_level}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				and module_type = #{module_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(is_display)">
+				and is_display = #{is_display}
+			</if>
+		</where>
+		ORDER BY sort_no, cat_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Category">
+		INSERT INTO category (cat_name,en_name,word_index,up_cat_id,cat_level,module_type,is_display,sort_no,member_add,seotitle,seokeyword,seodesc,mem_type,cat_intr,cat_simple) VALUES (#{cat_name},#{en_name},#{word_index},#{up_cat_id},#{cat_level},#{module_type},#{is_display},#{sort_no},#{member_add},#{seotitle},#{seokeyword},#{seodesc},#{mem_type},#{cat_intr},#{cat_simple})
+		<selectKey keyProperty="cat_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+ 
+	<select id="getDetailCatTree" resultType="com.xingfugo.business.module.Category" parameterType="string">
+        select * from category where cat_id in (${value}) order by cat_level asc
+    </select>
+	
+	<select id="getCatMapByIds" resultType="map" parameterType="string">
+        select cat_id ,cat_name from category where cat_id in (${value})
+    </select>
+    
+	<select id="getByPk" resultType="com.xingfugo.business.module.Category" parameterType="string">
+        select * from category where cat_id=#{value}
+    </select>
+    
+    <select id="getCategoryByUpCatId" resultType="map" parameterType="map">
+        select * from category
+         <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_cat_id)">
+				and up_cat_id = #{up_cat_id}
+			</if> 
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				and module_type = #{module_type}
+			</if>
+			and is_display='0'
+		</where>
+		 order by sort_no desc
+    </select>
+    
+    <select id="getCategoryByUpCatIds" resultType="map">
+        select * from category where
+         up_cat_id in
+        <foreach collection="list" open="(" separator="," close=")" item="pId" >
+        	#{pId}
+        </foreach>
+        and module_type='goods' and is_display='0' order by up_cat_id asc, sort_no desc
+    </select>
+    
+    <select id="getCategoryByParentId" resultType="map" parameterType="string">
+        select cat_id from category where up_cat_id=#{up_cat_id} 
+    </select>
+    
+    <select id="hasExist" resultType="java.lang.Integer" parameterType="com.xingfugo.business.module.Category">
+        select count(0) from category 
+        <where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(en_name)">
+				and en_name = #{en_name}
+			</if> 
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(cat_id)">
+				and cat_id != #{cat_id}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				and module_type = #{module_type}
+			</if>
+		</where>
+    </select>
+    
+    
+    <select id="getParentsByCatid" resultType="map" parameterType="String">
+    	SELECT T2.cat_id cat_id, T2.cat_name cat_name
+		FROM (
+		    SELECT
+		        @r AS _id,
+		        (SELECT @r := up_cat_id FROM category WHERE cat_id = _id) AS up_cat_id,
+		        @l := @l + 1 AS lvl
+		    FROM
+		        (SELECT @r := #{cat_id}, @l := 0) vars,
+		        category h
+			WHERE @r != 1111111111) T1
+		JOIN category T2
+		ON T1._id = T2.cat_id
+		ORDER BY T1.lvl DESC;
+    </select>
+    
+    
+   	<select id="getListForStatic" resultType="map" parameterType="map">
+		select cat_id,cat_name from category 
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				and module_type=#{module_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_cat_id)">
+				and up_cat_id=#{up_cat_id}
+			</if>
+		</where>
+		limit ${start},${row}
+	</select>
+	
+	<select id="getAllListForStatic" resultType="map" parameterType="map">
+		select cat_id,cat_name from category 
+		<where>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(module_type)">
+				and module_type=#{module_type}
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(up_cat_id)">
+				and up_cat_id=#{up_cat_id}
+			</if>
+		</where>
+	</select>
+	
+</mapper>
+

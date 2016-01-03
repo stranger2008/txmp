@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.xingfugo.business.dao.EmailhistoryDao">
+
+	<select id="getByPk" parameterType="string" resultType="com.xingfugo.business.module.Emailhistory">
+    	SELECT trade_id,email_attr,title,content,in_date FROM emailhistory WHERE trade_id=${value}
+	</select>
+
+	<update id="update" parameterType="com.xingfugo.business.module.Emailhistory">
+		UPDATE emailhistory SET email_attr=#{email_attr},title=#{title},content=#{content},in_date=#{in_date} WHERE trade_id=${trade_id}
+	</update>
+
+	<insert id="insert" parameterType="com.xingfugo.business.module.Emailhistory">
+		INSERT INTO emailhistory (email_attr,title,content,in_date) VALUES (#{email_attr},#{title},#{content},#{in_date})
+	</insert>
+
+	<delete id="delete" parameterType="string">
+		DELETE FROM emailhistory WHERE trade_id in (${value})
+	</delete>
+
+	<select id="getListByPage"  resultType="map" parameterType="com.xingfugo.business.module.mybatis.BasePageForm">
+		SELECT trade_id,email_attr,title,content,in_date  from emailhistory
+		<where>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(email_attr)">
+				and email_attr like concat('%', #{email_attr}, '%')
+			</if>
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(title)">
+				and title like concat('%', #{title}, '%')
+			</if>			
+			
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_begin)">
+				<![CDATA[ AND UNIX_TIMESTAMP(in_date) >= UNIX_TIMESTAMP(#{in_date_begin})]]>
+			</if>
+			<if test="@com.xingfugo.util.MybatisOgnl@isNotEmpty(in_date_end)">
+				<![CDATA[ AND DATE(in_date) < DATE_SUB(#{in_date_end}, INTERVAl -1 DAY)]]>
+			</if>
+			
+		</where>
+		ORDER BY in_date DESC ,trade_id  DESC
+	</select>
+	
+	<select id="getList" resultType="map" parameterType="map">
+		SELECT trade_id,email_attr,title,content,in_date  from emailhistory
+		<where>
+			
+		</where>
+		ORDER BY trade_id DESC
+	</select>
+	
+	<insert id="insertGetPk" parameterType="com.xingfugo.business.module.Emailhistory">
+		INSERT INTO emailhistory (email_attr,title,content,in_date) VALUES (#{email_attr},#{title},#{content},#{in_date})
+		<selectKey keyProperty="trade_id" resultType="string" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+</mapper>
+
