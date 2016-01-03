@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<decorators defaultdir="/WEB-INF/view/inc">  
+  
+    <excludes>  
+        <pattern>/inc/*</pattern>
+        <pattern>*login.action</pattern>
+        <!-- 不加装饰器统计加public前缀 -->
+        <pattern>/public/*.action*</pattern>
+    </excludes>
+
+    <decorator name="member" page="basic.jsp">
+        <pattern>*.action</pattern>
+    </decorator>
+
+</decorators>
