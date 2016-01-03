@@ -1,0 +1,40 @@
+/*清零样式*/
+* { margin: 0; padding: 0;}
+h1,h2,h3,h4,h5,h6 { font-size: 100%; font-style: normal; font-weight:normal; line-height:normal; padding:0; margin:0;}
+ul,ol,li {list-style: none;}
+em,i { font-style: normal;}
+img { border: none;}
+input,img { vertical-align: middle;}
+body { color: #000; font-family:"微软雅黑"; background: #FFF; font-size:12px; min-width:320px; height: auto;}
+a{ font-size:14px; color:#333; text-decoration:none}
+a:hover{ color:#c70003;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after { display: block; content: ''; clear: both; visibility: hidden;}
+.none { display: none;
+}
+.no-spacing { margin: 0; padding: 0;}
+.margin-center { margin: 0 auto; text-align: center;}
+.center { text-align: center;}
+.margin-auto { margin: 0 auto;}
+input:focus {
+    outline:none;
+}
+/*头部*/
+.logo{ width:129px; height:43px; margin-bottom:20px;}
+
+
+
+
+/*商家登录*/
+.signsp-box{ margin-top:50px;}
+.shop-sign{ min-width:298px; max-width:498px; height:320px; border-radius:10px; background:#fff; padding:10px; border:1px solid #d5d5d5; box-shadow:0 5px 5px #d5d5d5;}
+.shop-sign-tit{ font-size:16px; height:25px; line-height:25px; border-bottom:1px solid #ccc; padding:10px 0; color:#000;}
+.shop-sign-form{ margin:20px 0;}
+.shop-sign-txt{ display:inline-block; width:60px; height:20px; text-align:right; margin:10px 0;}
+.shop-ipt{ width:200px; height:25px; padding:0 5px;}
+.cd-ipt{ width:50px; height:25px; padding:0 5px;}
+.shop-sign-btn{ width:80px; line-height:28px; height:28px; background-color:#c80000; border:0; color:#fff; margin:10px;}
+.error{ display:inline-block; width:auto; margin-right:105px; color:#c80000;}
+
+

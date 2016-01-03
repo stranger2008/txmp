@@ -1,0 +1,27 @@
+.fundaccount{ margin-top: 10px;}
+.fundaccount h2{
+	margin-bottom: 10px;
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #cccccc;
+	font-family: "Î¢ÈíÑÅºÚ";
+	color: #333333;
+	font-size: 14px;
+}
+
+em {
+	font-size: 16px;
+	color: red;
+}
+
+.fundaccount ul{list-style-type: none;}
+
+.fundaccount ul li a{
+	float: right;
+	margin-right: 20px;
+	width: 50px;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid #ccc;
+	background:-webkit-linear-gradient(top,#fefefe,#f0f0f0)
+}

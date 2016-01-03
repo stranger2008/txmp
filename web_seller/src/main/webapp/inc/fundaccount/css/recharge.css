@@ -1,0 +1,108 @@
+.fr {
+    float: right;
+}
+.progress {
+    margin: 20px 0 0 0;
+    width: 435px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 12px;
+    font-family: "ËÎÌå";
+}
+
+.progress1 {
+    width: 435px;
+    height: 36px;
+    background: url(../images/step1.png) no-repeat;
+}
+
+.progress2 {
+    width: 435px;
+    height: 36px;
+    background: url(../images/step2.png) no-repeat;
+}
+
+.progress li {
+    float: left;
+    width: 145px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+
+.progress li.step-h {
+    color: #fff;
+}
+
+.progress li.step {
+    color: #5d5d5d;
+}
+.recharge{
+    margin-top:30px;
+}
+.recharge-cont {
+    border: 1px solid #ddd;
+}
+
+.recharge-thead {
+    height: 35px;
+    line-height: 35px;
+    background-color: #f3f3f3;
+    color: #666;
+    font-size: 18px;
+    font-family: "Î¢ÈíÑÅºÚ";
+    padding-left:15px;
+}
+.recharge-ul{
+    padding:25px 40px;
+}
+.recharge-ul li{
+    line-height:24px;
+    color: #666;
+    font-size: 14px;
+    margin:10px 0;
+}
+.recharge-ul li span{
+    display:inline-block;
+    width:70px;;
+}
+.recharge-ul li i{
+    line-height:24px;
+    color: #666;
+    font-size: 14px;
+    font-family: "Arial";
+}
+.recharge-txt{
+    width:146px;
+    height:24px;
+    line-height:24px;
+    border:1px solid #ccc;
+}
+.recharge-ul li em{
+    color: #999;
+    font-size: 12px;
+}
+.recharge-ul li label{
+    margin:0 10px 0 5px;
+}
+.btn-red{
+    background: url(../images/mammon-icon.png) -157px -186px;
+    height: 25px;
+    line-height: 25px;
+    color: #fff;
+    display: inline-block;
+    padding-left: 15px;
+}
+.btn-huang:hover,
+.btn-red:hover{
+    color: #fff;
+}
+.btn-red span{
+    background: url(../images/mammon-icon.png) -296px -186px;
+    display: inline-block;
+    width: 15px;
+    height: 25px;
+    float: right;
+
+}
+a {cursor: pointer;}
