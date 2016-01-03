@@ -1,0 +1,128 @@
+/*banner*/
+	.subbanner
+	{
+		width:100%;
+		margin:0 auto;
+		height:342px;
+		overflow:hidden;
+		z-index:-1;
+	}
+	.btns
+	{	display: inline;
+		width: auto;
+		hegiht:11px;
+		float:left;
+		left:63%;
+		margin-top:-26px;
+		position:absolute;
+		z-index:1;
+	}
+	.btns a
+	{
+		color:#fff;
+		font-size:9px;
+		line-height:11px;
+		float:left;
+		width:11px;
+		height:11px;
+		text-align:center;
+		text-decoration:none;
+		margin-left:5px;
+		background:url(../images/dot0.png) no-repeat;
+		background-position:0 0;
+		
+	}
+	.btns a.activeSlide
+	{	
+		color:#d20001;
+		background:url(../images/dot0.png) no-repeat;
+		background-position:-20px 0;
+	}
+	.btns a:hover
+	{	
+		color:#d20001;
+		background:url(../images/dot0.png) no-repeat;
+		background-position:-20px 0;
+	}
+
+/*店铺首页*/
+.shop{ margin-top:30px;}
+.shop h2{ height:24px; margin-bottom:30px;}
+.shop span{ font-size:24px; font-family:"微软雅黑"; color:#000; }
+.shop em{ margin-left:10px; font-size:18px; font-family:"Arial"; color:#e10000; }
+.leftimg{ width:209px; height:573px;}
+
+
+	/*商铺商品*/
+.shop-pro{ margin-top:15px; width:960px; height:266px; padding:0;}
+.shop-pro ul{ margin:0 0px;}
+.shop-pro ul li{ width:180px; height:260px; margin:0 5px 35px 5px; float:left;}
+.img-collect{ display:block; width:180px; height:180px;}
+.img-collect img{ width:180px; height:180px;}
+.img-dec{ display:inline-block; width:180px; margin:5px 0;}
+.img-dec .name{ display: inline-block; height:22px; overflow:hidden; font-size:12px; color:#666666; line-height:20px; text-align:left;}
+.img-dec .price{ font-family:"Arial"; margin-bottom:5px; line-height:28px;}
+.img-dec .price strong{ font-size:18px; color:#e10000; font-family:"Arial";}
+.img-dec .price em{ font-size:14px; color:#999999; margin-left:25px; text-decoration:line-through;}
+.img-dec .buybtn,.img-dec .buybtn2{ display: inline-block; width:75px; height:21px; line-height:21px; overflow:hidden; font-size:12px; color:#fff; text-align:center; background-color:#565656;}
+.img-dec .buybtn:hover,.img-dec .buybtn2{ background-color:#e10000;}
+.shop-pro img:hover{ background-color:#FFF; filter:alpha(opacity=70);  -moz-opacity:0.7;  -khtml-opacity: 0.7;  opacity: 0.7; }
+
+	/*红酒*/
+.wine{ margin-top:20px;}
+.wine h2{ height:32px; line-height:32px; border-bottom:1px solid #e4e4e4;}
+.wine h2 b{ font-size:20px; font-family:"微软雅黑"; color:#333; }
+.wine h2 b em{ margin-left:10px; font-size:16px; font-family:"Arial"; color:#e10000; }
+.wine h2 .more{ float:right; font-size:12px; color:#5d5d5d; }
+.wine h2 .more:hover{ color:#e10000; }
+.wine-cont{ margin-top:15px; height:266px; padding:0;}
+.wine-cont ul{ margin:0 0px;}
+.wine-cont ul li{ width:200px; height:260px; margin:0 50px 45px 0; float:left;}
+
+
+/*banner*/
+	.subbanner
+	{
+		width:100%;
+		margin:0 auto;
+		height:342px;
+		overflow:hidden;
+		z-index:-1;
+	}
+	.btns
+	{	display: inline;
+		width: auto;
+		hegiht:11px;
+		float:left;
+		left:63%;
+		margin-top:-26px;
+		position:absolute;
+		z-index:1;
+	}
+	.btns a
+	{
+		color:#fff;
+		font-size:9px;
+		line-height:11px;
+		float:left;
+		width:11px;
+		height:11px;
+		text-align:center;
+		text-decoration:none;
+		margin-left:5px;
+		background:url(../images/dot0.png) no-repeat;
+		background-position:0 0;
+		
+	}
+	.btns a.activeSlide
+	{	
+		color:#d20001;
+		background:url(../images/dot0.png) no-repeat;
+		background-position:-20px 0;
+	}
+	.btns a:hover
+	{	
+		color:#d20001;
+		background:url(../images/dot0.png) no-repeat;
+		background-position:-20px 0;
+	}

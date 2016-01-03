@@ -1,0 +1,602 @@
+/*banner*/
+#banner {
+    width: 100%;
+    margin: 0 auto;
+    height: 450px;
+    overflow: hidden;
+}
+
+#btn {
+    display: inline;
+    width: auto;
+    hegiht: 18px;
+    float: left;
+    left: 60%;
+    margin-top: -30px;
+    position: absolute;
+    z-index: 5;
+}
+
+#btn a {
+    color: #fff;
+    font: 700 11px "Arial";
+    float: left;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 5px;
+    background: url(images/dot2.png) no-repeat;
+    background-position: 0 0;
+    background-color: #000;
+    border-radius: 18px;
+
+}
+
+#btn a.activeSlide {
+    color: #fff;
+    background: url(images/dot2.png) no-repeat;
+    background-position: -27px 0;
+    background-color: #c40000;
+}
+
+#btn a:hover {
+    color: #fff;
+    background: url(images/dot2.png) no-repeat;
+    background-position: -27px 0;
+    background-color: #c40000;
+}
+
+/*图片列表*/
+.listpic {
+    margin-top: 10px;
+    width: 910px;
+    height: 386px;
+    border: 1px solid #e5e5e5;
+    background-color: #e7e7e7;
+    padding: 12px 40px;
+}
+
+.img-box {
+    position: relative;
+    width: 293px;
+    height: 187px;
+    margin-bottom: 12px;
+}
+
+.img-box .ll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 100px;
+    height: 157px;
+    background-color: #fff;
+    padding: 30px 0 0 20px;
+    opacity: 0.75;
+}
+
+.img-box .ll h3 {
+    font-size: 20px;
+    color: #333333;
+    font-family: "微软雅黑";
+    margin-bottom: 18px
+}
+
+.img-box .ll p {
+    font-size: 14px;
+    color: #666666;
+    font-family: "微软雅黑";
+    margin-bottom: 10px;
+}
+
+.img-box .ll .red {
+    font-size: 12px;
+    color: #ca0000;
+    font-family: "微软雅黑";
+    margin-bottom: 20px;
+}
+
+.img-box .ll a {
+    font-size: 12px;
+    color: #666666;
+    font-family: "微软雅黑";
+}
+
+.img-box .ll a:hover {
+    color: #e10000;
+    text-decoration: underline;
+}
+
+.img-media {
+    display: block;
+    width: 293px;
+    height: 187px;
+    margin: 0 auto;
+}
+
+.img-media img {
+    width: 293px;
+    height: 187px;
+}
+
+.img-box p {
+    width: 293px;
+    font-size: 12px;
+    line-height: 24px;
+    color: #666;
+    font-family: "宋体";
+}
+
+.img-hover {
+    background-color: #f9f6f6;
+    opacity: 0.5;
+}
+
+.img-hover h3 {
+    color: #d20100;
+}
+
+.img-hover p {
+    text-decoration: underline;
+}
+
+.track {
+    width: 100%;
+    position: relative;
+}
+
+.view-port, .track .inner {
+    width: 910px;
+}
+
+.view-port {
+    overflow: hidden;
+    position: relative;
+}
+
+.track .inner {
+    position: relative;
+    margin: 0 auto;
+}
+
+.track a.prev,
+.track a.next {
+    position: absolute;
+    top: 165px;
+    display: block;
+    width: 27px;
+    height: 56px;
+    background: url(../images/arr.png) no-repeat;
+}
+
+.track a.prev.disabled,
+.track a.next.disabled {
+    display: none;
+}
+
+.track a.prev {
+    left: -35px;
+    background-position: 0 0;
+}
+
+.track a.prev:hover {
+    background-position: -29px 0;
+}
+
+.track a.prev:active {
+    background-position: -29px 0;
+}
+
+.track a.next {
+    right: -35px;
+    background-position: -29px -58px;
+}
+
+.track a.next:hover {
+    background-position: 0 -58px;
+}
+
+.track a.next:active {
+    background-position: 0 -58px;
+}
+
+.slider-container {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 390px;
+}
+
+.slider-container.big {
+    height: 390px;
+}
+
+.slider-container .item {
+    position: absolute;
+    width: 310px;
+    height: 390px;
+}
+
+.slider-container.big .item {
+    height: 390px;
+}
+
+.slider-container .item p {
+    padding: 0;
+    margin: 0;
+}
+
+.listpic img:hover {
+    background-color: #FFF;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+
+/*热销排行榜*/
+.hotlist {
+    margin-top: 10px;
+    width: 178px;
+    height: 410px;
+    padding: 0 10px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-top: 2px solid #000000;
+}
+
+.hotlist h2 {
+    height: 58px;
+    line-height: 58px;
+    font-size: 18px;
+    color: #ca0000;
+    font-family: "微软雅黑";
+    text-align: center;
+    border-bottom: 1px dashed #dddddd;
+}
+
+.hotpic {
+    margin: 10px 0;
+}
+
+.hotpic-c {
+    width: 85px;
+    color: #565656;
+    line-height: 22px;
+}
+
+.hotpic-c h3 {
+    width: 85px;
+    height: 44px;
+    overflow: hidden;
+}
+
+.hotpic-c h3 a {
+    color: #565656;
+    font-size: 12px;
+    font-family: "微软雅黑";
+}
+
+.hotpic-c .price1 {
+    color: #ca0000;
+    font-size: 14px;
+}
+
+.hotpic-c .price2 {
+    color: #999999;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
+.hotpic-c p a {
+    color: #ca0000;
+    font-family: "Arial";
+    font-size: 12px;
+}
+
+.hotlist ul li {
+    height: 35px;
+    line-height: 35px;
+    border-top: 1px solid #e5e5e5;
+    padding-left: 20px;
+    position: relative;
+}
+
+.hotlist ul li a {
+    color: #565656;
+    font-size: 12px;
+}
+
+.hotlist a:hover {
+    color: #e10000;
+}
+
+.hotlist ul li b {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../images/num.png) no-repeat;
+    background-position: 0 0;
+}
+
+.hotlist ul li:nth-child(2) b {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../images/num.png) no-repeat;
+    background-position: 0 -16px;
+}
+
+.hotlist ul li:nth-child(3) b {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../images/num.png) no-repeat;
+    background-position: 0 -32px;
+}
+
+.hotlist ul li:nth-child(4) b {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../images/num.png) no-repeat;
+    background-position: 0 -48px;
+}
+
+.hotlist ul li:nth-child(5) b {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../images/num.png) no-repeat;
+    background-position: 0 -64px;
+}
+
+.hotlist ul li:nth-child(6) b {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../images/num.png) no-repeat;
+    background-position: 0 -80px;
+}
+
+/*新品上架*/
+.newpro {
+    margin-top: 30px;
+}
+
+.newpro img:hover {
+    background-color: #FFF;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.newpro h2 {
+    font-size: 18px;
+    color: #333333;
+    font-family: "微软雅黑";
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 2px solid #000000;
+    font-weight: bold;
+}
+
+.product-l {
+    position: relative;
+}
+
+.product-l img {
+    width: 190px;
+    height: 252px;
+}
+
+.product-l .det01 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #c80a28;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.product-l .det02 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #d8bb78;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.product-l .det03 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #2f9fc1;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.product-l .det04 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #601986;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.product-l a {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    height: 34px;
+    line-height: 34px;
+	text-align:center;
+    font-size: 12px;
+    color: #fff;
+    font-family: "微软雅黑";
+}
+
+.product-cla {
+    width: 190px;
+    height: 160px;
+    background-color: #fafafa;
+    padding-top: 10px;
+}
+.product-cla a {
+    font-size: 12px;
+    color: #666;
+    font-family: "微软雅黑";
+    display: inline-block;
+    width: 90px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+}
+.product-cla a:hover {
+    color: #e10000;
+}
+.new-product{
+    width: 790px;
+    height: 424px;
+    margin-left: 10px;
+}
+.new-product-num{
+    position: absolute;
+    bottom: 20px;
+    z-index: 10;
+    left: 50%;
+}
+.new-product-num a{
+    width: 36px;
+    height: 8px;
+    display: inline-block;
+    background: #999;
+    text-indent: -9999px;
+    margin-right: 3px;
+}
+.new-product-num .activeSlide{
+    background: #e10000;
+}
+.product-r {
+    width: 200px;
+}
+
+.product-r a {
+    display: block;
+}
+
+.propiclist {
+    margin-top: 10px;
+    height: 261px;
+    border: 1px solid #e5e5e5;
+}
+
+.propiclist ul li {
+    float: left;
+    width: 238px;
+    height: 261px;
+    border-right: 1px solid #e5e5e5;
+    overflow: hidden;
+}
+
+.propiclist ul li:last-child {
+    border-right: 0;
+}
+
+.propiclist a {
+    display: block;
+    width: 238px;
+    height: 261px;
+    font-size: 14px;
+    color: #333;
+    font-family: "微软雅黑";
+}
+
+.propiclist a:hover {
+    background-color: #fff;
+    opacity: 0.7;
+    z-index: 999;
+}
+
+.propiclist .pro-d1 {
+    position: relative;
+}
+
+.pro-p {
+    position: absolute;
+    top: 18px;
+    left: 12px;
+}
+
+.pro-p em {
+    padding-top: 10px;
+    display: block;
+    font-size: 12px;
+    color: #666666;
+}
+
+.pro-d2 {
+    width: 160px;
+    height: 84px;
+    overflow: hidden;
+    margin: 10px auto;
+    text-align: left;
+}
+
+.pro-d2 p {
+    width: 160px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.pro-d2 em {
+    color: #ca0000;
+}

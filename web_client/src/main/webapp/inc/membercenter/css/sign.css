@@ -1,0 +1,257 @@
+/*登录*/
+.logo-sign {
+    position: relative;
+    margin: 40px 0;
+}
+
+.logo-sign img {
+    width: 146px;
+    height: 52px;
+}
+
+.logo-sign b {
+    position: absolute;
+    top: 3px;
+    left: 166px;
+    width: 111px;
+    height: 45px;
+    border-left: 1px solid #d4d4d4;
+    font-size: 25px;
+    font-family: "微软雅黑";
+    color: #333333;
+    font-weight: 100;
+    padding: 5px 0 0 20px;
+}
+
+.box-sign {
+    width: 1198px;
+    border: 1px solid #dddddd;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-sn {
+    padding: 50px 100px 150px 100px;
+}
+
+.form-sn h2 {
+    font-size: 25px;
+    font-family: "微软雅黑";
+    color: #333333;
+}
+
+.sign-info {
+    height: 38px;
+    line-height: 38px;
+    margin: 30px 0;
+}
+
+.sign-info span {
+    display: inline-block;
+    text-align: right;
+    font-size: 14px;
+    font-family: "宋体";
+    color: #999999;
+    width:160px;
+    height: 38px;
+    margin-right: 10px;
+}
+
+.sign-info span i {
+    color: #e10000;
+    padding-right: 5px;
+}
+
+.sign-ipt {
+    width: 270px;
+    height: 36px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.sign-ipt .sign-txt {
+    width: 240px;
+    height: 24px;
+    line-height: 24px;
+    padding: 6px;
+    border: 0;
+    font-size: 14px;
+}
+
+.sign-ipt b {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 0;
+}
+.sign-ipt .no-b {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    visibility: hidden;
+}
+.sign-ipt .right-ipt {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    width: 19px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -35px;
+}
+.caution{ position:relative; width:240px; height:36px; line-height:36px; background-color:#f7f7f7; border:1px solid #ddd; padding-left:30px; margin-left:6px;}
+.caution b {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    width: 19px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -73px;
+}
+.caution-err{ position:relative; width:240px; height:36px; line-height:36px; background-color:#fff9f3; border:1px solid #ffd8c0; color:#e10000; padding-left:30px; margin-left:6px;}
+.caution-err b {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    width: 19px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -54px;
+}
+.psd-color em{ display:inline-block; width:34px; height:14px; line-height:14px; color:#fff; text-align:center; background-color:#c4c4c4; margin:0 1px 6px 0;}
+.psd-color .red{ background-color:#e10000;}
+.psd-color .yellow{ background-color:#f79100;}
+.psd-color .green{ background-color:#6da81f;}
+
+.sign-ipt2 b {
+    top: 8px;
+    right: 5px;
+    width: 14px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -16px;
+}
+
+.sign-info2 {
+    padding-left: 100px;
+}
+
+.sign-chk {
+    margin: 5px;
+}
+
+.at {
+    margin-right: 10px;
+    font-size: 12px;
+    font-family: "宋体";
+    color: #333333;
+}
+
+.fgps {
+    font-size: 12px;
+    font-family: "宋体";
+    color: #333333;
+}
+
+.sign-btn {
+    width: 270px;
+    height: 34px;
+    line-height: 34px;
+    background: url(../images/sign-btn.png) repeat-x;
+    font-size: 16px;
+    font-family: "宋体";
+    color: #fff;
+    border: 0;
+    margin-top: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sign-info3 {
+    width: 380px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.free-lg {
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: "宋体";
+    color: #d4273b;
+}
+
+.sign-bg {
+    position: absolute;
+    top: 20px;
+    right: 0;
+	z-index:-999;
+}
+
+/*注册*/
+.login-p {
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-family: "宋体";
+    color: #333333;
+}
+
+.login-p a {
+    font-size: 14px;
+    font-family: "宋体";
+    color: #005aa0;
+    padding-left: 5px;
+}
+
+.sign-code {
+    width: 130px;
+    height: 24px;
+    line-height: 24px;
+    padding: 6px;
+    border: 0;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+.sign-codeimg {
+    width: 80px;
+    height: 38px;
+    margin: 0 10px;
+}
+
+.chag {
+    font-size: 14px;
+    font-family: "宋体";
+    color: #999999;
+}
+
+.chag em {
+    color: #005aa0;
+}
+
+.chag:hover {
+    color: #999999;
+}
+
+.chag em:hover {
+    color: #e10000;
+}
+
+.xy {
+    font-size: 12px;
+    color: #005aa0;
+}
+

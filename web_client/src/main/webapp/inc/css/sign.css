@@ -1,0 +1,367 @@
+/*登录*/
+.logo-sign {
+    position: relative;
+    margin: 40px 0;
+}
+
+.logo-sign img {
+    width: 146px;
+    height: 52px;
+}
+
+.logo-sign b {
+    position: absolute;
+    top: 3px;
+    left: 166px;
+    width: 111px;
+    height: 45px;
+    border-left: 1px solid #d4d4d4;
+    font-size: 25px;
+    font-family: "微软雅黑";
+    color: #333333;
+    font-weight: 100;
+    padding: 5px 0 0 20px;
+}
+
+.box-sign {
+    width: 1198px;
+    border: 1px solid #dddddd;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-sn {
+    padding: 50px 100px 150px 100px;
+}
+
+.form-sn h2 {
+    font-size: 25px;
+    font-family: "微软雅黑";
+    color: #333333;
+}
+
+.sign-info {
+    width:;
+    height: 38px;
+    line-height: 38px;
+    margin: 30px 0;
+}
+
+.sign-info span {
+    display: inline-block;
+    text-align: right;
+    font-size: 14px;
+    font-family: "宋体";
+    color: #999999;
+    width: 160px;
+    height: 38px;
+    margin-right: 10px;
+}
+
+.sign-info span i {
+    color: #e10000;
+    padding-right: 5px;
+}
+
+.sign-ipt {
+    width: 270px;
+    height: 36px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.sign-ipt .sign-txt {
+    width: 240px;
+    height: 24px;
+    line-height: 24px;
+    padding: 6px;
+    border: 0;
+    font-size: 14px;
+}
+
+.sign-ipt b {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 0;
+}
+
+.sign-ipt .no-b{
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    visibility:hidden;
+}
+.sign-ipt .right-ipt {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    width: 19px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -35px;
+}
+.caution{ position:relative; width:240px; height:36px; line-height:36px; background-color:#f7f7f7; border:1px solid #ddd; padding-left:30px; margin-left:6px;}
+.caution b {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    width: 19px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -73px;
+}
+.caution-err{ position:relative; width:240px; height:36px; line-height:36px; background-color:#fff9f3; border:1px solid #ffd8c0; color:#e10000; padding-left:30px; margin-left:6px;}
+.caution-err b {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    width: 19px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -54px;
+}
+.psd-color em{ display:inline-block; width:34px; height:14px; line-height:14px; color:#fff; text-align:center; background-color:#c4c4c4; margin:0 1px 6px 0;}
+.psd-color .red{ background-color:#e10000;}
+.psd-color .yellow{ background-color:#f79100;}
+.psd-color .green{ background-color:#6da81f;}
+
+.sign-ipt2 b {
+    top: 8px;
+    right: 5px;
+    width: 14px;
+    height: 19px;
+    background: url(../images/sign-icon.png) no-repeat;
+    background-position: 0 -16px;
+}
+
+.sign-info2 {
+    padding-left: 100px;
+}
+
+.sign-chk {
+    margin: 5px;
+}
+
+.at {
+    margin-right: 10px;
+    font-size: 12px;
+    font-family: "宋体";
+    color: #333333;
+}
+
+.fgps {
+    font-size: 12px;
+    font-family: "宋体";
+    color: #333333;
+}
+
+.sign-btn {
+    width: 270px;
+    height: 34px;
+    line-height: 34px;
+    background: url(../images/sign-btn.png) repeat-x;
+    font-size: 16px;
+    font-family: "宋体";
+    color: #fff;
+    border: 0;
+    margin-top: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sign-info3 {
+    width: 380px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.free-lg {
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: "宋体";
+    color: #d4273b;
+}
+
+.sign-bg {
+    position: absolute;
+    top: 20px;
+    right: 0;
+	z-index:-999;
+}
+
+/*注册*/
+.login-p {
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-family: "宋体";
+    color: #333333;
+}
+
+.login-p a {
+    font-size: 14px;
+    font-family: "宋体";
+    color: #005aa0;
+    padding-left: 5px;
+}
+
+.sign-code {
+    width: 130px;
+    height: 24px;
+    line-height: 24px;
+    padding: 6px;
+    border: 0;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+.sign-codeimg {
+    width: 80px;
+    height: 38px;
+    margin: 0 10px;
+}
+
+.chag {
+    font-size: 14px;
+    font-family: "宋体";
+    color: #999999;
+}
+
+.chag em {
+    color: #005aa0;
+}
+
+.chag:hover {
+    color: #999999;
+}
+
+.chag em:hover {
+    color: #e10000;
+}
+
+.xy {
+    font-size: 12px;
+    color: #005aa0;
+}
+/*找回密码*/
+.boxFindpwd {width: 1198px;margin-bottom: 30px;position: relative;}
+.box_findpwd{height: 33px;background: url(../images/tit_regist.jpg) repeat-x scroll 0px -34px #D1D1D1;}
+.box_findpwd h2 {font-weight:bold;float: left;height: 33px;padding-left: 15px;background: url(../images/tit_regist.jpg) no-repeat scroll 0px 0px transparent;line-height: 33px;font-family: "microsoft yahei";font-size:14px;color: #666;}
+.box_findpwd b {float: right;width: 10px;height: 33px;background: url(../images/tit_regist.jpg) no-repeat scroll 0px -68px transparent;}
+.boxFindpwd .mc {padding: 20px 135px;border-style: solid;border-color: #D1D1D1;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none; -moz-border-left-colors: none;border-image: none;border-width: 0px 1px 1px;}
+.boxFindpwd .mc .step {overflow: hidden;margin-bottom: 30px;height: 25px;}
+.boxFindpwd .step li {float: left;background: url(../images/p1.jpg) no-repeat scroll right top #EDEDED;height: 25px;line-height: 25px;color: #999;padding: 0px 86px 0px 85px;font-weight: bold;}
+.boxFindpwd .step .one{background:url(../images/p5.jpg) no-repeat top right #bbbbbb;color:#FFF;}
+.boxFindpwd .step .one1{background:url(../images/p9.jpg) no-repeat top right #bbbbbb;color:#FFF;}
+.boxFindpwd .step .two{background:url(../images/p10.jpg) no-repeat top right #bbbbbb;color:#FFF;}
+.boxFindpwd .step .two1{background:url(../images/p9.jpg) no-repeat top right #bbbbbb;color:#FFF;}
+.boxFindpwd .step .three{background:url(../images/p5.jpg) no-repeat top right #bbbbbb;color:#FFF;}
+.boxFindpwd .step .cur{background:url(../images/p2.jpg) no-repeat top right #ffe6bc;color:#ff6600;}
+.boxFindpwd .step .four{background:none #ededed;}
+.boxFindpwd .step .four1{background:#ffe6bc;}
+
+.boxFindpwd .find_pwd_form {
+    width: 582px;
+    overflow: hidden;
+    margin: 0px auto;
+    padding-left: 100px;
+    border:none;
+}
+
+.boxFindpwd .item {
+    padding-top: 5px;
+    height: 55px;
+    line-height: 26px;
+}
+.boxFindpwd .label {
+    width: 140px;
+    text-align: right;
+    font-size: 14px;
+    float: left;
+}
+.boxFindpwd .fl {float: left;}
+.boxFindpwd .text {
+    width: 240px;
+    height: 16px;
+    padding: 4px 3px;
+    border: 1px solid #BBB;
+    font-size: 14px;
+    font-family: arial,"宋体";
+}
+.boxFindpwd .clr {
+    display: block;
+    overflow: hidden;
+    clear: both;
+    height: 0px;
+    line-height: 0;
+    font-size: 0px;
+}
+.boxFindpwd .btn-entry {
+    width: 68px;
+    height: 25px;
+    line-height: 25px;
+    background: url(../images/p3.jpg) no-repeat scroll 0% 0% transparent;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+	border: 0px none;
+	text-align: center;
+	cursor: pointer;
+}
+.boxFindpwd .select {
+    border: 1px solid #BBB;
+    font-family: arial,"宋体";
+    font-size: 14px;
+    height: 26px;
+    padding: 4px 3px;
+    width: 247px;
+    float: left;
+	font-size: 12px;
+}
+.boxFindpwd .text-two {margin-top: 0px;width: 320px;}
+.boxFindpwd .text-ifo {
+    color: #F60;
+    border: medium none;
+    font-family: Verdana,Geneva,sans-serif;
+    margin-top: 5px;
+    font-weight: bold;
+    width: 112px;
+    float:left;
+}
+.boxFindpwd .text-one {margin-top: 0px;}
+.boxFindpwd .e-ifon {float: left;background: url(../images/p6.jpg) no-repeat scroll 0% 0% transparent;width: 121px;text-align: center;height: 25px;line-height: 25px;}
+.boxFindpwd .suc {font-weight: bold;}
+.boxFindpwd .call {overflow: hidden;padding: 50px 0;}
+.boxFindpwd .call{overflow:hidden;padding:50px 0;}
+.boxFindpwd .call b{float:left;background:url(../images/p4.jpg) no-repeat;width:50px;height:46px;margin-right:12px;}
+.boxFindpwd .suc{font-weight:bold;}
+.boxFindpwd .suc b{background:url(../images/p8.jpg) no-repeat;width:48px;height:38px;}
+.boxFindpwd .m-return{color:#333333;}
+.boxFindpwd .m-return span {line-height: 20px;font-weight: normal;}
+.boxFindpwd .m-return span strong {color: #009900;}
+.boxFindpwd .m-return span a{color:#005ea7;}
+.boxFindpwd .call-four span{line-height:20px;}
+.boxFindpwd .call span {float: left;line-height:20px;font-weight: normal;}
+.boxFindpwd .call span strong{color:#ff6600;}
+.boxFindpwd .suc span strong{color:#005ea7;}
+.boxFindpwd .suc span strong a{color:#005ea7;font-weight:bold;}
+.boxFindpwd .m-return span strong{color:#009900;}
+
+
+
+
+
+
