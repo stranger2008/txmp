@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<!-- 图片访问系统外网地址 -->
+	
+	<serverPath name="http://182.92.235.41/" value="/usr/local/nginx/html"/>
+	<!-- 
+	<serverPath name="http://www.lxl.com" value="D:/xampp/htdocs/txmp_file"/>
+	-->
+	<imageServer>
+		<filepath>/img</filepath>
+		<maxSize>10485760</maxSize>
+		<permit>gif/jpg/jpeg/png/bmp</permit>
+		<auto>
+			<spec width="2000" height="2000" />
+			<module name="goods">
+				<spec width="350" height="350" />
+				<spec width="400" height="400" />
+				<spec width="70" height="70" />
+				<spec width="200" height="200" />
+				<spec width="800" height="800" />
+			</module>
+			<module name="uploads">
+				<spec width="350" height="350" />
+				<spec width="400" height="400" />
+				<spec width="70" height="70" />
+				<spec width="200" height="200" />
+				<spec width="800" height="800" />
+			</module>
+		</auto>
+	</imageServer>
+	
+	<fileServer>
+		<filepath>/file</filepath>
+		<maxSize>52428800</maxSize>
+		<permit>pdf/doc/xls/rar/zip</permit>
+	</fileServer>
+	
+</root>
